@@ -1,0 +1,1040 @@
+{
+  "workspaceVersion": {
+    "major": 7,
+    "minor": 0,
+    "patch": 0
+  },
+  "editor": {
+    "showBoundShapes": true,
+    "zoomIndex": 8.03651936848959,
+    "backgroundImages": [],
+    "backgroundColor": [
+      0.4,
+      0.4,
+      0.4,
+      1
+    ],
+    "gridColor": [
+      1,
+      1,
+      1,
+      0.21052628755569458
+    ],
+    "drawGrid": true,
+    "drawZoomInfo": true,
+    "drawFpsInfo": true,
+    "drawParticleCounterInfo": true,
+    "showOrientationIndicator": false,
+    "portraitMode": false,
+    "infoTextScale": 2,
+    "spineNode": {
+      "skeleton": {
+        "filepath": ""
+      },
+      "atlas": {
+        "filepath": ""
+      },
+      "atlasImage": {
+        "filepath": ""
+      },
+      "animation": "none",
+      "selectedBone": "none",
+      "position": [
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1
+      ],
+      "infront": false
+    },
+    "relExportEffectPath": {
+      "filepath": "../src/config/particle-effects/coin_rain.ts"
+    },
+    "relExportAtlasPath": {
+      "filepath": "../assets/common/particle/coin_rain.part"
+    },
+    "relTextureMaskPath": {
+      "filepath": ""
+    },
+    "previewMask": false
+  },
+  "images": [
+    {
+      "id": "4822a639eab1cafcc5b0936b",
+      "filepath": "coin/coin_00.png"
+    },
+    {
+      "id": "f0541e552cda467257adab36",
+      "filepath": "coin/coin_01.png"
+    },
+    {
+      "id": "8ae3e1281691aa8bbeca4ec9",
+      "filepath": "coin/coin_02.png"
+    },
+    {
+      "id": "84f5ad842be01c0c8484f8d0",
+      "filepath": "coin/coin_03.png"
+    },
+    {
+      "id": "fb554688cef792c9742586d4",
+      "filepath": "coin/coin_04.png"
+    },
+    {
+      "id": "db1ec1b49e963cca416bf2dd",
+      "filepath": "coin/coin_05.png"
+    },
+    {
+      "id": "b7933e38e94b270d00951f18",
+      "filepath": "coin/coin_06.png"
+    },
+    {
+      "id": "58755df3ebe232b3092f6a94",
+      "filepath": "coin/coin_07.png"
+    },
+    {
+      "id": "d3c7f5c87e4fcaac56cc0c84",
+      "filepath": "coin/coin_08.png"
+    },
+    {
+      "id": "6c7fdeab8c7ad59fb02e9d97",
+      "filepath": "coin/coin_09.png"
+    },
+    {
+      "id": "ef47e860b83854af69e90367",
+      "filepath": "coin/coin_10.png"
+    },
+    {
+      "id": "1d2d8ac695952819a019bd5d",
+      "filepath": "coin/coin_11.png"
+    },
+    {
+      "id": "5515fac51c7a70b7ee0b30e2",
+      "filepath": "coin/coin_12.png"
+    },
+    {
+      "id": "1828d4287bf323a9e3dbf04f",
+      "filepath": "coin/coin_13.png"
+    },
+    {
+      "id": "4b4bc48dc0ff9395c146ea75",
+      "filepath": "coin/coin_14.png"
+    },
+    {
+      "id": "2bfe50bcb6e38ec1b03ca00f",
+      "filepath": "coin/coin_15.png"
+    },
+    {
+      "id": "887f9547903dd2eb83730652",
+      "filepath": "coin/coin_16.png"
+    },
+    {
+      "id": "0e7278da6741205f8e1b4bdb",
+      "filepath": "coin/coin_17.png"
+    },
+    {
+      "id": "6ca1b7bb6623ad406ec0a9f4",
+      "filepath": "coin/coin_18.png"
+    },
+    {
+      "id": "6700ccc2949158dc8b47d3cd",
+      "filepath": "coin/coin_19.png"
+    },
+    {
+      "id": "f1b48636cb9997e90ae11ad7",
+      "filepath": "coin/coin_20.png"
+    },
+    {
+      "id": "de639a7bdd6789667546dd7f",
+      "filepath": "coin/coin_21.png"
+    },
+    {
+      "id": "8da34ccf9149cbdce03e466e",
+      "filepath": "coin/coin_22.png"
+    },
+    {
+      "id": "453042d9949065da9bbbf9d9",
+      "filepath": "coin/coin_23.png"
+    },
+    {
+      "id": "607826703cd1793202717d0c",
+      "filepath": "coin/coin_24.png"
+    },
+    {
+      "id": "97927f9f0fd7f6a761d6f8fe",
+      "filepath": "coin/coin_25.png"
+    },
+    {
+      "id": "9175cd1dbfde5bbbf6c863af",
+      "filepath": "coin/coin_26.png"
+    },
+    {
+      "id": "0e3c7af09cdef6a7f3e40307",
+      "filepath": "coin/coin_27.png"
+    },
+    {
+      "id": "4d0ef65a2b8d5b9cb72b2390",
+      "filepath": "coin/coin_28.png"
+    },
+    {
+      "id": "1adadf7bc3e2e7993e4a4b02",
+      "filepath": "coin/coin_29.png"
+    }
+  ],
+  "effect": {
+    "version": {
+      "major": 9,
+      "minor": 0,
+      "patch": 0
+    },
+    "maskImage": "",
+    "maskRotation": {
+      "type": "scalar",
+      "value": [
+        0
+      ]
+    },
+    "maskScale": {
+      "type": "scalar",
+      "value": [
+        1
+      ]
+    },
+    "emitterProperties": [
+      {
+        "id": "coin_burst",
+        "enabled": true,
+        "prewarm": false,
+        "maxParticleNum": {
+          "type": "scalar",
+          "value": [
+            500
+          ]
+        },
+        "emitRate": {
+          "type": "scalar",
+          "value": [
+            150
+          ]
+        },
+        "images": [
+          "4822a639eab1cafcc5b0936b",
+          "f0541e552cda467257adab36",
+          "8ae3e1281691aa8bbeca4ec9",
+          "84f5ad842be01c0c8484f8d0",
+          "fb554688cef792c9742586d4",
+          "db1ec1b49e963cca416bf2dd",
+          "b7933e38e94b270d00951f18",
+          "58755df3ebe232b3092f6a94",
+          "d3c7f5c87e4fcaac56cc0c84",
+          "6c7fdeab8c7ad59fb02e9d97",
+          "ef47e860b83854af69e90367",
+          "1d2d8ac695952819a019bd5d",
+          "5515fac51c7a70b7ee0b30e2",
+          "1828d4287bf323a9e3dbf04f",
+          "4b4bc48dc0ff9395c146ea75",
+          "2bfe50bcb6e38ec1b03ca00f",
+          "887f9547903dd2eb83730652",
+          "0e7278da6741205f8e1b4bdb",
+          "6ca1b7bb6623ad406ec0a9f4",
+          "6700ccc2949158dc8b47d3cd",
+          "f1b48636cb9997e90ae11ad7",
+          "de639a7bdd6789667546dd7f",
+          "8da34ccf9149cbdce03e466e",
+          "453042d9949065da9bbbf9d9",
+          "607826703cd1793202717d0c",
+          "97927f9f0fd7f6a761d6f8fe",
+          "9175cd1dbfde5bbbf6c863af",
+          "0e3c7af09cdef6a7f3e40307",
+          "4d0ef65a2b8d5b9cb72b2390",
+          "1adadf7bc3e2e7993e4a4b02"
+        ],
+        "particleImageFrameOffset": {
+          "type": "minmax",
+          "value": [
+            0,
+            30
+          ]
+        },
+        "blendMode": "premultiplied_alpha",
+        "randomSeed": {
+          "type": "random"
+        },
+        "inWorldSpace": true,
+        "shader": "particleDefaultShader",
+        "shape": {
+          "type": "ellipse",
+          "position": {
+            "type": "vector2",
+            "value": [
+              0,
+              0
+            ]
+          },
+          "direction": "radial",
+          "pivot": {
+            "type": "vector2",
+            "value": [
+              0,
+              141.53839111328125
+            ]
+          },
+          "angle": {
+            "type": "scalar",
+            "value": [
+              0
+            ]
+          },
+          "minRadius": {
+            "type": "vector2",
+            "value": [
+              90,
+              60
+            ]
+          },
+          "maxRadius": {
+            "type": "vector2",
+            "value": [
+              150,
+              120
+            ]
+          },
+          "sectorSize": {
+            "type": "scalar",
+            "value": [
+              360
+            ]
+          },
+          "sectorSpawnAngle": {
+            "type": "scalar",
+            "value": [
+              0
+            ]
+          }
+        },
+        "startDelay": {
+          "type": "scalar",
+          "value": [
+            0
+          ]
+        },
+        "emitDuration": {
+          "type": "scalar",
+          "value": [
+            0.1
+          ]
+        },
+        "loopDelay": {
+          "type": "scalar",
+          "value": [
+            1.9
+          ]
+        },
+        "loopAmount": {
+          "type": "scalar",
+          "value": [
+            1
+          ]
+        },
+        "particleLifetime": {
+          "type": "minmax",
+          "value": [
+            3,
+            4
+          ]
+        },
+        "particleDirection": {
+          "type": "minmax",
+          "value": [
+            0,
+            0
+          ]
+        },
+        "particleAngle": {
+          "type": "minmax",
+          "value": [
+            0,
+            360
+          ]
+        },
+        "particleLinearSpeed": {
+          "type": "minmax",
+          "value": [
+            750,
+            900
+          ]
+        },
+        "particleRotationSpeed": {
+          "type": "minmax",
+          "value": [
+            -1,
+            1
+          ]
+        },
+        "particleSize": [
+          {
+            "type": "minmax",
+            "value": [
+              80,
+              110
+            ]
+          }
+        ],
+        "particleColor": [
+          {
+            "type": "scalar",
+            "value": [
+              1
+            ]
+          },
+          {
+            "type": "scalar",
+            "value": [
+              1
+            ]
+          },
+          {
+            "type": "scalar",
+            "value": [
+              1
+            ]
+          },
+          {
+            "type": "scalar",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "affectors": {
+          "acceleration": {
+            "enabled": true,
+            "linearRange": {
+              "type": "vector2",
+              "value": [
+                0,
+                1000
+              ]
+            },
+            "angularValue": {
+              "type": "scalar",
+              "value": [
+                0
+              ]
+            }
+          },
+          "animation": {
+            "enabled": true,
+            "range": {
+              "type": "minmax",
+              "value": [
+                60,
+                60
+              ]
+            },
+            "type": "forward"
+          },
+          "scaleOverLifetime": {
+            "enabled": true,
+            "values": [
+              [
+                0,
+                0.5,
+                1,
+                1
+              ],
+              [
+                0,
+                0.5,
+                1,
+                1
+              ]
+            ],
+            "range": [
+              {
+                "type": "vector2",
+                "value": [
+                  0,
+                  1
+                ]
+              },
+              {
+                "type": "vector2",
+                "value": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "separateAxis": false,
+            "easeType": [
+              0,
+              0
+            ]
+          },
+          "colorOverLifetime": {
+            "enabled": true,
+            "colorValues": [
+              0,
+              1,
+              1,
+              1,
+              1,
+              0.9186746987951807,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              0
+            ],
+            "colorEaseType": 0,
+            "darkValues": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "darkEaseType": 0
+          },
+          "dragOverLifetime": {
+            "enabled": false,
+            "linearDrag": {
+              "type": "scalar",
+              "value": [
+                200
+              ]
+            },
+            "linearCurveValues": [
+              [
+                0,
+                1,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                1,
+                1
+              ]
+            ],
+            "linearEaseType": [
+              0,
+              0
+            ],
+            "angularDrag": {
+              "type": "scalar",
+              "value": [
+                200
+              ]
+            },
+            "angularCurveValues": [
+              0,
+              1,
+              1,
+              1
+            ],
+            "angularEaseType": 0
+          },
+          "pointAccelerator": {
+            "enabled": false,
+            "point": {
+              "type": "vector2",
+              "value": [
+                0,
+                0
+              ]
+            },
+            "magnitude": {
+              "type": "scalar",
+              "value": [
+                500
+              ]
+            },
+            "magnitudeValues": [
+              [
+                0,
+                1,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                1,
+                1
+              ]
+            ],
+            "magnitudeEaseType": [
+              0,
+              0
+            ]
+          }
+        },
+        "particleAlignToDirection": false,
+        "anchor": {
+          "type": "vector2",
+          "value": [
+            0,
+            0
+          ]
+        },
+        "particleDarkColor": [
+          {
+            "type": "scalar",
+            "value": [
+              0
+            ]
+          },
+          {
+            "type": "scalar",
+            "value": [
+              0
+            ]
+          },
+          {
+            "type": "scalar",
+            "value": [
+              0
+            ]
+          },
+          {
+            "type": "scalar",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "particleEnableDarkColor": false,
+        "maskShader": "particleDefaultMaskShader",
+        "revParticleDrawOrder": false,
+        "invertMask": false
+      },
+      {
+        "id": "coin_rain",
+        "enabled": true,
+        "prewarm": false,
+        "maxParticleNum": {
+          "type": "scalar",
+          "value": [
+            1000
+          ]
+        },
+        "emitRate": {
+          "type": "scalar",
+          "value": [
+            14
+          ]
+        },
+        "images": [
+          "4822a639eab1cafcc5b0936b",
+          "f0541e552cda467257adab36",
+          "8ae3e1281691aa8bbeca4ec9",
+          "84f5ad842be01c0c8484f8d0",
+          "fb554688cef792c9742586d4",
+          "db1ec1b49e963cca416bf2dd",
+          "b7933e38e94b270d00951f18",
+          "58755df3ebe232b3092f6a94",
+          "d3c7f5c87e4fcaac56cc0c84",
+          "6c7fdeab8c7ad59fb02e9d97",
+          "ef47e860b83854af69e90367",
+          "1d2d8ac695952819a019bd5d",
+          "5515fac51c7a70b7ee0b30e2",
+          "1828d4287bf323a9e3dbf04f",
+          "4b4bc48dc0ff9395c146ea75",
+          "2bfe50bcb6e38ec1b03ca00f",
+          "887f9547903dd2eb83730652",
+          "0e7278da6741205f8e1b4bdb",
+          "6ca1b7bb6623ad406ec0a9f4",
+          "6700ccc2949158dc8b47d3cd",
+          "f1b48636cb9997e90ae11ad7",
+          "de639a7bdd6789667546dd7f",
+          "8da34ccf9149cbdce03e466e",
+          "453042d9949065da9bbbf9d9",
+          "607826703cd1793202717d0c",
+          "97927f9f0fd7f6a761d6f8fe",
+          "9175cd1dbfde5bbbf6c863af",
+          "0e3c7af09cdef6a7f3e40307",
+          "4d0ef65a2b8d5b9cb72b2390",
+          "1adadf7bc3e2e7993e4a4b02"
+        ],
+        "particleImageFrameOffset": {
+          "type": "minmax",
+          "value": [
+            0,
+            30
+          ]
+        },
+        "blendMode": "premultiplied_alpha",
+        "randomSeed": {
+          "type": "random"
+        },
+        "inWorldSpace": true,
+        "shader": "particleDefaultShader",
+        "shape": {
+          "type": "ellipse",
+          "position": {
+            "type": "vector2",
+            "value": [
+              0,
+              -50
+            ]
+          },
+          "direction": "global",
+          "pivot": {
+            "type": "vector2",
+            "value": [
+              0,
+              0
+            ]
+          },
+          "angle": {
+            "type": "scalar",
+            "value": [
+              0
+            ]
+          },
+          "minRadius": {
+            "type": "vector2",
+            "value": [
+              0,
+              0
+            ]
+          },
+          "maxRadius": {
+            "type": "vector2",
+            "value": [
+              300,
+              109.06
+            ]
+          },
+          "sectorSize": {
+            "type": "scalar",
+            "value": [
+              360
+            ]
+          },
+          "sectorSpawnAngle": {
+            "type": "scalar",
+            "value": [
+              0
+            ]
+          }
+        },
+        "startDelay": {
+          "type": "scalar",
+          "value": [
+            0
+          ]
+        },
+        "emitDuration": {
+          "type": "scalar",
+          "value": [
+            0.5
+          ]
+        },
+        "loopDelay": {
+          "type": "scalar",
+          "value": [
+            0
+          ]
+        },
+        "loopAmount": {
+          "type": "scalar",
+          "value": [
+            -1
+          ]
+        },
+        "particleLifetime": {
+          "type": "minmax",
+          "value": [
+            2,
+            2
+          ]
+        },
+        "particleDirection": {
+          "type": "minmax",
+          "value": [
+            225,
+            315
+          ]
+        },
+        "particleAngle": {
+          "type": "minmax",
+          "value": [
+            0,
+            360
+          ]
+        },
+        "particleLinearSpeed": {
+          "type": "minmax",
+          "value": [
+            500,
+            650
+          ]
+        },
+        "particleRotationSpeed": {
+          "type": "minmax",
+          "value": [
+            -0.5,
+            0.5
+          ]
+        },
+        "particleSize": [
+          {
+            "type": "minmax",
+            "value": [
+              75,
+              90
+            ]
+          }
+        ],
+        "particleColor": [
+          {
+            "type": "scalar",
+            "value": [
+              1
+            ]
+          },
+          {
+            "type": "scalar",
+            "value": [
+              1
+            ]
+          },
+          {
+            "type": "scalar",
+            "value": [
+              1
+            ]
+          },
+          {
+            "type": "scalar",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "affectors": {
+          "acceleration": {
+            "enabled": true,
+            "linearRange": {
+              "type": "vector2",
+              "value": [
+                0,
+                1000
+              ]
+            },
+            "angularValue": {
+              "type": "scalar",
+              "value": [
+                0
+              ]
+            }
+          },
+          "animation": {
+            "enabled": true,
+            "range": {
+              "type": "minmax",
+              "value": [
+                60,
+                60
+              ]
+            },
+            "type": "forward"
+          },
+          "scaleOverLifetime": {
+            "enabled": true,
+            "values": [
+              [
+                0,
+                0.5,
+                1,
+                1
+              ],
+              [
+                0,
+                0.5,
+                1,
+                1
+              ]
+            ],
+            "range": [
+              {
+                "type": "vector2",
+                "value": [
+                  0,
+                  1
+                ]
+              },
+              {
+                "type": "vector2",
+                "value": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "separateAxis": false,
+            "easeType": [
+              0,
+              0
+            ]
+          },
+          "colorOverLifetime": {
+            "enabled": false,
+            "colorValues": [
+              0,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "colorEaseType": 0,
+            "darkValues": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "darkEaseType": 0
+          },
+          "dragOverLifetime": {
+            "enabled": false,
+            "linearDrag": {
+              "type": "scalar",
+              "value": [
+                200
+              ]
+            },
+            "linearCurveValues": [
+              [
+                0,
+                1,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                1,
+                1
+              ]
+            ],
+            "linearEaseType": [
+              0,
+              0
+            ],
+            "angularDrag": {
+              "type": "scalar",
+              "value": [
+                200
+              ]
+            },
+            "angularCurveValues": [
+              0,
+              1,
+              1,
+              1
+            ],
+            "angularEaseType": 0
+          },
+          "pointAccelerator": {
+            "enabled": false,
+            "point": {
+              "type": "vector2",
+              "value": [
+                0,
+                0
+              ]
+            },
+            "magnitude": {
+              "type": "scalar",
+              "value": [
+                500
+              ]
+            },
+            "magnitudeValues": [
+              [
+                0,
+                1,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                1,
+                1
+              ]
+            ],
+            "magnitudeEaseType": [
+              0,
+              0
+            ]
+          }
+        },
+        "particleAlignToDirection": false,
+        "anchor": {
+          "type": "vector2",
+          "value": [
+            0,
+            0
+          ]
+        },
+        "particleDarkColor": [
+          {
+            "type": "scalar",
+            "value": [
+              0
+            ]
+          },
+          {
+            "type": "scalar",
+            "value": [
+              0
+            ]
+          },
+          {
+            "type": "scalar",
+            "value": [
+              0
+            ]
+          },
+          {
+            "type": "scalar",
+            "value": [
+              1
+            ]
+          }
+        ],
+        "particleEnableDarkColor": false,
+        "maskShader": "particleDefaultMaskShader",
+        "revParticleDrawOrder": false,
+        "invertMask": false
+      }
+    ]
+  }
+}

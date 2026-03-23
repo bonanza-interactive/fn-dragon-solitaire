@@ -1,0 +1,211 @@
+{
+  "gameClientConfig": {
+    "mathver": "D250",
+    "gamble": {
+      "selections": [
+        {
+          "type": "low",
+          "multiplier": 2
+        },
+        {
+          "type": "high",
+          "multiplier": 2
+        },
+        {
+          "type": "black_seven",
+          "multiplier": 24
+        }
+      ]
+    },
+    "paytable": [
+      {
+        "rank": "WILD_HAND",
+        "winFactor": 25000
+      },
+      {
+        "rank": "FIVE_OF_A_KIND",
+        "winFactor": 5000
+      },
+      {
+        "rank": "STRAIGHT_FLUSH",
+        "winFactor": 2000
+      },
+      {
+        "rank": "FOUR_OF_A_KIND",
+        "winFactor": 600
+      },
+      {
+        "rank": "FULL_HOUSE",
+        "winFactor": 500
+      },
+      {
+        "rank": "FLUSH",
+        "winFactor": 400
+      },
+      {
+        "rank": "STRAIGHT",
+        "winFactor": 300
+      },
+      {
+        "rank": "THREE_OF_A_KIND",
+        "winFactor": 200
+      },
+      {
+        "rank": "TWO_PAIR",
+        "winFactor": 100
+      }
+    ]
+  },
+  "events": [
+    {
+      "method": "placeBet",
+      "action": "deal",
+      "params": {},
+      "bet": 100,
+      "roundState": {
+        "hand": [
+          {
+            "rank": "Rank_10",
+            "suit": "Spades",
+            "isJoker": false
+          },
+          {
+            "rank": "Rank_10",
+            "suit": "Clubs",
+            "isJoker": false
+          },
+          {
+            "rank": "Rank_10",
+            "suit": "Diamonds",
+            "isJoker": false
+          },
+          {
+            "rank": "Rank_10",
+            "suit": "Hearts",
+            "isJoker": false
+          }
+        ],
+        "flop": [],
+        "allowSwap": false,
+        "roundMultiplier": 1,
+        "gambleSelectableOptions": [],
+        "v": 1,
+        "state": "base_cards",
+        "bonusWon": false,
+        "winFactor": 0,
+        "maxWinFactorReached": false,
+        "canGamble": false
+      }
+    },
+    {
+      "method": "action",
+      "action": "pick",
+      "params": {
+        "pick": 3,
+        "swap": false
+      },
+      "roundState": {
+        "hand": [
+          {
+            "rank": "Rank_10",
+            "suit": "Spades",
+            "isJoker": false
+          },
+          {
+            "rank": "Rank_10",
+            "suit": "Clubs",
+            "isJoker": false
+          },
+          {
+            "rank": "Rank_10",
+            "suit": "Diamonds",
+            "isJoker": false
+          },
+          {
+            "rank": "Rank_10",
+            "suit": "Hearts",
+            "isJoker": false
+          }
+        ],
+        "flop": [],
+        "allowSwap": false,
+        "result": [
+          {
+            "rank": "Rank_10",
+            "suit": "Spades",
+            "isJoker": false
+          },
+          {
+            "rank": "Rank_10",
+            "suit": "Clubs",
+            "isJoker": false
+          },
+          {
+            "rank": "Rank_10",
+            "suit": "Diamonds",
+            "isJoker": false
+          },
+          {
+            "rank": "Rank_10",
+            "suit": "Hearts",
+            "isJoker": false
+          },
+          {
+            "rank": "Rank_5",
+            "suit": "Spades",
+            "isJoker": false
+          }
+        ],
+        "win": {
+          "hand": "FOUR_OF_A_KIND",
+          "winningCards": [
+            {
+              "rank": "Rank_10",
+              "suit": "Spades",
+              "isJoker": false
+            },
+            {
+              "rank": "Rank_10",
+              "suit": "Clubs",
+              "isJoker": false
+            },
+            {
+              "rank": "Rank_10",
+              "suit": "Diamonds",
+              "isJoker": false
+            },
+            {
+              "rank": "Rank_10",
+              "suit": "Hearts",
+              "isJoker": false
+            }
+          ],
+          "winFactor": 600
+        },
+        "roundMultiplier": 1,
+        "gambleSelectableOptions": [
+          "high",
+          "low",
+          "black_seven"
+        ],
+        "v": 1,
+        "state": "result",
+        "bonusWon": false,
+        "winFactor": 600,
+        "maxWinFactorReached": false,
+        "canGamble": true
+      }
+    },
+    {
+      "method": "settleBet"
+    }
+  ],
+  "currency": "EUR",
+  "placeBetTs": "2024-09-26T11:51:40.339Z",
+  "settleBetTs": "2024-09-26T11:51:40.339Z",
+  "roundWin": 600,
+  "totalWin": 600,
+  "bet": 100,
+  "gameId": "cgk",
+  "roundId": "01905ed9-5a77-7cfa-aacb-3d75c19bb152"
+}

@@ -1,0 +1,38 @@
+{
+  "variants": [
+    {
+      "variant": [
+        "default",
+        "rtp-94G96",
+        "rtp-90G100",
+        "rtp-92G100",
+        "rtp-95G100",
+        "rtp-93G96X20000N"
+      ],
+      "pages": [
+        {
+          "background": "slot-ui/intro/hero_bg.png",
+          "image": "slot-ui/intro/{_hero_image}.png"
+        },
+        {
+          "background": "slot-ui/intro/feature_bg.png",
+          "image": "slot-ui/intro/feature_deuces.png",
+          "header": "{intro_feature_deuces_header}",
+          "text": "{intro_feature_deuces_text}"
+        },
+        {
+          "background": "slot-ui/intro/feature_bg.png",
+          "image": "slot-ui/intro/feature_card_swap.png",
+          "header": "{intro_feature_card_swap_header}",
+          "text": "{intro_feature_card_swap_text}"
+        },
+        {
+          "background": "slot-ui/intro/feature_bg.png",
+          "image": "slot-ui/intro/feature_random_super.png",
+          "header": "{intro_feature_random_super_header}",
+          "text": "{intro_feature_random_super_text}"
+        }
+      ]
+    }
+  ]
+}

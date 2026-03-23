@@ -1,0 +1,12 @@
+{
+  "exclude": ["src/imgui-js", "node_modules"],
+  "wrappingStyle": "prettier",
+  "removeLastSlashInPath": false,
+  "sortConfiguration.removeUnusedImports": true,
+  "sortConfiguration.removeUnusedDefaultImports": true,
+  "generalConfiguration.exclude": ["src/imgui-js"],
+  "importStringConfiguration.maximumNumberOfImportExpressionsPerLine.type": "newLineEachExpressionAfterCountLimitExceptIfOnlyOne",
+  "importStringConfiguration.maximumNumberOfImportExpressionsPerLine.count": 80,
+  "importStringConfiguration.tabSize": 2,
+  "importStringConfiguration.trailingComma": "multiLine"
+}
