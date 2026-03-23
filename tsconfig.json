@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "noEmit": false,
+    "allowJs": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2019",
+    "lib": [
+      "dom",
+      "es2019"
+    ],
+    "declaration": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "noImplicitReturns": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src",
+    "server"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
