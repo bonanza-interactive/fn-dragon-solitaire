@@ -1,82 +1,22 @@
-/* eslint-disable id-blacklist */
 import {
   Infer,
-  Struct,
   any,
   array,
   boolean,
   enums,
-  integer,
-  min,
   number,
   optional,
   size,
   string,
   type,
+  Struct,
 } from 'superstruct';
-/* eslint-enable id-blacklist */
 
 // superstruct definitions for backend types
-
-export enum State {
-  MAIN_STATE = 'main',
-  BASE_CARDS_STATE = 'base_cards',
-  RESULT_STATE = 'result',
+export enum Actions {
+  DEAL = 'deal',
+  PICK = 'pick',
 }
-
-export const StateSchema: Struct<State> = enums([
-  State.MAIN_STATE,
-  State.BASE_CARDS_STATE,
-  State.RESULT_STATE,
-]);
-
-export enum Action {
-  DEAL_ACTION = 'deal',
-  PICK_ACTION = 'pick',
-  GAMBLE_ACTION = 'gamble',
-}
-
-export const ActionSchema: Struct<Action> = enums([
-  Action.DEAL_ACTION,
-  Action.PICK_ACTION,
-  Action.GAMBLE_ACTION,
-]);
-
-export enum GamblePick {
-  LOW = 'low',
-  HIGH = 'high',
-  BLACK_SEVEN = 'black_seven',
-}
-
-export const GamblePickSchema: Struct<GamblePick> = enums([
-  GamblePick.LOW,
-  GamblePick.HIGH,
-  GamblePick.BLACK_SEVEN,
-]);
-
-export enum Ranks {
-  WILD_HAND = 'WILD_HAND',
-  FIVE_OF_A_KIND = 'FIVE_OF_A_KIND',
-  STRAIGHT_FLUSH = 'STRAIGHT_FLUSH',
-  FOUR_OF_A_KIND = 'FOUR_OF_A_KIND',
-  FULL_HOUSE = 'FULL_HOUSE',
-  FLUSH = 'FLUSH',
-  STRAIGHT = 'STRAIGHT',
-  THREE_OF_A_KIND = 'THREE_OF_A_KIND',
-  TWO_PAIR = 'TWO_PAIR',
-}
-
-export const RankSchema: Struct<Ranks> = enums([
-  Ranks.WILD_HAND,
-  Ranks.FIVE_OF_A_KIND,
-  Ranks.STRAIGHT_FLUSH,
-  Ranks.FOUR_OF_A_KIND,
-  Ranks.FULL_HOUSE,
-  Ranks.FLUSH,
-  Ranks.STRAIGHT,
-  Ranks.THREE_OF_A_KIND,
-  Ranks.TWO_PAIR,
-]);
 
 export enum CardRank {
   JOKER = 'Joker',
@@ -93,7 +33,7 @@ export enum CardRank {
   RANK_Q = 'Rank_Q',
   RANK_K = 'Rank_K',
   RANK_A = 'Rank_A',
-}
+};
 
 export const CardRankSchema: Struct<CardRank> = enums([
   CardRank.JOKER,
@@ -118,7 +58,7 @@ export enum CardSuit {
   CLUBS = 'Clubs',
   HEARTS = 'Hearts',
   DIAMONDS = 'Diamonds',
-}
+};
 
 export const CardSuitSchema: Struct<CardSuit> = enums([
   CardSuit.JOKERS,
@@ -128,113 +68,115 @@ export const CardSuitSchema: Struct<CardSuit> = enums([
   CardSuit.DIAMONDS,
 ]);
 
-export const PickActionSchema = type({
-  pick: integer(),
-  swap: boolean(),
-});
-
-export const GamblePickActionSchema = type({
-  pick: GamblePickSchema,
-});
-
 export const CardSchema = type({
   rank: CardRankSchema,
   suit: CardSuitSchema,
   isJoker: boolean(),
 });
 
-export const GambleRoundSchema = type({
-  selection: GamblePickSchema,
-  resultCard: CardSchema,
-  winFactor: integer(),
-  stake: integer(),
+const RoundSchema = type({
+  roundType: string(),
+  winFactor: number(),
 });
 
-export const WinSchema = type({
-  hand: RankSchema,
-  winningCards: array(CardSchema),
-  winFactor: integer(),
+export enum Location {
+  STOCK = 'STOCK',
+  WASTE_PILE = 'WASTE_PILE',
+  STACK_1 = 'STACK_1',
+  STACK_2 = 'STACK_2',
+  STACK_3 = 'STACK_3',
+  STACK_4 = 'STACK_4',
+  STACK_5 = 'STACK_5',
+  STACK_6 = 'STACK_6',
+  STACK_7 = 'STACK_7',
+  FOUNDATION = 'FOUNDATION',
+};
+
+export const LocationSchema: Struct<Location> = enums([
+  Location.STOCK,
+  Location.WASTE_PILE,
+  Location.STACK_1,
+  Location.STACK_2,
+  Location.STACK_3,
+  Location.STACK_4,
+  Location.STACK_5,
+  Location.STACK_6,
+  Location.STACK_7,
+  Location.FOUNDATION,
+]);
+
+export const MoveSchema = type({
+  from: LocationSchema,
+  to: LocationSchema,
+  count : number(),
+});
+
+export const BonusResultSchema = type({
+  suit: CardSuitSchema,
+  count: number(),
+  winFactor: number(),
+});
+
+export const FeatureStatusSchema = type({
+  bonusResult: optional(BonusResultSchema),
+  bonusWinningCards: optional(array(CardSchema)),
+  multiplier: optional(number()),
 });
 
 export const RoundStateSchema = type({
-  hand: size(array(CardSchema), 2, 4),
-  flop: size(array(CardSchema), 0, 2),
-  allowSwap: boolean(),
-  roundMultiplier: min(integer(), 1),
-  result: optional(size(array(CardSchema), 5)),
-  gambleSelectableOptions: array(GamblePickSchema),
-  win: optional(WinSchema),
-  gambleResult: optional(GambleRoundSchema),
+  rounds: array(RoundSchema),
+  picks: optional(array(MoveSchema)),
+  wastePile: array(CardSchema),
+  openCards: size(array(size(array(CardSchema), 0, 13)), 7),
+  foundationTops: size(array(CardSchema), 0, 4),
+  faceDownCounts: size(array(number()), 7),
+  featureStatus: FeatureStatusSchema,
+  hash: string(),
   canGamble: boolean(),
-  state: StateSchema,
-  winFactor: integer(),
-  v: integer(),
+  state: string(),
+  winFactor: number(),
+  v: number(),
   maxWinFactorReached: boolean(),
+  winLimitExceeded: boolean(),
   bonusWon: boolean(),
 });
 
 export const GameStateSchema = type({
-  v: integer(),
-});
-
-export const PaytableSchema = type({
-  rank: RankSchema,
-  winFactor: integer(),
-});
-
-export const GambleSelectionSchema = type({
-  type: GamblePickSchema,
-  multiplier: number(),
-});
-
-export const GambleSchema = type({
-  selections: size(array(GambleSelectionSchema), 3),
+  storedStake: optional(number()),
+  // recovery: optional(RecoveryState),
+  v: number(),
 });
 
 export const GameConfigSchema = type({
   mathver: string(),
-  paytable: size(array(PaytableSchema), 9),
-  gamble: GambleSchema,
+  // paytables: PaytablesSchema,
+  // paylines: PaylinesSchema,
+  // freespinGamble: optional(array(FreespinGambleItem)),
+  // gamble: optional(GambleSchema),
+  // wilds: optional(array(WildsSchema)),
+  balance: optional(number()),
 });
-
-export type Win = Infer<typeof WinSchema>;
-export type GambleRound = Infer<typeof GambleRoundSchema>;
-export type RoundState = Infer<typeof RoundStateSchema>;
-export type GameState = Infer<typeof GameStateSchema>;
-export type Paytable = Infer<typeof PaytableSchema>;
-export type GameConfig = Infer<typeof GameConfigSchema>;
-export type PickAction = Infer<typeof PickActionSchema>;
-export type GamblePickAction = Infer<typeof GamblePickActionSchema>;
-
-// superstruct definitions for Nemo types
-
-export enum ReplayMethods {
-  PLAY = 'play',
-  COMPLETE = 'complete',
-  ACTION = 'action',
-}
-
-export const ReplayMethodSchema: Struct<ReplayMethods> = enums([
-  ReplayMethods.PLAY,
-  ReplayMethods.COMPLETE,
-  ReplayMethods.ACTION,
-]);
 
 export const ReplayRoundSchema = type({
   action: optional(string()),
-  method: ReplayMethodSchema,
+  method: string(),
   params: any(),
   gameState: optional(GameStateSchema),
   roundState: optional(RoundStateSchema),
 });
 
 export const ReplaySchema = type({
-  roundId: string(),
-  bet: integer(),
-  gameClientConfig: any(),
+  bet: number(),
   events: array(ReplayRoundSchema),
+  gameClientConfig: any(),
   recoveryState: optional(array(number())),
+  roundId: string(),
+  version: any(),
 });
 
 export type ReplayRound = Infer<typeof ReplayRoundSchema>;
 export type Replay = Infer<typeof ReplaySchema>;
+export type RoundState = Infer<typeof RoundStateSchema>;
+export type GameState = Infer<typeof GameStateSchema>;
+export type GameConfig = Infer<typeof GameConfigSchema>;
+export type Round = Infer<typeof RoundSchema>;

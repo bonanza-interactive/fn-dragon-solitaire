@@ -6,7 +6,11 @@ include:
 
 # Required variables on a per-game basis.
 variables:
-  WEB_NAME: pickngopokerdeuceswild
-  BACKEND_ID: villitkakkoset
-  BACKEND_VERSION: 1.0.0-1738660011-SNAPSHOT
-
+  BACKEND_ID: dragonsolitaire
+  # A valid WEB_NAME must:
+  # - Consist of only characters [0-9a-z-].
+  # - Start with a letter.
+  # - End with either a letter or digit.
+  # - Be at most 32 characters long.
+  WEB_NAME:
+  BACKEND_VERSION: 1.0.0-1774264207-SNAPSHOT
