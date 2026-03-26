@@ -6,7 +6,7 @@ import {GameConfig} from './config/config';
 import {LOCALIZER} from './framework';
 import {assert} from './util/assert';
 import {CORE} from './game';
-import {GAMBLE_BUTTON_SHOW_TIME} from './states';
+// import {GAMBLE_BUTTON_SHOW_TIME} from './states';
 import {
   bindButtonListeners,
   setPickedGambleButton,
@@ -76,15 +76,9 @@ export class GambleButtons {
 
     this.multiplier = {
       lo:
-        GameConfig.gameConfig.gamble.selections.find((e) => e.type === 'low')
-          ?.multiplier ?? 0,
-      b7:
-        GameConfig.gameConfig.gamble.selections.find(
-          (e) => e.type === 'black_seven'
-        )?.multiplier ?? 0,
-      hi:
-        GameConfig.gameConfig.gamble.selections.find((e) => e.type === 'high')
-          ?.multiplier ?? 0,
+       0,
+      b7:0,
+      hi:0,
     };
 
     this.multiplierTexts = {
@@ -150,10 +144,10 @@ export class GambleButtons {
     if (!elements.mover.node.visible) return;
 
     if (animate) {
-      elements.mover.move(0, 0, to[0], to[1], GAMBLE_BUTTON_SHOW_TIME);
-      CORE.gameTimer.invoke(GAMBLE_BUTTON_SHOW_TIME, () => {
-        elements.mover.node.visible = false;
-      });
+      // elements.mover.move(0, 0, to[0], to[1], GAMBLE_BUTTON_SHOW_TIME);
+      // CORE.gameTimer.invoke(GAMBLE_BUTTON_SHOW_TIME, () => {
+      //   elements.mover.node.visible = false;
+      // });
     } else {
       elements.mover.set(to[0], to[1]);
       elements.mover.node.visible = false;
@@ -168,7 +162,7 @@ export class GambleButtons {
 
     if (animate) {
       const from = CORE.gfx.normalizedCanvasToWorld(0.5, 1);
-      elements.mover.move(from[0], from[1], 0, 0, GAMBLE_BUTTON_SHOW_TIME);
+      // elements.mover.move(from[0], from[1], 0, 0, GAMBLE_BUTTON_SHOW_TIME);
     } else {
       elements.mover.set(0, 0);
     }

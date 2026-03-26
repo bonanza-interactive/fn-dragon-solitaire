@@ -13,13 +13,13 @@ export class GambleMaxWin extends State<StateMachineRoundData> {
       `fx_dbl_query_${gambleMusicLevel(CLIENT_STATE.winsum, data.bet)}`
     );
 
-    const allButtons = GameConfig.gameConfig.gamble.selections.map(
-      (e) => e.type
-    );
+    // const allButtons = GameConfig.gameConfig.gamble.selections.map(
+    //   (e) => e.type
+    // );
 
-    for (const button of allButtons) {
-      GAME.gambleButtons.hideButton(true, button);
-    }
+    // for (const button of allButtons) {
+    //   GAME.gambleButtons.hideButton(true, button);
+    // }
 
     await showWin(CLIENT_STATE.winsum, true);
     GAME.baseGameFrameText.setText(

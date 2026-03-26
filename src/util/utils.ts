@@ -73,9 +73,9 @@ export function getResolutionScale(
   return resolutionScale;
 }
 
-export function winningRound(round: RoundState): boolean {
-  return round.win !== undefined;
-}
+// export function winningRound(round: RoundState): boolean {
+//   return round.win !== undefined;
+// }
 
 /**
  * Wrapper to create a simple void promise and its resolve callback.

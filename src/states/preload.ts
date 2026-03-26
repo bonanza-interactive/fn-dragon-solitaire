@@ -206,16 +206,16 @@ export class Preload extends State {
 
     GAME.superBack = new Background(baseGame.nodes.root);
 
-    const wincombinations = GameConfig.gameConfig.paytable.map((e) => ({
-      rank: e.rank,
-      multiplier: e.winFactor,
-    }));
+    // const wincombinations = GameConfig.gameConfig.paytable.map((e) => ({
+    //   rank: e.rank,
+    //   multiplier: e.winFactor,
+    // }));
 
-    GAME.paytable = new Paytable(
-      getNode(baseGame.nodes.root, 'paytable_root'),
-      GAMEFW.settings().game.bets,
-      wincombinations
-    );
+    // GAME.paytable = new Paytable(
+    //   getNode(baseGame.nodes.root, 'paytable_root'),
+    //   GAMEFW.settings().game.bets,
+    //   wincombinations
+    // );
 
     // todo: temp swap button
     GAME.swapButton = new Button('swap_button');

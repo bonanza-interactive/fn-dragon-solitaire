@@ -36,10 +36,10 @@ export class ClientState {
       this.roundStep = recoveryStep.index;
     }
 
-    if (round.gambleResult) {
-      this.gambleStake = round.gambleResult?.stake;
-      this.gamblePick = round.gambleResult.selection;
-    }
+    // if (round.gambleResult) {
+    //   this.gambleStake = round.gambleResult?.stake;
+    //   this.gamblePick = round.gambleResult.selection;
+    // }
 
     this.winsum = computeWinCents(bet, round.winFactor);
   }

@@ -1,7 +1,6 @@
 import * as superstruct from 'superstruct';
 
 import {
-  GamblePick,
   GameConfig,
   GameConfigSchema as GamePaysSchema,
   Replay,
@@ -125,15 +124,15 @@ export class BackendUtil {
     return await GAMEFW.step(step);
   }
 
-  public static async gamble(
-    pick: GamblePick
-  ): Promise<{round: RoundState; bet: number}> {
-    const params = {pick};
-    const gameData = await GAMEFW.action('gamble', params);
-    Recorder.action(gameData, 'gamble', params);
-    superstruct.assert(gameData.round, RoundStateSchema);
-    return {round: gameData.round, bet: gameData.bet};
-  }
+  // public static async gamble(
+  //   pick: GamblePick
+  // ): Promise<{round: RoundState; bet: number}> {
+  //   const params = {pick};
+  //   const gameData = await GAMEFW.action('gamble', params);
+  //   Recorder.action(gameData, 'gamble', params);
+  //   superstruct.assert(gameData.round, RoundStateSchema);
+  //   return {round: gameData.round, bet: gameData.bet};
+  // }
 
   public static async pick(
     pick: number,

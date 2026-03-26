@@ -5,33 +5,33 @@ import {CLIENT_STATE} from '../main';
 import {AnyState, State} from '../state-machine';
 import {BackendUtil} from '../util/backend-util';
 import {Ready} from './ready';
-import {Spinning} from './spinning';
+// import {Spinning} from './spinning';
 
 export type StateMachineEnterData = {
   restored: boolean;
 };
 
 export class BasegameRound extends State {
-  public async run(_data: StateMachineEnterData): Promise<AnyState> {
-    GAME.baseGameFrameText.hide();
-    GAME.winScroll.hide();
+public run(_data: StateMachineEnterData): AnyState {
+  GAME.baseGameFrameText.hide();
+  GAME.winScroll.hide();
 
-    GAME.paytable.refreshWintable();
+  // GAME.paytable.refreshWintable();
+  // GAME.cards.dealCards();
 
-    GAME.cards.dealCards();
+  CLIENT_STATE.reset();
 
-    if (CLIENT_STATE.replay) return new Spinning(replayRoundData(CLIENT_STATE));
+  BackendUtil.play(GAMEFW.state().bet).then((roundResult) => {
+    // GAME.cards.collectCards().then(() => {
+    //   if (!roundResult.accepted) {
+    //     GAME.cards.resetCards();
+    //     return new Ready();
+    //   }
 
-    CLIENT_STATE.reset();
-    const roundResult = await BackendUtil.play(GAMEFW.state().bet);
-    await GAME.cards.collectCards();
+    //   // return new Spinning(roundResult);
+    // });
+  });
 
-    if (!roundResult.accepted) {
-      GAME.cards.resetCards();
-
-      return new Ready();
-    }
-
-    return new Spinning(roundResult);
-  }
+  return new Ready(); // fallback return (important)
+}
 }
