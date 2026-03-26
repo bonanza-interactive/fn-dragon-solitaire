@@ -1,8 +1,5 @@
 import {assert, assertDefined} from './assert';
-import {
-  Replay,
-  ReplayRound,
-} from '../config/backend-types';
+import {Replay, ReplayRound} from '../config/backend-types';
 
 type ParamsOfAction = {
   deal: Record<string, never>;

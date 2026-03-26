@@ -12,26 +12,25 @@ export type StateMachineEnterData = {
 };
 
 export class BasegameRound extends State {
-public run(_data: StateMachineEnterData): AnyState {
-  GAME.baseGameFrameText.hide();
-  GAME.winScroll.hide();
+  public run(_data: StateMachineEnterData): AnyState {
+    GAME.baseGameFrameText.hide();
+    GAME.winScroll.hide();
 
-  // GAME.paytable.refreshWintable();
-  // GAME.cards.dealCards();
+    // GAME.paytable.refreshWintable();
+    // GAME.cards.dealCards();
 
-  CLIENT_STATE.reset();
+    CLIENT_STATE.reset();
 
-  BackendUtil.play(GAMEFW.state().bet).then((roundResult) => {
-    // GAME.cards.collectCards().then(() => {
-    //   if (!roundResult.accepted) {
-    //     GAME.cards.resetCards();
-    //     return new Ready();
-    //   }
+    BackendUtil.play(GAMEFW.state().bet).then((roundResult) => {
+      // GAME.cards.collectCards().then(() => {
+      //   if (!roundResult.accepted) {
+      //     GAME.cards.resetCards();
+      //     return new Ready();
+      //   }
+      //   // return new Spinning(roundResult);
+      // });
+    });
 
-    //   // return new Spinning(roundResult);
-    // });
-  });
-
-  return new Ready(); // fallback return (important)
-}
+    return new Ready(); // fallback return (important)
+  }
 }

@@ -75,10 +75,9 @@ export class GambleButtons {
     };
 
     this.multiplier = {
-      lo:
-       0,
-      b7:0,
-      hi:0,
+      lo: 0,
+      b7: 0,
+      hi: 0,
     };
 
     this.multiplierTexts = {

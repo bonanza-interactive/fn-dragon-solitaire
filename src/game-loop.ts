@@ -21,7 +21,6 @@ export class Main {
   public createStates(gamble: boolean): void {
     this.stateMachine = new StateMachine(
       [
- 
         // States.Spinning,
         States.ResultNoWin,
         // States.BasegameRound,
@@ -31,11 +30,7 @@ export class Main {
         States.Replay,
         States.ReplayFinished,
         States.CarouselIntro,
-        ...(gamble
-          ? [
-             
-            ]
-          : []),
+        ...(gamble ? [] : []),
       ],
       new States.Preload()
     );

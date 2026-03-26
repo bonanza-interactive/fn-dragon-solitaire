@@ -1,5 +1,5 @@
 // export * from './basegame-round';
-export * from './four-of-a-kind'
+export * from './four-of-a-kind';
 export * from './gamble-exit';
 export * from './gamble-max-win';
 export * from './preload';
