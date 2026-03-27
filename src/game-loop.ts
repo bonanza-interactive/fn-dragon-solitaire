@@ -39,14 +39,14 @@ export class Main {
         States.CarouselIntro,
         ...(gamble
           ? [
-              States.Gamble,
-              States.GambleSelect,
-              States.GambleContinue,
-              States.GambleQuery,
-              States.GambleRound,
-              States.GambleEnter,
-              States.GambleExit,
-              States.GambleMaxWin,
+              // States.Gamble,
+              // States.GambleSelect,
+              // States.GambleContinue,
+              // States.GambleQuery,
+              // States.GambleRound,
+              // States.GambleEnter,
+              // States.GambleExit,
+              // States.GambleMaxWin,
             ]
           : []),
       ],

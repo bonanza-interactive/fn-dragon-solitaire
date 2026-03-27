@@ -2,7 +2,7 @@ import {CORE, GAME} from '../game';
 import {CLIENT_STATE, StateMachineRoundData} from '../main';
 import {AnyState, State} from '../state-machine';
 import {getWinIndex, getWinningCards, showWin} from '../util/utils-game';
-import {GambleQuery} from './gamble-query';
+// import {GambleQuery} from './gamble-query';
 import {computeWinCents} from '../util/win-amount';
 import {SettleBet} from './settlebet';
 import {GAMEFW} from '../framework';
@@ -87,7 +87,6 @@ export class ResultWinBasegame extends State<StateMachineRoundData> {
       }
     }
 
-    if (GAMEFW.settings().game.gamble) return new GambleQuery(data);
-    else return new SettleBet(false);
+    return new SettleBet(false);
   }
 }

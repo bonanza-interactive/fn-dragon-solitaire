@@ -1,7 +1,6 @@
 import {assert, assertDefined} from './assert';
 import {
   Action,
-  GamblePickAction,
   PickAction,
   Replay,
   ReplayRound,
@@ -10,7 +9,7 @@ import {
 type ParamsOfAction = {
   deal: Record<string, never>;
   pick: PickAction;
-  gamble: GamblePickAction;
+  // gamble: GamblePickAction;
 };
 
 export function findAction<K extends Action>(

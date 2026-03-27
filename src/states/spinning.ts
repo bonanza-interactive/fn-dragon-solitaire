@@ -36,7 +36,7 @@ export class Spinning extends State<StateMachineRoundData> {
       GAME.superBack.setVisible(true);
     }
 
-    GAME.gambleButtons.updateMultipliers(CLIENT_STATE.bonusWon);
+    // GAME.gambleButtons.updateMultipliers(CLIENT_STATE.bonusWon);
 
     const cards = [...data.round.hand, ...data.round.flop].map((e) => ({
       rank: e.rank,

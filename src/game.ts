@@ -16,7 +16,7 @@ import {NodeStorage} from './node-storage';
 import {MessageQueue} from './util/message-queue';
 import {WinScroll} from './win-scroll';
 import * as particle from '@apila/particle-runtime';
-import {GambleButtons} from './gamble-buttons';
+// import {GambleButtons} from './gamble-buttons';
 
 type Gfx = gfx.Gfx;
 type SoundPlayer = sound.SoundPlayer;
@@ -37,7 +37,7 @@ type Game = {
   paytable: Paytable;
   swapButton: Button;
 
-  gambleButtons: GambleButtons;
+  // gambleButtons: GambleButtons;
 
   baseGameFrameText: FrameText;
   gambleGameFrameText: FrameText;
