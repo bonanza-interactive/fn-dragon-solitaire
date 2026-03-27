@@ -32,7 +32,7 @@ import {isMobileAndroidFirefox, wait} from '../util/utils';
 import {CarouselIntro} from './carousel-intro';
 import {AtlasOpts, webfontToBitmapFont} from '../webfont/atlas';
 import {FONT, FONT_STYLE} from '../webfont/config';
-import {GambleButtons} from '../gamble-buttons';
+// import {GambleButtons} from '../gamble-buttons';
 
 export class Preload extends State {
   private loader = new Loader();
@@ -206,16 +206,18 @@ export class Preload extends State {
 
     GAME.superBack = new Background(baseGame.nodes.root);
 
-    // const wincombinations = GameConfig.gameConfig.paytable.map((e) => ({
-    //   rank: e.rank,
-    //   multiplier: e.winFactor,
-    // }));
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    const wincombinations = GameConfig.gameConfig.paytable.map((e) => ({
+      rank: e.rank,
+      multiplier: e.winFactor,
+    }));
 
-    // GAME.paytable = new Paytable(
-    //   getNode(baseGame.nodes.root, 'paytable_root'),
-    //   GAMEFW.settings().game.bets,
-    //   wincombinations
-    // );
+    GAME.paytable = new Paytable(
+      getNode(baseGame.nodes.root, 'paytable_root'),
+      GAMEFW.settings().game.bets,
+      wincombinations
+    );
 
     // todo: temp swap button
     GAME.swapButton = new Button('swap_button');
@@ -225,7 +227,7 @@ export class Preload extends State {
     );
     GAME.swapButton.visible = false;
 
-    GAME.gambleButtons = new GambleButtons(baseGame.nodes.root);
+    // GAME.gambleButtons = new GambleButtons(baseGame.nodes.root);
 
     GAME.winScroll = new WinScroll(
       getNode(uiCommon.nodes.root, 'scroller-root')

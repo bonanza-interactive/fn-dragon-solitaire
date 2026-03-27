@@ -1,5 +1,5 @@
 import {ChipType} from '../chips';
-// import {Win} from '../config/backend-types';
+import {Win} from '../config/backend-types';
 import {GameConfig} from '../config/config';
 import {GAME} from '../game';
 import {CLIENT_STATE} from '../main';
@@ -64,9 +64,9 @@ export function hasJoker(cards: {rank: string; suit: string}[]): boolean {
   return cards.find((e) => e.rank === Rank.Rank_2) !== undefined;
 }
 
-// export function getWinIndex(win: Win): number {
-//   return GameConfig.gameConfig.paytable.findIndex((e) => e.rank === win.hand);
-// }
+export function getWinIndex(win: Win): number {
+  return GameConfig.gameConfig.paytable.findIndex((e) => e.rank === win.hand);
+}
 
 export function getWinningCards(
   result: {rank: string; suit: string}[],

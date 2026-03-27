@@ -21,16 +21,34 @@ export class Main {
   public createStates(gamble: boolean): void {
     this.stateMachine = new StateMachine(
       [
-        // States.Spinning,
+        States.EndRound,
+        States.Spinning,
         States.ResultNoWin,
-        // States.BasegameRound,
+        States.BasegameRound,
         States.PreloadDone,
+        States.ReadyRecovery,
         States.SettleBet,
+        States.ResultWinBasegame,
+        States.Ready,
         States.Preload,
+        States.PickADeck,
+        States.Result,
+        States.FourOfAKind,
         States.Replay,
         States.ReplayFinished,
         States.CarouselIntro,
-        ...(gamble ? [] : []),
+        ...(gamble
+          ? [
+              States.Gamble,
+              States.GambleSelect,
+              States.GambleContinue,
+              States.GambleQuery,
+              States.GambleRound,
+              States.GambleEnter,
+              States.GambleExit,
+              States.GambleMaxWin,
+            ]
+          : []),
       ],
       new States.Preload()
     );

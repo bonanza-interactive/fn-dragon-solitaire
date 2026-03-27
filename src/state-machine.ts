@@ -65,9 +65,9 @@ export class StateMachine {
         return;
       }
 
-      // if (!this.states.some((s) => nextState instanceof s)) {
-      //   throw new Error('State is not supported by this StateMachine');
-      // }
+      if (!this.states.some((s) => nextState instanceof s)) {
+        throw new Error('State is not supported by this StateMachine');
+      }
 
       this.currentState = nextState as State<undefined>;
     }

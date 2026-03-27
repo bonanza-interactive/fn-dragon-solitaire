@@ -4,7 +4,7 @@ import {AnyState, State} from '../state-machine';
 import {getReelGameKitLayout} from '../util/utils-gfx';
 import {Ready} from './ready';
 import {CLIENT_STATE, StateMachineRoundData} from '../main';
-// import {ReadyRecovery} from './ready-recovery';
+import {ReadyRecovery} from './ready-recovery';
 import {Replay} from './replay';
 
 export class PreloadDone extends State<StateMachineRoundData | undefined> {
@@ -13,7 +13,7 @@ export class PreloadDone extends State<StateMachineRoundData | undefined> {
     onLayoutChanged(GAME.nodeStorage, layout);
 
     if (CLIENT_STATE.replay) return new Replay();
-    // if (data) return new ReadyRecovery(data);
+    if (data) return new ReadyRecovery(data);
     GAME.nodeStorage.uiCommon.nodes.root.visible = true;
     return new Ready();
   }
