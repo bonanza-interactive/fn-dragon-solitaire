@@ -5,7 +5,7 @@ import {AnyState, State} from '../state-machine';
 import {Result} from './result';
 import {BackendUtil} from '../util/backend-util';
 import {assert, assertDefined} from '../util/assert';
-import {Action} from '../config/backend-types';
+import {Actions} from '../config/backend-types';
 import {wait} from '../util/utils';
 import {findAction} from '../util/replay-util';
 import {customInput, nextInput} from '../forward-input';
@@ -31,7 +31,7 @@ export class PickADeck extends State<StateMachineRoundData> {
       const {
         roundState,
         params: {swap, pick},
-      } = findAction(CLIENT_STATE.replay, Action.PICK_ACTION);
+      } = findAction(CLIENT_STATE.replay, Actions.PICK);
 
       if (swap !== CLIENT_STATE.swap) {
         await wait(1000);

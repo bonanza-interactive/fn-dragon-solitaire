@@ -6,7 +6,7 @@ import {Result} from './result';
 import {BackendUtil} from '../util/backend-util';
 import {assert, assertDefined} from '../util/assert';
 import {findAction} from '../util/replay-util';
-import {Action} from '../config/backend-types';
+import {Actions} from '../config/backend-types';
 import {wait} from '../util/utils';
 import {customInput, nextInput} from '../forward-input';
 
@@ -17,7 +17,7 @@ export class FourOfAKind extends State<StateMachineRoundData> {
       const {
         roundState,
         params: {pick},
-      } = findAction(CLIENT_STATE.replay, Action.PICK_ACTION);
+      } = findAction(CLIENT_STATE.replay, Actions.PICK);
       CLIENT_STATE.deckSelect = pick;
       roundResult = {
         bet: CLIENT_STATE.replay.bet,
