@@ -16,7 +16,7 @@ export class BasegameRound extends State {
     GAME.baseGameFrameText.hide();
     GAME.winScroll.hide();
 
-    GAME.paytable.refreshWintable();
+    // GAME.paytable.refreshWintable();
 
     GAME.cards.dealCards();
 

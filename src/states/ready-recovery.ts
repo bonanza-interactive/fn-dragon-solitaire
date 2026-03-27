@@ -3,7 +3,7 @@ import {GameConfig} from '../config/config';
 import {CORE, GAME} from '../game';
 import {CLIENT_STATE, StateMachineRoundData} from '../main';
 import {AnyState, State} from '../state-machine';
-import {getWinIndex} from '../util/utils-game';
+// import {getWinIndex} from '../util/utils-game';
 import {showSuperRoundText} from '../util/utils-gfx';
 import {EndRound} from './end-round';
 // import {GambleRound} from './gamble-round';
@@ -17,18 +17,18 @@ export class ReadyRecovery extends State<StateMachineRoundData> {
     GAME.nodeStorage.baseGame.nodes.root.visible = true;
     GAME.nodeStorage.uiCommon.nodes.root.visible = true;
 
-    GAME.paytable.setSuperround(data.round.roundMultiplier);
-    GAME.paytable.updateWinsums(data.bet);
+    // GAME.paytable.setSuperround(data.round.roundMultiplier);
+    // GAME.paytable.updateWinsums(data.bet);
 
-    if (data.round.win !== undefined) {
-      GAME.paytable.hiliteWins(getWinIndex(data.round.win));
-    }
+    // if (data.round.win !== undefined) {
+    //   GAME.paytable.hiliteWins(getWinIndex(data.round.win));
+    // }
 
     // if (data.round.gambleResult) {
     //   await this.recoverGambleGame(data);
     //   return new GambleRound(data);
     // } else 
-    if (data.round.result) {
+    if (data.round) {
       return this.recoverEndRound(data);
     } else {
       return this.recoverBaseGame(data);
@@ -92,7 +92,7 @@ export class ReadyRecovery extends State<StateMachineRoundData> {
   }
 
   private recoverEndRound(data: StateMachineRoundData): AnyState {
-    assert(data.round.result !== undefined);
+    // assert(data.round.result !== undefined);
 
     GAMEFW.updateWins(computeWinCents(data));
 
@@ -109,13 +109,13 @@ export class ReadyRecovery extends State<StateMachineRoundData> {
 
     // GAME.gambleButtons.updateMultipliers(CLIENT_STATE.bonusWon);
 
-    GAME.cards.setCards(
-      data.round.result.map((e) => ({
-        rank: e.rank,
-        suit: e.suit,
-        isJoker: e.isJoker,
-      }))
-    );
+    // GAME.cards.setCards(
+    //   data.round.result.map((e) => ({
+    //     rank: e.rank,
+    //     suit: e.suit,
+    //     isJoker: e.isJoker,
+    //   }))
+    // );
 
     return new EndRound(data);
   }

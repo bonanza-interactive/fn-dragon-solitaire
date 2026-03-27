@@ -12,15 +12,15 @@ function createPayTable(
   }>
 ): string {
   let html = `<table class="${classes?.table ?? ''}">`;
-  const pays = GameConfig.gameConfig.paytable;
+  // const pays = GameConfig.gameConfig.paytable;
 
-  pays.forEach(
-    (e) =>
-      (html += `<tr class="${classes?.tr ?? ''}">
-         <td class="${classes?.td ?? ''}">{${e.rank}}</td>
-         <td class="cf-help-win-factor ${classes?.td ?? ''}" win-factor="${e.winFactor}">-</td>
-       </tr>`)
-  );
+  // pays.forEach(
+  //   (e) =>
+  //     (html += `<tr class="${classes?.tr ?? ''}">
+  //        <td class="${classes?.td ?? ''}">{${e.rank}}</td>
+  //        <td class="cf-help-win-factor ${classes?.td ?? ''}" win-factor="${e.winFactor}">-</td>
+  //      </tr>`)
+  // );
 
   html += '</table>';
 

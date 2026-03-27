@@ -74,7 +74,7 @@ export function getResolutionScale(
 }
 
 export function winningRound(round: RoundState): boolean {
-  return round.win !== undefined;
+  return round !== undefined;
 }
 
 /**

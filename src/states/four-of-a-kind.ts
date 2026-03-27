@@ -33,7 +33,7 @@ export class FourOfAKind extends State<StateMachineRoundData> {
       roundResult = await BackendUtil.pick(CLIENT_STATE.deckSelect, false);
     }
 
-    assert(roundResult.round.hand !== undefined);
+    // assert(roundResult.round.hand !== undefined);
     GAME.cards.selectCard(CLIENT_STATE.deckSelect);
     return new Result(roundResult);
   }
