@@ -59,12 +59,50 @@ const cards: Partial<schema.NodeSchema>[] = [
       },
     },
   },
-  {
+   {
+    name: 'waste_0',
+    if: {
+      portrait: {position: [-500, -300], layout: [schema.canvasAnchorBottom(-400)]},
+      landscape: {
+        position: [-920, 0],
+        // layout: [schema.canvasAnchorBottom(570)],
+      },
+    },
+   },
+   {
     name: 'deck',
     if: {
       portrait: {position: [0, 0], layout: [schema.canvasAnchorLeft(-240)]},
       landscape: {position: [0, 0], layout: [schema.canvasAnchorLeft(-240)]},
     },
+    },
+    {
+    name: 'stack_0',
+    if: { landscape: { position: [-600, 0] } }
+    },
+    {
+    name: 'stack_1',
+    if: { landscape: { position: [-400, 0] } }
+    },
+    {
+    name: 'stack_2',
+     if: { landscape: { position: [-200, 0] } }
+    },
+   {
+     name: 'stack_3',
+     if: { landscape: { position: [0, 0] } }
+   },
+   {
+      name: 'stack_4',
+      if: { landscape: { position: [200, 0] } }
+   },
+  {
+     name: 'stack_5',
+     if: { landscape: { position: [400, 0] } }
+  },
+   {
+      name: 'stack_6',
+      if: { landscape: { position: [600, 0] } }
   },
   {
     name: 'stack_left_0',

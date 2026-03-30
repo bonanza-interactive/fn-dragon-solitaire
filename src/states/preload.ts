@@ -32,10 +32,13 @@ import {isMobileAndroidFirefox, wait} from '../util/utils';
 import {CarouselIntro} from './carousel-intro';
 import {AtlasOpts, webfontToBitmapFont} from '../webfont/atlas';
 import {FONT, FONT_STYLE} from '../webfont/config';
+import { Waste } from '../waste';
+import { anim } from '@apila/game-libraries';
 // import {GambleButtons} from '../gamble-buttons';
 
 export class Preload extends State {
   private loader = new Loader();
+  private timeline = new anim.Timeline();
 
   public async run(): Promise<AnyState> {
     GAMEFW.loadStart();
@@ -202,6 +205,7 @@ export class Preload extends State {
     const superTextSprite = getSprite(baseGame.nodes.root, 'super_round_text');
     GAME.superRoundText = new SuperText(superTextSprite);
     GAME.cards = new Cards(getNode(baseGame.nodes.root, 'card_root'));
+    GAME.waste = new Waste(getNode(baseGame.nodes.root, 'card_root'), this.timeline);
     GAME.chips = new Chips(baseGame.nodes.root);
 
     GAME.superBack = new Background(baseGame.nodes.root);

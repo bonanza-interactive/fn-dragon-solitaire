@@ -110,10 +110,12 @@ export const debugConfig = {
 
 export enum CardName {
   Discard = 'discard',
+  Waste = 'waste',
   Deck = 'deck',
   StackLeft = 'stack_left',
   StackLeftDiscard = 'stack_left_discard',
   StackRight = 'stack_right',
+  Stack = 'stack',
   StackRightDiscard = 'stack_right_discard',
   Hand = 'hand',
   FourOfAKindReserve = '4OAK_reserve',

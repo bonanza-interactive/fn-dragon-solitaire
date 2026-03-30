@@ -54,6 +54,7 @@ export class Cards {
   private revealPromise?: () => void;
   private flipPromise?: () => void;
   private timeline = new anim.Timeline();
+  private openCards: {rank: string; suit: string; isJoker: boolean}[][] = [];
 
   constructor(root: gfx.Empty) {
     this.root = root;
@@ -115,6 +116,10 @@ export class Cards {
     this.askedToDeal = true;
   }
 
+  public setOpenCards(data: typeof this.openCards): void {
+  this.openCards = data;
+  }
+   
   private async dealCardsInternal(): Promise<void> {
     this.cardsState = CardsState.Dealing;
     CORE.fx.trigger('fx_deal_cards');
@@ -126,24 +131,22 @@ export class Cards {
 
     const anims: Promise<void>[] = [];
 
-    const targets: CardLocation[] = [
-      {name: CardName.Hand, index: 0},
-      {name: CardName.Hand, index: 1},
-      {name: CardName.StackLeft, index: 0},
-      {name: CardName.StackLeft, index: 1},
-      {name: CardName.StackLeft, index: 2},
-      {name: CardName.StackRight, index: 0},
-      {name: CardName.StackRight, index: 1},
-      {name: CardName.StackRight, index: 2},
-    ];
-
-    for (let i = 0; i < this.cards.length; i++) {
-      const card = this.cards[i];
+    for (let stackIndex = 0; stackIndex < this.openCards.length; stackIndex++) {
+     const stack = this.openCards[stackIndex];
+     if (!stack || stack.length === 0) continue;
+     const topCard = stack[stack.length - 1];
+      const card = this.cards[stackIndex]; 
       const start = {name: CardName.Deck};
-      const target = targets[i];
+      const target = {name: CardName.Stack, index: stackIndex}; 
       const durationSeconds = 0.3;
-      const delaySeconds = i * delay;
-      card.cardIndex = CARD_BACK;
+      const delaySeconds = stackIndex * delay;
+      if (topCard.isJoker) {
+      card.cardIndex =
+        53 + Math.floor(rankToIndex(topCard.rank) / 13);
+      } else {
+      card.cardIndex = cardToIndex(topCard.rank, topCard.suit);
+      }
+      card.visible = true;
       anims.push(card.move(durationSeconds, delaySeconds, start, target));
     }
     await Promise.all(anims);
