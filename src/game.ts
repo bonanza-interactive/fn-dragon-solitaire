@@ -4,7 +4,7 @@ import {Background} from './background';
 import {Button} from './button';
 import {Chips} from './chips';
 import {Cards} from './cards';
-import { Waste } from './waste';
+import {Waste} from './waste';
 
 import {Paytable} from './paytable';
 import {SuperText} from './super-text';

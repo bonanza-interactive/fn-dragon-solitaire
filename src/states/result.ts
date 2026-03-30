@@ -1,9 +1,7 @@
-import {GAME} from '../game';
 import {CLIENT_STATE, StateMachineRoundData} from '../main';
 import {AnyState, State} from '../state-machine';
 import {EndRound} from './end-round';
 import {computeWinCents} from '../util/win-amount';
-import {assert} from '../util/assert';
 import {GAMEFW} from '../framework';
 
 export class Result extends State<StateMachineRoundData> {

@@ -1,16 +1,13 @@
-import {CORE, GAME} from '../game';
+import {CORE} from '../game';
 import {CLIENT_STATE, StateMachineRoundData} from '../main';
 import {AnyState, State} from '../state-machine';
-import { getWinningCards, showWin} from '../util/utils-game';
+import {showWin} from '../util/utils-game';
 // import {GambleQuery} from './gamble-query';
 import {computeWinCents} from '../util/win-amount';
 import {SettleBet} from './settlebet';
-import {GAMEFW} from '../framework';
 
 export class ResultWinBasegame extends State<StateMachineRoundData> {
   public async run(data: StateMachineRoundData): Promise<AnyState> {
-    const roundState = data.round;
-
     if (
       // roundState.win !== undefined &&
       // roundState.result !== undefined &&
@@ -18,15 +15,15 @@ export class ResultWinBasegame extends State<StateMachineRoundData> {
     ) {
       // const winIndex = getWinIndex(roundState.win);
       // const winningCards = getWinningCards(
-        // roundState.result.map((e) => ({
-        //   rank: e.rank,
-        //   suit: e.suit,
-        // })),
-        // roundState.win.winningCards.map((e) => ({
-        //   rank: e.rank,
-        //   suit: e.suit,
-        // }))
-     
+      // roundState.result.map((e) => ({
+      //   rank: e.rank,
+      //   suit: e.suit,
+      // })),
+      // roundState.win.winningCards.map((e) => ({
+      //   rank: e.rank,
+      //   suit: e.suit,
+      // }))
+
       // );
 
       if (CLIENT_STATE.sorted) {

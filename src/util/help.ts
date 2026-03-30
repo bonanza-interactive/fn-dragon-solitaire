@@ -1,5 +1,3 @@
-import {GameConfig} from '../config/config';
-
 function createSubject(header?: string): string {
   return header !== undefined ? `<h1 class="subject">{${header}}</h1>` : '';
 }

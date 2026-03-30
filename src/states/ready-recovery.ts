@@ -1,5 +1,4 @@
 import {ChipType} from '../chips';
-import {GameConfig} from '../config/config';
 import {CORE, GAME} from '../game';
 import {CLIENT_STATE, StateMachineRoundData} from '../main';
 import {AnyState, State} from '../state-machine';
@@ -8,7 +7,6 @@ import {showSuperRoundText} from '../util/utils-gfx';
 import {EndRound} from './end-round';
 // import {GambleRound} from './gamble-round';
 import {Spinning} from './spinning';
-import {assert} from '../util/assert';
 import {GAMEFW} from '../framework';
 import {computeWinCents} from '../util/win-amount';
 
@@ -27,7 +25,7 @@ export class ReadyRecovery extends State<StateMachineRoundData> {
     // if (data.round.gambleResult) {
     //   await this.recoverGambleGame(data);
     //   return new GambleRound(data);
-    // } else 
+    // } else
     if (data.round) {
       return this.recoverEndRound(data);
     } else {

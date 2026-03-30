@@ -1,6 +1,5 @@
 import {ChipType} from '../chips';
 // import {Win} from '../config/backend-types';
-import {GameConfig} from '../config/config';
 import {GAME} from '../game';
 import {CLIENT_STATE} from '../main';
 import {ScrollStyle} from '../win-scroll';

@@ -2,11 +2,10 @@ import {core, gfx} from '@apila/engine';
 import {Background} from '../background';
 import {Button} from '../button';
 import {Chips} from '../chips';
-import {Paytable} from '../paytable';
 import {SuperText} from '../super-text';
 import {registerButton} from '../button-state-handler';
 import {Cards} from '../cards';
-import {GameConfig, miscConfig} from '../config/config';
+import {miscConfig} from '../config/config';
 import {BASE_GAME, UI_COMMON_ROOT} from '../config/schemas';
 import {FrameText} from '../frame-text';
 import {CORE, GAME} from '../game';
@@ -32,8 +31,8 @@ import {isMobileAndroidFirefox, wait} from '../util/utils';
 import {CarouselIntro} from './carousel-intro';
 import {AtlasOpts, webfontToBitmapFont} from '../webfont/atlas';
 import {FONT, FONT_STYLE} from '../webfont/config';
-import { Waste } from '../waste';
-import { anim } from '@apila/game-libraries';
+import {Waste} from '../waste';
+import {anim} from '@apila/game-libraries';
 // import {GambleButtons} from '../gamble-buttons';
 
 export class Preload extends State {
@@ -205,7 +204,10 @@ export class Preload extends State {
     const superTextSprite = getSprite(baseGame.nodes.root, 'super_round_text');
     GAME.superRoundText = new SuperText(superTextSprite);
     GAME.cards = new Cards(getNode(baseGame.nodes.root, 'card_root'));
-    GAME.waste = new Waste(getNode(baseGame.nodes.root, 'card_root'), this.timeline);
+    GAME.waste = new Waste(
+      getNode(baseGame.nodes.root, 'card_root'),
+      this.timeline
+    );
     GAME.chips = new Chips(baseGame.nodes.root);
 
     GAME.superBack = new Background(baseGame.nodes.root);

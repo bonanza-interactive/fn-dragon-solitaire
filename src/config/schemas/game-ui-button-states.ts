@@ -1,9 +1,6 @@
 import {gfx} from '@apila/engine';
-
-import {GAME} from '../../game';
 import {ButtonVisualState, ButtonVisualUpdateFunc} from '../../types';
 import {getNode} from '../../util/utils-node';
-import {assert} from '../../util/assert';
 
 // function buttonImages(button: string): string[] {
 //   if (button === 'gamble_low') return GAME.gambleButtons.getImages('lo');

@@ -18,18 +18,17 @@ export class BasegameRound extends State {
 
     // GAME.paytable.refreshWintable();
 
-
     if (CLIENT_STATE.replay) return new Spinning(replayRoundData(CLIENT_STATE));
 
     CLIENT_STATE.reset();
     const roundResult = await BackendUtil.play(GAMEFW.state().bet);
     if (!roundResult.accepted) {
-    throw new Error("Bet not accepted");
-     }
-     GAME.cards.setOpenCards(roundResult.round.openCards)
-     GAME.waste.setWastePile(roundResult.round.wastePile);
-     GAME.waste.show();
-     GAME.cards.dealCards();
+      throw new Error('Bet not accepted');
+    }
+    GAME.cards.setOpenCards(roundResult.round.openCards);
+    GAME.waste.setWastePile(roundResult.round.wastePile);
+    GAME.waste.show();
+    GAME.cards.dealCards();
     await GAME.cards.collectCards();
 
     if (!roundResult.accepted) {

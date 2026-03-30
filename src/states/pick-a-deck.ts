@@ -14,6 +14,7 @@ export class PickADeck extends State<StateMachineRoundData> {
   private swapping = false;
 
   public async run(data: StateMachineRoundData): Promise<AnyState> {
+    console.log('data:', data);
     // if (data.round.allowSwap) {
     //   GAME.swapButton.visible = true;
     //   GAME.swapButton.activate(() => this.swapCards(this));

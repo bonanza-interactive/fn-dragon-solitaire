@@ -1,12 +1,7 @@
 import {gfx} from '@apila/engine';
 import {anim} from '@apila/game-libraries';
 import {Card} from './card';
-import {
-  CardLocation,
-  CardMovement,
-  CardName,
-  debugConfig,
-} from './config/config';
+import {CardMovement, CardName, debugConfig} from './config/config';
 import {GameLayer} from './config/schemas';
 import {CORE} from './game';
 import {getCardNodeName} from './util/utils';
@@ -117,9 +112,9 @@ export class Cards {
   }
 
   public setOpenCards(data: typeof this.openCards): void {
-  this.openCards = data;
+    this.openCards = data;
   }
-   
+
   private async dealCardsInternal(): Promise<void> {
     this.cardsState = CardsState.Dealing;
     CORE.fx.trigger('fx_deal_cards');
@@ -132,19 +127,18 @@ export class Cards {
     const anims: Promise<void>[] = [];
 
     for (let stackIndex = 0; stackIndex < this.openCards.length; stackIndex++) {
-     const stack = this.openCards[stackIndex];
-     if (!stack || stack.length === 0) continue;
-     const topCard = stack[stack.length - 1];
-      const card = this.cards[stackIndex]; 
+      const stack = this.openCards[stackIndex];
+      if (!stack || stack.length === 0) continue;
+      const topCard = stack[stack.length - 1];
+      const card = this.cards[stackIndex];
       const start = {name: CardName.Deck};
-      const target = {name: CardName.Stack, index: stackIndex}; 
+      const target = {name: CardName.Stack, index: stackIndex};
       const durationSeconds = 0.3;
       const delaySeconds = stackIndex * delay;
       if (topCard.isJoker) {
-      card.cardIndex =
-        53 + Math.floor(rankToIndex(topCard.rank) / 13);
+        card.cardIndex = 53 + Math.floor(rankToIndex(topCard.rank) / 13);
       } else {
-      card.cardIndex = cardToIndex(topCard.rank, topCard.suit);
+        card.cardIndex = cardToIndex(topCard.rank, topCard.suit);
       }
       card.visible = true;
       anims.push(card.move(durationSeconds, delaySeconds, start, target));
