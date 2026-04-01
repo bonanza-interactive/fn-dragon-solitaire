@@ -1,0 +1,388 @@
+{
+  "variants": [
+    {
+      "variant": "default",
+      "sections": [
+        {
+          "paragraphs": [
+            {
+              "header": "{help_introduction_header}"
+            },
+            {
+              "text": "{help_introduction_description_0}"
+            },
+            {
+              "text": "{help_introduction_description_1}"
+            },
+            {
+              "text": "{help_introduction_description_2}"
+            },
+            {
+              "text": "{help_introduction_description_3}"
+            }
+          ]
+        },
+        {
+          "paragraphs": [
+            {
+              "header": "{help_how_to_play_header}"
+            },
+            {
+              "text": "{help_how_to_play_description_0}"
+            },
+            {
+              "text": "{help_how_to_play_description_1}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_back_button.png",
+                "style": "small",
+                "alt": "info_back_button"
+              }
+            },
+            {
+              "text": "{help_how_to_play_description_2}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_swap_button.png",
+                "style": "small",
+                "alt": "info_swap_button"
+              }
+            },
+            {
+              "text": "{help_how_to_play_description_3}"
+            }
+          ]
+        },
+        {
+          "paragraphs": [
+            {
+              "header": "{help_wins_header}"
+            },
+            {
+              "text": "{help_wins_description_0}"
+            },
+            {
+              "text": "{help_wins_description_1}",
+              "gamble": true
+            },
+            {
+              "text": "{help_wins_description_2}"
+            }
+          ]
+        },
+        {
+          "paragraphs": [
+            {
+              "header": "{help_card_deck_header}"
+            },
+            {
+              "text": "{help_card_deck_description_0}"
+            },
+            {
+              "text": "{help_card_deck_description_1}"
+            },
+            {
+              "text": "{help_card_deck_description_2}"
+            },
+            {
+              "text": "{help_card_deck_description_3}"
+            },
+            {
+              "text": "{help_card_deck_description_4}"
+            },
+            {
+              "text": "{help_card_deck_description_5}"
+            },
+            {
+              "text": "{help_card_deck_description_6}"
+            }
+          ]
+        },
+        {
+          "paragraphs": [
+            {
+              "header": "{help_dragon_card_header}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_dragon_free.png",
+                "style": "medium",
+                "alt": "info_dragon_free"
+              }
+            },
+            {
+              "text": "{help_dragon_card_description_0}"
+            },
+            {
+              "text": "{help_dragon_card_description_1}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_dragon_card.png",
+                "alt": "info_dragon_card"
+              }
+            },
+            {
+              "text": "{help_dragon_card_description_2}"
+            }
+          ]
+        },
+        {
+          "paragraphs": [
+            {
+              "header": "{help_freespins_header}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_freespin_image.png",
+                "alt": "info_freespin_image"
+              }
+            },
+            {
+              "text": "{help_freespins_description_0}"
+            },
+            {
+              "text": "{help_freespins_description_1}"
+            },
+            {
+              "text": "{help_freespins_description_2}"
+            },
+            {
+              "text": "{help_freespins_description_3}"
+            },
+            {
+              "text": "{help_freespins_description_4}"
+            },
+            {
+              "text": "{help_freespins_description_5}"
+            }
+          ]
+        },
+        {
+          "paragraphs": [
+            {
+              "header": "{help_gamble_header}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_0}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_1}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_2}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_3}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_4_tie_win}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_5}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_6}",
+              "gamble": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "rtp-94G97",
+      "sections": [
+        {
+          "paragraphs": [
+            {
+              "header": "{help_introduction_header}"
+            },
+            {
+              "text": "{help_introduction_description_0}"
+            },
+            {
+              "text": "{help_introduction_description_1}"
+            },
+            {
+              "text": "{help_introduction_description_2}"
+            },
+            {
+              "text": "{help_introduction_description_3}"
+            }
+          ]
+        },
+        {
+          "paragraphs": [
+            {
+              "header": "{help_how_to_play_header}"
+            },
+            {
+              "text": "{help_how_to_play_description_0}"
+            },
+            {
+              "text": "{help_how_to_play_description_1}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_back_button.png",
+                "style": "small",
+                "alt": "info_back_button"
+              }
+            },
+            {
+              "text": "{help_how_to_play_description_2}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_swap_button.png",
+                "style": "small",
+                "alt": "info_swap_button"
+              }
+            },
+            {
+              "text": "{help_how_to_play_description_3}"
+            }
+          ]
+        },
+        {
+          "paragraphs": [
+            {
+              "header": "{help_wins_header}"
+            },
+            {
+              "text": "{help_wins_description_0}"
+            },
+            {
+              "text": "{help_wins_description_1}",
+              "gamble": true
+            },
+            {
+              "text": "{help_wins_description_2}"
+            }
+          ]
+        },
+        {
+          "paragraphs": [
+            {
+              "header": "{help_card_deck_header}"
+            },
+            {
+              "text": "{help_card_deck_description_0}"
+            },
+            {
+              "text": "{help_card_deck_description_1}"
+            },
+            {
+              "text": "{help_card_deck_description_2}"
+            },
+            {
+              "text": "{help_card_deck_description_3}"
+            },
+            {
+              "text": "{help_card_deck_description_4}"
+            },
+            {
+              "text": "{help_card_deck_description_5}"
+            },
+            {
+              "text": "{help_card_deck_description_6}"
+            }
+          ]
+        },
+        {
+          "paragraphs": [
+            {
+              "header": "{help_dragon_card_header}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_dragon_free.png",
+                "style": "medium",
+                "alt": "info_dragon_free"
+              }
+            },
+            {
+              "text": "{help_dragon_card_description_0}"
+            },
+            {
+              "text": "{help_dragon_card_description_1}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_dragon_card.png",
+                "alt": "info_dragon_card"
+              }
+            },
+            {
+              "text": "{help_dragon_card_description_2}"
+            }
+          ]
+        },
+        {
+          "paragraphs": [
+            {
+              "header": "{help_freespins_header}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_freespin_image.png",
+                "alt": "info_freespin_image"
+              }
+            },
+            {
+              "text": "{help_freespins_description_0}"
+            },
+            {
+              "text": "{help_freespins_description_1}"
+            },
+            {
+              "text": "{help_freespins_description_2}"
+            },
+            {
+              "text": "{help_freespins_description_3}"
+            },
+            {
+              "text": "{help_freespins_description_4}"
+            },
+            {
+              "text": "{help_freespins_description_5}"
+            }
+          ]
+        },
+        {
+          "paragraphs": [
+            {
+              "header": "{help_gamble_header}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_0}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_1}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_2}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_3}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_4_tie_break}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_4_tie_break_red}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_4_tie_break_black}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_5}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_6}",
+              "gamble": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

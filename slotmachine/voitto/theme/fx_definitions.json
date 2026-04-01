@@ -1,0 +1,24 @@
+{
+  "handlers": {
+    "led": {
+      "type": "LedHandler",
+      "base_dir": "led/",
+      "led_targets": {
+        "voitto_frame": {
+          "assets": {
+            "led_normal": "led.png"
+          }
+        }
+      }
+    }
+  },
+  "events": {
+    "enter_menu_normal": {
+      "target": "led",
+      "action": "play",
+      "asset": "led_normal",
+      "loop": true
+    },
+    "leave_menu": []
+  }
+}

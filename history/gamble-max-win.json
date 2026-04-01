@@ -1,0 +1,990 @@
+{
+  "gameClientConfig": {
+    "mathver": "D (test maths 94.2%)",
+    "gamble": {
+      "selectables": 4,
+      "aceAsHigh": false,
+      "winConfigs": [
+        {
+          "type": "Larger",
+          "multiplier": 2
+        },
+        {
+          "type": "EqualRedOpenCard",
+          "multiplier": 1,
+          "canContinue": false
+        }
+      ]
+    },
+    "basegame": {
+      "jokers": 1,
+      "drawCount": 12,
+      "minSelections": 2,
+      "maxSelections": 6
+    },
+    "freespin": {
+      "jokers": 0,
+      "drawCount": 12,
+      "minSelections": 4,
+      "maxSelections": 4
+    },
+    "dragonMultipliers": {
+      "basegame": [
+        {
+          "selections": 2,
+          "weightedDraw": [
+            {
+              "item": {
+                "freespinAmount": 3
+              }
+            },
+            {
+              "item": {
+                "multiplier": 2
+              }
+            },
+            {
+              "item": {
+                "multiplier": 3
+              }
+            },
+            {
+              "item": {
+                "multiplier": 5
+              }
+            },
+            {
+              "item": {
+                "multiplier": 7
+              }
+            },
+            {
+              "item": {
+                "multiplier": 10
+              }
+            },
+            {
+              "item": {
+                "multiplier": 50
+              }
+            },
+            {
+              "item": {
+                "multiplier": 100
+              }
+            }
+          ]
+        },
+        {
+          "selections": 3,
+          "weightedDraw": [
+            {
+              "item": {
+                "freespinAmount": 3
+              }
+            },
+            {
+              "item": {
+                "multiplier": 2
+              }
+            },
+            {
+              "item": {
+                "multiplier": 3
+              }
+            },
+            {
+              "item": {
+                "multiplier": 5
+              }
+            },
+            {
+              "item": {
+                "multiplier": 7
+              }
+            },
+            {
+              "item": {
+                "multiplier": 10
+              }
+            },
+            {
+              "item": {
+                "multiplier": 50
+              }
+            },
+            {
+              "item": {
+                "multiplier": 100
+              }
+            }
+          ]
+        },
+        {
+          "selections": 4,
+          "weightedDraw": [
+            {
+              "item": {
+                "freespinAmount": 3
+              }
+            },
+            {
+              "item": {
+                "multiplier": 2
+              }
+            },
+            {
+              "item": {
+                "multiplier": 3
+              }
+            },
+            {
+              "item": {
+                "multiplier": 5
+              }
+            },
+            {
+              "item": {
+                "multiplier": 7
+              }
+            },
+            {
+              "item": {
+                "multiplier": 10
+              }
+            },
+            {
+              "item": {
+                "multiplier": 50
+              }
+            },
+            {
+              "item": {
+                "multiplier": 100
+              }
+            }
+          ]
+        },
+        {
+          "selections": 5,
+          "weightedDraw": [
+            {
+              "item": {
+                "freespinAmount": 3
+              }
+            },
+            {
+              "item": {
+                "multiplier": 2
+              }
+            },
+            {
+              "item": {
+                "multiplier": 3
+              }
+            },
+            {
+              "item": {
+                "multiplier": 5
+              }
+            },
+            {
+              "item": {
+                "multiplier": 7
+              }
+            },
+            {
+              "item": {
+                "multiplier": 10
+              }
+            },
+            {
+              "item": {
+                "multiplier": 50
+              }
+            },
+            {
+              "item": {
+                "multiplier": 100
+              }
+            }
+          ]
+        },
+        {
+          "selections": 6,
+          "weightedDraw": [
+            {
+              "item": {
+                "freespinAmount": 3
+              }
+            },
+            {
+              "item": {
+                "multiplier": 2
+              }
+            },
+            {
+              "item": {
+                "multiplier": 3
+              }
+            },
+            {
+              "item": {
+                "multiplier": 5
+              }
+            },
+            {
+              "item": {
+                "multiplier": 7
+              }
+            },
+            {
+              "item": {
+                "multiplier": 10
+              }
+            },
+            {
+              "item": {
+                "multiplier": 50
+              }
+            },
+            {
+              "item": {
+                "multiplier": 100
+              }
+            }
+          ]
+        }
+      ],
+      "freespin": [
+        {
+          "selections": 4,
+          "weightedDraw": [
+            {
+              "item": {
+                "multiplier": 2
+              }
+            },
+            {
+              "item": {
+                "multiplier": 3
+              }
+            },
+            {
+              "item": {
+                "multiplier": 5
+              }
+            },
+            {
+              "item": {
+                "multiplier": 10
+              }
+            },
+            {
+              "item": {
+                "multiplier": 15
+              }
+            },
+            {
+              "item": {
+                "multiplier": 25
+              }
+            },
+            {
+              "item": {
+                "multiplier": 50
+              }
+            },
+            {
+              "item": {
+                "multiplier": 100
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "paytables": {
+      "basegame": [
+        {
+          "selected": 2,
+          "payout": [
+            {
+              "count": 1,
+              "winFactor": 50
+            },
+            {
+              "count": 2,
+              "winFactor": 650
+            }
+          ]
+        },
+        {
+          "selected": 3,
+          "payout": [
+            {
+              "count": 2,
+              "winFactor": 300
+            },
+            {
+              "count": 3,
+              "winFactor": 1350
+            }
+          ]
+        },
+        {
+          "selected": 4,
+          "payout": [
+            {
+              "count": 2,
+              "winFactor": 150
+            },
+            {
+              "count": 3,
+              "winFactor": 500
+            },
+            {
+              "count": 4,
+              "winFactor": 3500
+            }
+          ]
+        },
+        {
+          "selected": 5,
+          "payout": [
+            {
+              "count": 2,
+              "winFactor": 50
+            },
+            {
+              "count": 3,
+              "winFactor": 400
+            },
+            {
+              "count": 4,
+              "winFactor": 900
+            },
+            {
+              "count": 5,
+              "winFactor": 5500
+            }
+          ]
+        },
+        {
+          "selected": 6,
+          "payout": [
+            {
+              "count": 2,
+              "winFactor": 50
+            },
+            {
+              "count": 3,
+              "winFactor": 150
+            },
+            {
+              "count": 4,
+              "winFactor": 700
+            },
+            {
+              "count": 5,
+              "winFactor": 3000
+            },
+            {
+              "count": 6,
+              "winFactor": 20000
+            }
+          ]
+        }
+      ],
+      "freespin": [
+        {
+          "selected": 4,
+          "payout": [
+            {
+              "count": 1,
+              "winFactor": 50
+            },
+            {
+              "count": 2,
+              "winFactor": 100
+            },
+            {
+              "count": 3,
+              "winFactor": 500
+            },
+            {
+              "count": 4,
+              "winFactor": 2000
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "events": [
+    {
+      "method": "placeBet",
+      "action": "spin",
+      "params": {},
+      "bet": 100,
+      "roundState": {
+        "rounds": [
+          {
+            "roundType": "basegame",
+            "drawnNumbers": [
+              {
+                "rank": "Joker",
+                "suit": "Jokers",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_A",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_2",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_3",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_4",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_5",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_6",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_7",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_8",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_9",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_10",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_J",
+                "suit": "Hearts",
+                "isJoker": false
+              }
+            ],
+            "selectedNumbers": [
+              {
+                "rank": "Rank_10",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_J",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_3",
+                "suit": "Diamonds",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_4",
+                "suit": "Diamonds",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_5",
+                "suit": "Diamonds",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_6",
+                "suit": "Diamonds",
+                "isJoker": false
+              }
+            ],
+            "win": {
+              "matchingNumbers": [
+                {
+                  "rank": "Rank_10",
+                  "suit": "Hearts",
+                  "isJoker": false
+                },
+                {
+                  "rank": "Rank_J",
+                  "suit": "Hearts",
+                  "isJoker": false
+                }
+              ],
+              "containsDragon": true,
+              "multiplier": 50,
+              "winFactor": 50
+            },
+            "multiplier": 50,
+            "winFactor": 2500
+          }
+        ],
+        "gambleSelectableOptions": [],
+        "v": 1,
+        "state": "result",
+        "freespinWon": false,
+        "winFactor": 2500,
+        "maxWinFactorReached": false,
+        "canGamble": true
+      }
+    },
+    {
+      "method": "action",
+      "action": "gamble",
+      "params": {
+        "rank": "Rank_A",
+        "suit": "Hearts",
+        "isJoker": false
+      },
+      "roundState": {
+        "rounds": [],
+        "gambleSelectableOptions": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "gambleResult": {
+          "openCard": {
+            "rank": "Rank_A",
+            "suit": "Hearts",
+            "isJoker": false
+          },
+          "stake": 2500
+        },
+        "v": 1,
+        "state": "gamble",
+        "freespinWon": false,
+        "winFactor": 2500,
+        "maxWinFactorReached": false,
+        "canGamble": false
+      }
+    },
+    {
+      "method": "action",
+      "action": "gamblePick",
+      "params": {
+        "pick": 1
+      },
+      "roundState": {
+        "rounds": [],
+        "gambleSelectableOptions": [],
+        "gambleResult": {
+          "openCard": {
+            "rank": "Rank_A",
+            "suit": "Hearts",
+            "isJoker": false
+          },
+          "stake": 2500,
+          "result": {
+            "resultCards": [
+              {
+                "rank": "Rank_2",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_3",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_4",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_5",
+                "suit": "Hearts",
+                "isJoker": false
+              }
+            ],
+            "pick": 1,
+            "winFactor": 5000,
+            "canContinue": true
+          }
+        },
+        "v": 1,
+        "state": "result",
+        "freespinWon": false,
+        "winFactor": 5000,
+        "maxWinFactorReached": false,
+        "canGamble": true
+      }
+    },
+    {
+      "method": "action",
+      "action": "gamble",
+      "params": {
+        "rank": "Rank_A",
+        "suit": "Hearts",
+        "isJoker": false
+      },
+      "roundState": {
+        "rounds": [],
+        "gambleSelectableOptions": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "gambleResult": {
+          "openCard": {
+            "rank": "Rank_A",
+            "suit": "Hearts",
+            "isJoker": false
+          },
+          "stake": 5000
+        },
+        "v": 1,
+        "state": "gamble",
+        "freespinWon": false,
+        "winFactor": 5000,
+        "maxWinFactorReached": false,
+        "canGamble": false
+      }
+    },
+    {
+      "method": "action",
+      "action": "gamblePick",
+      "params": {
+        "pick": 1
+      },
+      "roundState": {
+        "rounds": [],
+        "gambleSelectableOptions": [],
+        "gambleResult": {
+          "openCard": {
+            "rank": "Rank_A",
+            "suit": "Hearts",
+            "isJoker": false
+          },
+          "stake": 5000,
+          "result": {
+            "resultCards": [
+              {
+                "rank": "Rank_2",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_3",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_4",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_5",
+                "suit": "Hearts",
+                "isJoker": false
+              }
+            ],
+            "pick": 1,
+            "winFactor": 10000,
+            "canContinue": true
+          }
+        },
+        "v": 1,
+        "state": "result",
+        "freespinWon": false,
+        "winFactor": 10000,
+        "maxWinFactorReached": false,
+        "canGamble": true
+      }
+    },
+    {
+      "method": "action",
+      "action": "gamble",
+      "params": {
+        "rank": "Rank_A",
+        "suit": "Hearts",
+        "isJoker": false
+      },
+      "roundState": {
+        "rounds": [],
+        "gambleSelectableOptions": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "gambleResult": {
+          "openCard": {
+            "rank": "Rank_A",
+            "suit": "Hearts",
+            "isJoker": false
+          },
+          "stake": 10000
+        },
+        "v": 1,
+        "state": "gamble",
+        "freespinWon": false,
+        "winFactor": 10000,
+        "maxWinFactorReached": false,
+        "canGamble": false
+      }
+    },
+    {
+      "method": "action",
+      "action": "gamblePick",
+      "params": {
+        "pick": 1
+      },
+      "roundState": {
+        "rounds": [],
+        "gambleSelectableOptions": [],
+        "gambleResult": {
+          "openCard": {
+            "rank": "Rank_A",
+            "suit": "Hearts",
+            "isJoker": false
+          },
+          "stake": 10000,
+          "result": {
+            "resultCards": [
+              {
+                "rank": "Rank_2",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_3",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_4",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_5",
+                "suit": "Hearts",
+                "isJoker": false
+              }
+            ],
+            "pick": 1,
+            "winFactor": 20000,
+            "canContinue": true
+          }
+        },
+        "v": 1,
+        "state": "result",
+        "freespinWon": false,
+        "winFactor": 20000,
+        "maxWinFactorReached": false,
+        "canGamble": true
+      }
+    },
+    {
+      "method": "action",
+      "action": "gamble",
+      "params": {
+        "rank": "Rank_A",
+        "suit": "Hearts",
+        "isJoker": false
+      },
+      "roundState": {
+        "rounds": [],
+        "gambleSelectableOptions": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "gambleResult": {
+          "openCard": {
+            "rank": "Rank_A",
+            "suit": "Hearts",
+            "isJoker": false
+          },
+          "stake": 20000
+        },
+        "v": 1,
+        "state": "gamble",
+        "freespinWon": false,
+        "winFactor": 20000,
+        "maxWinFactorReached": false,
+        "canGamble": false
+      }
+    },
+    {
+      "method": "action",
+      "action": "gamblePick",
+      "params": {
+        "pick": 1
+      },
+      "roundState": {
+        "rounds": [],
+        "gambleSelectableOptions": [],
+        "gambleResult": {
+          "openCard": {
+            "rank": "Rank_A",
+            "suit": "Hearts",
+            "isJoker": false
+          },
+          "stake": 20000,
+          "result": {
+            "resultCards": [
+              {
+                "rank": "Rank_2",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_3",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_4",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_5",
+                "suit": "Hearts",
+                "isJoker": false
+              }
+            ],
+            "pick": 1,
+            "winFactor": 40000,
+            "canContinue": true
+          }
+        },
+        "v": 1,
+        "state": "result",
+        "freespinWon": false,
+        "winFactor": 40000,
+        "maxWinFactorReached": false,
+        "canGamble": true
+      }
+    },
+    {
+      "method": "action",
+      "action": "gamble",
+      "params": {
+        "rank": "Rank_A",
+        "suit": "Hearts",
+        "isJoker": false
+      },
+      "roundState": {
+        "rounds": [],
+        "gambleSelectableOptions": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "gambleResult": {
+          "openCard": {
+            "rank": "Rank_A",
+            "suit": "Hearts",
+            "isJoker": false
+          },
+          "stake": 40000
+        },
+        "v": 1,
+        "state": "gamble",
+        "freespinWon": false,
+        "winFactor": 40000,
+        "maxWinFactorReached": false,
+        "canGamble": false
+      }
+    },
+    {
+      "method": "action",
+      "action": "gamblePick",
+      "params": {
+        "pick": 1
+      },
+      "roundState": {
+        "rounds": [],
+        "gambleSelectableOptions": [],
+        "gambleResult": {
+          "openCard": {
+            "rank": "Rank_A",
+            "suit": "Hearts",
+            "isJoker": false
+          },
+          "stake": 40000,
+          "result": {
+            "resultCards": [
+              {
+                "rank": "Rank_2",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_3",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_4",
+                "suit": "Hearts",
+                "isJoker": false
+              },
+              {
+                "rank": "Rank_5",
+                "suit": "Hearts",
+                "isJoker": false
+              }
+            ],
+            "pick": 1,
+            "winFactor": 80000,
+            "canContinue": true
+          }
+        },
+        "v": 1,
+        "state": "result",
+        "freespinWon": false,
+        "winFactor": 80000,
+        "maxWinFactorReached": false,
+        "canGamble": false
+      }
+    },
+    {
+      "method": "settleBet"
+    }
+  ],
+  "currency": "EUR",
+  "placeBetTs": "2025-04-09T08:25:18.456Z",
+  "settleBetTs": "2025-04-09T08:25:18.456Z",
+  "roundWin": 80000,
+  "totalWin": 80000,
+  "bet": 100,
+  "gameId": "reel-game-kit",
+  "roundId": "01905ed9-5a77-7cfa-aacb-3d75c19bb152"
+}
