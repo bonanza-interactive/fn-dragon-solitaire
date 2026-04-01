@@ -11,7 +11,7 @@ export const getEndpoint = (opts?: RemoteBackendOptions): string => {
 
 export async function makeBackendOp(
   op: string,
-  key?: Partial<RemoteBackendKey>
+  key?: Partial<RemoteBackendKey>,
 ): Promise<void> {
   const path = Path.join(HOST, `api/v1/backend/${op}`, getBackendKeyPath(key));
   console.log(`Making request GET ${path}`);
@@ -31,7 +31,7 @@ function getBackendKeyPath(key?: Partial<RemoteBackendKey>): string {
   return Path.join(
     key?.backendId ?? getBackendIdCIConfig(),
     key?.packageVersion ?? getBackendPackageVersionFromCIConfig(),
-    key?.userName ?? getUsername()
+    key?.userName ?? getUsername(),
   );
 }
 

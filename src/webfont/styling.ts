@@ -22,12 +22,12 @@ export function popState(ctx: CanvasRenderingContext2D) {
  *  Canvas fill state is used instead
  */
 export function DrawFilledText(
-  opts?: Partial<{fill: string; innerShadow: boolean}>
+  opts?: Partial<{fill: string; innerShadow: boolean}>,
 ): gfx.CanvasTextDrawFn {
   return (
     ctx: CanvasRenderingContext2D,
     builder: gfx.CanvasTextBuilder,
-    box: gfx.CanvasTextBox
+    box: gfx.CanvasTextBox,
   ) => {
     ctx.save();
 
@@ -60,12 +60,12 @@ export function DrawOutlineText(
     width: number;
     lineJoin: CanvasLineJoin;
     drawUnder: boolean;
-  }>
+  }>,
 ): gfx.CanvasTextDrawFn {
   return (
     ctx: CanvasRenderingContext2D,
     builder: gfx.CanvasTextBuilder,
-    box: gfx.CanvasTextBox
+    box: gfx.CanvasTextBox,
   ) => {
     ctx.save();
 
@@ -89,7 +89,7 @@ export function DrawOutlineText(
  * @param opts
  */
 export function SetupCanvasShadow(
-  opts: Partial<CanvasShadowStyles>
+  opts: Partial<CanvasShadowStyles>,
 ): gfx.CanvasTextDrawFn {
   return (ctx: CanvasRenderingContext2D, builder: gfx.CanvasTextBuilder) => {
     ctx.shadowBlur = opts.shadowBlur
@@ -113,12 +113,12 @@ export function SetupCanvasShadow(
  * @param opts
  */
 export function SetupCanvasInnerShadow(
-  opts?: Partial<CanvasShadowStyles>
+  opts?: Partial<CanvasShadowStyles>,
 ): gfx.CanvasTextDrawFn {
   return (
     ctx: CanvasRenderingContext2D,
     builder: gfx.CanvasTextBuilder,
-    box: gfx.CanvasTextBox
+    box: gfx.CanvasTextBox,
   ) => {
     ctx.textBaseline = builder.metrics.baseline;
 
@@ -163,7 +163,7 @@ export type CanvasDrawBounds = 'line-content' | 'line' | 'canvas';
 function resolveBounds(
   ctx: CanvasRenderingContext2D,
   line: gfx.CanvasTextBox,
-  bounds?: CanvasDrawBounds
+  bounds?: CanvasDrawBounds,
 ): [number, number, number, number] {
   return bounds === 'line-content'
     ? line.bounds.content
@@ -199,12 +199,12 @@ export function SetupLinearGradient(
   opts?: Partial<{
     bounds: CanvasDrawBounds;
     padLTRB: [number, number, number, number];
-  }>
+  }>,
 ): gfx.CanvasTextDrawFn {
   return (
     ctx: CanvasRenderingContext2D,
     builder: gfx.CanvasTextBuilder,
-    line: gfx.CanvasTextBox
+    line: gfx.CanvasTextBox,
   ) => {
     const [x, y, w, h] = resolveBounds(ctx, line, opts?.bounds);
 
@@ -214,7 +214,7 @@ export function SetupLinearGradient(
       x + x0 * w - padLTRB[0],
       y + y0 * h - padLTRB[1],
       x + x1 * w + padLTRB[2],
-      y + y1 * h + padLTRB[3]
+      y + y1 * h + padLTRB[3],
     );
 
     for (const [offset, color] of stops) {
@@ -236,12 +236,12 @@ export function SetupRadialGradient(
   stops: GradientStop[],
   opts?: Partial<{
     bounds: CanvasDrawBounds;
-  }>
+  }>,
 ): gfx.CanvasTextDrawFn {
   return (
     ctx: CanvasRenderingContext2D,
     builder: gfx.CanvasTextBuilder,
-    line: gfx.CanvasTextBox
+    line: gfx.CanvasTextBox,
   ) => {
     const [x, y, w, h] = resolveBounds(ctx, line, opts?.bounds);
 
@@ -251,7 +251,7 @@ export function SetupRadialGradient(
       r0 * Math.min(w, h) * 0.5,
       x + x1 * w,
       y + y1 * h,
-      r1 * Math.min(w, h) * 0.5
+      r1 * Math.min(w, h) * 0.5,
     );
 
     for (const [offset, color] of stops) {
@@ -273,7 +273,7 @@ export function SetupRadialGradient(
 export function drawTextBounds(
   ctx: CanvasRenderingContext2D,
   _: unknown,
-  box: gfx.CanvasTextBox
+  box: gfx.CanvasTextBox,
 ): void {
   const {bounds} = box;
 
@@ -287,7 +287,7 @@ export function drawTextBounds(
 }
 
 function canvasRectToLocal(
-  ctx: CanvasRenderingContext2D
+  ctx: CanvasRenderingContext2D,
 ): [number, number, number, number] {
   const origin = ctx
     .getTransform()

@@ -1,0 +1,49 @@
+{
+  "handlers": {
+    "led_theme_voltti": {
+      "type": "LedHandler",
+      "base_dir": "led/",
+      "led_targets": {
+        "voltti_frame": {
+          "assets": {
+            "led_normal": "led_frame.png"
+          }
+        },
+        "voltti_logo": {
+          "assets": {
+            "led_normal": "led_logo.png"
+          }
+        },
+        "voltti_logo_bg": {
+          "assets": {
+            "led_normal": "led_logo_bg.png"
+          }
+        },
+        "voltti_game_panel": {
+          "assets": {
+            "led_normal": "led_game_panel.png"
+          }
+        },
+        "voltti_hat": {
+          "assets": {
+            "led_normal": "led_hat.png"
+          }
+        },
+        "voltti_card_top": {
+          "assets": {
+            "led_normal": "led_card.png"
+          }
+        }
+      }
+    }
+  },
+  "events": {
+    "enter_menu_normal": {
+      "target": "led_theme_voltti",
+      "action": "play",
+      "asset": "led_normal",
+      "loop": true
+    },
+    "leave_menu": []
+  }
+}

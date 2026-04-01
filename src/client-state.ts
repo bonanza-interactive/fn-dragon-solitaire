@@ -1,66 +1,66 @@
 import {Replay, RoundState} from './config/backend-types';
-import {RecoveryStep} from './config/recovery-step';
-import {computeWinCents} from './util/win-amount';
+import {RecoveryStep, RecoveryStepState} from './config/recovery-step';
+import {computeWinAmount} from './util/win-amount';
 
 export class ClientState {
   public bet = 0;
 
-  public recoveryState?: RecoveryStep;
+  public recoveryState?: RecoveryStepState;
   public roundStep = 0;
   public freespinsLeft = 0;
   public winsum = 0;
 
-  public deckSelect = -1;
-  public swap = false;
-  public bonusWon = false;
-  public sorted = false;
+  public freespinWon = false;
 
   public gambleStake = 0;
   public gambleOptions: string[] = [];
-  public gamblePick?: string;
+  public gamblePick?: number;
 
+  public attemptAutoPlay = false;
   public replay?: Replay;
+  public winScrollCompletePromise: Promise<void> = Promise.resolve();
+  public roundInProgress = false;
 
   public restore(
     round: RoundState,
     bet: number,
-    recoveryStep?: RecoveryStep
+    recoveryData?: RecoveryStep,
   ): void {
-    this.bonusWon = round.bonusWon;
-    this.recoveryState = recoveryStep;
-
     this.bet = bet;
-
-    if (recoveryStep) {
-      this.recoveryState = recoveryStep;
-      this.roundStep = recoveryStep.index;
+    const maxRoundSteps = round.rounds?.length;
+    if (recoveryData) {
+      this.recoveryState = recoveryData.state;
+      this.roundStep = recoveryData.index;
     }
-
+    this.freespinWon = round.freespinWon;
+    this.roundStep = Math.min(Math.max(this.roundStep, 0), maxRoundSteps ?? 0);
     if (round.gambleResult) {
-      this.gambleStake = round.gambleResult?.stake;
-      this.gamblePick = round.gambleResult.selection;
+      this.gambleStake = round.gambleResult.stake;
+      this.gamblePick = round.gambleResult.result?.pick;
     }
-
-    this.winsum = computeWinCents(bet, round.winFactor);
+    const roundsRestored = round.rounds.slice(0, this.roundStep);
+    const winsRestored = roundsRestored.flatMap((i) => i.win);
+    this.winsum += winsRestored.reduce(
+      (winsum, win) => winsum + (computeWinAmount(win.winFactor, bet) ?? 0),
+      0,
+    );
   }
 
   public reset(): void {
-    this.deckSelect = -1;
-    this.swap = false;
-    this.bonusWon = false;
-    this.sorted = false;
-
+    this.freespinWon = false;
     this.freespinsLeft = 0;
     this.winsum = 0;
     this.roundStep = 0;
+    this.attemptAutoPlay = false;
     this.gamblePick = undefined;
     this.gambleOptions = [];
+    this.roundInProgress = false;
   }
 }
 
 export function replayRoundData(
   cs: ClientState,
-  step?: number
+  step?: number,
 ): {
   round: RoundState;
   bet: number;

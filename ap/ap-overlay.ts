@@ -29,7 +29,7 @@ export const OVERLAY_VALUES = {
 const dropdownValueChanged = (
   label: string,
   value: string,
-  controls: ap.OverlayControls
+  controls: ap.OverlayControls,
 ) => {
   if (label === 'platform') {
     OVERLAY_VALUES.platform = value;
@@ -40,7 +40,7 @@ const dropdownValueChanged = (
 const checkboxValueChanged = (
   label: string,
   value: boolean,
-  controls: ap.OverlayControls
+  controls: ap.OverlayControls,
 ) => {
   if (label === 'verbose') {
     ap.setLogLevel(value ? ap.Level.INFO : ap.Level.STATUS);
@@ -64,7 +64,7 @@ export const createAndStartOverlayBackend = () => {
       checkboxValueChanged,
       buttonClicked,
     },
-    true
+    true,
   );
   return res;
 };

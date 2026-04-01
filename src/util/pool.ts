@@ -53,7 +53,7 @@ export class Pool<T> {
   public return(item: T): void {
     if (!this.options.requireReturn) {
       throw new Error(
-        'Cannot return an item to pool without return requirement.'
+        'Cannot return an item to pool without return requirement.',
       );
     }
     this.pool.push(item);
@@ -74,7 +74,7 @@ export class Pool<T> {
       const value = this.pool.pop();
       if (!value) {
         throw new Error(
-          'Ran out of items in pool. Increase pool size or return items.'
+          'Ran out of items in pool. Increase pool size or return items.',
         );
       }
       return value;

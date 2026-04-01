@@ -3,6 +3,7 @@ import {CanvasFontConfig} from './config';
 import {CORE} from '../game';
 
 let UNIQUE_ID = 0;
+const DEBUG = false;
 
 /**
  * A wrapper for `gfx.Sprite`s which renders text strings into the images
@@ -17,6 +18,7 @@ export class WebfontSprite {
   private lineSpacing: number;
   private _style: gfx.CanvasTextDrawFn[];
   private pad: number;
+  private debugMaxSizeVisualizer: gfx.Sprite | undefined;
 
   private maxSize?: gfx.VectorT;
 
@@ -38,7 +40,7 @@ export class WebfontSprite {
     public sprite: gfx.Sprite,
     private font: CanvasFontConfig,
     style: gfx.CanvasTextDrawFn[],
-    opts?: Partial<{align: CanvasTextAlign; lineSpacing: number; pad: number}>
+    opts?: Partial<{align: CanvasTextAlign; lineSpacing: number; pad: number}>,
   ) {
     this.resourceId = `webfont-canvas-${UNIQUE_ID++}`;
     this.align = opts?.align ?? 'left';
@@ -47,6 +49,15 @@ export class WebfontSprite {
     this._style = style;
 
     CORE.gfx.addLayoutChanged(this.checkTextSize.bind(this));
+    if (DEBUG) {
+      this.debugMaxSizeVisualizer = CORE.gfx.createSprite({
+        image: 'white',
+        parent: sprite.parent,
+        opacity: 0.5,
+        depthGroup: sprite.depthGroup,
+        name: sprite.name + '-maxsize-debug-box',
+      });
+    }
   }
 
   set visible(visible: boolean) {
@@ -80,7 +91,7 @@ export class WebfontSprite {
         {
           extraLineSpacing: this.lineSpacing,
           padLTRB: [this.pad, this.pad, this.pad, this.pad],
-        }
+        },
       )
       .align(this.align)
       .drawLines(text, ...this._style)
@@ -123,6 +134,18 @@ export class WebfontSprite {
   }
 
   private checkTextSize(): void {
+    if (this.debugMaxSizeVisualizer && this.maxSize) {
+      this.debugMaxSizeVisualizer.size = [this.maxSize[0], this.maxSize[1]];
+
+      this.debugMaxSizeVisualizer.position = [
+        this.sprite.position[0],
+        this.sprite.position[1],
+      ];
+      this.debugMaxSizeVisualizer.pivot = [
+        this.sprite.pivot[0],
+        this.sprite.pivot[1],
+      ];
+    }
     const scaledSize = [
       this.sprite.size[0] * this.sprite.scale[0],
       this.sprite.size[1] * this.sprite.scale[0],

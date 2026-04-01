@@ -1,57 +1,25 @@
 import {gfx} from '@apila/engine';
-import {schema} from '@apila/game-libraries';
+import {Orientation, clamp} from '@apila/engine/dist/apila-gfx';
+import {anim, schema} from '@apila/game-libraries';
+import {Timeline} from '@apila/game-libraries/dist/game-animation';
 
 import {CORE} from '../game';
+import {AUTO_TICK} from '../main';
+import {lerp, voidPromise, wait} from './utils';
 import {getWorldSize, minMaxNormalize} from './utils-gfx';
 import {getNode} from './utils-node';
-import {GAMEFW, IS_MOBILE_DEVICE} from '../framework';
-
-// aspect ratio to start adding extra margin
-const ASPECT_RATIO_MIN = 0.4;
-const ASPECT_RATIO_MAX = 1.0;
-// how much extra margin to add
-const EXTRA_MARGIN_COEFFICIENT = 0.22;
-
-export function marginLTRB() {
-  if (CORE && CORE.gfx && GAMEFW) {
-    const aspectRatio = window.innerWidth / window.innerHeight;
-    const normalizedAspectRatio = minMaxNormalize(
-      aspectRatio,
-      ASPECT_RATIO_MIN,
-      ASPECT_RATIO_MAX
-    );
-    const needExtraMargin =
-      IS_MOBILE_DEVICE &&
-      CORE.gfx.layout.orientation === gfx.Orientation.Portrait &&
-      normalizedAspectRatio > 0;
-
-    const margins = {left: 0, right: 0, top: 0, bottom: 0};
-    const [w, h] = CORE.gfx.layout.canvasPixelSize;
-    margins.left = w * 0.05;
-    margins.right = w * 0.05;
-    if (needExtraMargin) {
-      margins.bottom =
-        h * 0.15 + h * normalizedAspectRatio * EXTRA_MARGIN_COEFFICIENT;
-    } else {
-      margins.bottom = h * 0.15;
-    }
-    return margins;
-  } else {
-    return {top: 0, right: 0, bottom: 0, left: 0};
-  }
-}
 
 function isNumberArray(
-  size: unknown
+  size: unknown,
 ): size is [number, number, number, number] {
   return Array.isArray(size) && typeof size[0] === 'number';
 }
 
 export type MarginProperties = {
   /**
-   * Margin values in screen space
+   * Margin values in screen space (left, top, right, bottom)
    */
-  marginValues: {top: number; right: number; bottom: number; left: number};
+  marginValues: [number, number, number, number];
 
   /**
    * Node area rectangle in world space
@@ -91,7 +59,7 @@ export type MarginProperties = {
  *
  */
 export function margin(
-  properties: MarginProperties
+  properties: MarginProperties,
 ): schema.LayoutFunc<gfx.NodeProperties> {
   const layoutFunc = (n: gfx.NodeProperties, g: gfx.Gfx) => {
     n.worldScale = [1, 1];
@@ -161,18 +129,12 @@ export function margin(
     ];
 
     // Margin values after removing padding amount
-    const left = Math.max(
-      properties.marginValues.left - containerPadding[0],
-      0
-    );
-    const top = Math.max(properties.marginValues.top - containerPadding[1], 0);
-    const right = Math.max(
-      properties.marginValues.right - containerPadding[0],
-      0
-    );
+    const left = Math.max(properties.marginValues[0] - containerPadding[0], 0);
+    const top = Math.max(properties.marginValues[1] - containerPadding[1], 0);
+    const right = Math.max(properties.marginValues[2] - containerPadding[0], 0);
     const bottom = Math.max(
-      properties.marginValues.bottom - containerPadding[1],
-      0
+      properties.marginValues[3] - containerPadding[1],
+      0,
     );
 
     // Scale of the canvas before vs after including the margin values
@@ -183,7 +145,7 @@ export function margin(
 
     const nodeScale = Math.min(
       (worldSize[0] * canvasScale[0]) / boundingBoxSize[0],
-      (worldSize[1] * canvasScale[1]) / boundingBoxSize[1]
+      (worldSize[1] * canvasScale[1]) / boundingBoxSize[1],
     );
 
     // The padding amount between node and world area when
@@ -195,7 +157,7 @@ export function margin(
 
     const worldScale = Math.min(
       worldSize[0] / canvasSize[0],
-      worldSize[1] / canvasSize[1]
+      worldSize[1] / canvasSize[1],
     );
 
     // Calculate the offset value from margins.
@@ -227,7 +189,7 @@ export function margin(
  */
 
 export function marginDeferred(
-  properties: MarginProperties
+  properties: MarginProperties,
 ): schema.LayoutFunc<gfx.NodeProperties> {
   const layoutFunc = (n: gfx.NodeProperties, g: gfx.Gfx) =>
     CORE.messageQueue.pushMessage(() => margin(properties)(n, g));
@@ -239,10 +201,26 @@ export const fullscreen = (n: gfx.NodeProperties, g: gfx.Gfx) => {
   n.size = [worldSize[0], worldSize[1]];
 };
 
+export function anchorToParent(
+  leftHorzNorm: number,
+  topVertNorm: number,
+  offset: [number, number] = [0, 0],
+): schema.LayoutFunc<gfx.NodeProperties> {
+  return schema.parentAnchorGeneral(
+    undefined,
+    undefined,
+    leftHorzNorm,
+    topVertNorm,
+    true,
+    true,
+    offset,
+  );
+}
+
 export function anchor(
   leftHorzNorm: number,
   topVertNorm: number,
-  offset: [number, number] = [0, 0]
+  offset: [number, number] = [0, 0],
 ): schema.LayoutFunc<gfx.NodeProperties> {
   return schema.canvasAnchorGeneral(
     undefined,
@@ -251,6 +229,88 @@ export function anchor(
     topVertNorm,
     true,
     true,
-    offset
+    offset,
   );
+}
+
+export const minMaxNormalizeAspectRatioRange = (
+  aspectRatioMin: number,
+  aspectRatioMax: number,
+  aspectRatio: number,
+  orientation: Orientation,
+) => {
+  const orientationAdjustedAspectRatio =
+    orientation === Orientation.Portrait ? 1 / aspectRatio : aspectRatio;
+
+  return clamp(
+    minMaxNormalize(
+      orientationAdjustedAspectRatio,
+      aspectRatioMin,
+      aspectRatioMax,
+    ),
+    0,
+    1,
+  );
+};
+
+export function anchorRelativeToParent(
+  g: gfx.Gfx,
+  aspectMin: number,
+  aspectMax: number,
+  verticalPosMin: number,
+  verticalPosMax: number,
+): schema.LayoutFunc<gfx.NodeProperties> {
+  const ratio = minMaxNormalizeAspectRatioRange(
+    aspectMin,
+    aspectMax,
+    g.layout.aspectRatio,
+    g.layout.orientation,
+  );
+  const y = lerp(verticalPosMin, verticalPosMax, ratio);
+  return anchorToParent(0.5, y);
+}
+
+export async function moveNode(
+  moveNode: gfx.NodeProperties,
+  animationTimeSeconds: number,
+  animationDelaySeconds = 0,
+  nodeStart: gfx.NodeProperties,
+  nodeTarget: gfx.NodeProperties,
+): Promise<void> {
+  await wait(animationDelaySeconds * 1000);
+
+  const {promise: nodeMoved, resolve} = voidPromise();
+  const timeline = new Timeline();
+  AUTO_TICK.add(timeline);
+
+  moveNode.parent = nodeStart.parent;
+  moveNode.worldPosition = nodeStart.worldPosition;
+  moveNode.scale = nodeStart.scale;
+
+  timeline
+    .animate(anim.OutQuad(0, 1), animationTimeSeconds, (t) => {
+      const x = anim.easeLinear(
+        nodeStart.worldPosition[0],
+        nodeTarget.worldPosition[0],
+        t,
+      );
+      const y = anim.easeLinear(
+        nodeStart.worldPosition[1],
+        nodeTarget.worldPosition[1],
+        t,
+      );
+      const scale = anim.easeLinear(nodeStart.scale[0], nodeTarget.scale[0], t);
+      moveNode.worldPosition = [x, y];
+      moveNode.scale = [scale, scale];
+    })
+    .after(() => {
+      AUTO_TICK.remove(timeline);
+      resolve();
+    });
+
+  await nodeMoved;
+
+  moveNode.parent = nodeTarget;
+  moveNode.position = [0, 0];
+  moveNode.scale = [1, 1];
 }

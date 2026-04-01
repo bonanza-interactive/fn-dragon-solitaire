@@ -1,111 +1,35 @@
 {
   "variants": [
     {
-      "variant": ["rtp-90G100"],
+      "variant": ["default", "rtp-94G97"],
       "format": "table",
       "payGroups": [
         {
-          "rows": 9,
-          "columns": 2,
-          "columnLabels": ["{pays_column_label_0}", "{pays_column_label_1}"],
+          "description": "{help_paytable_description}",
+          "rows": 5,
+          "columns": 6,
+          "rowHeader": "{help_paytable_selected}",
+          "columnHeader": "{help_paytable_hits}",
+          "rowLabels": ["2", "3", "4", "5", "6"],
+          "columnLabels": ["1", "2", "3", "4", "5", "6"],
           "pays": [
-            ["{WILD_HAND}", 100],
-            ["{FIVE_OF_A_KIND}", 35],
-            ["{STRAIGHT_FLUSH}", 15],
-            ["{FOUR_OF_A_KIND}", 6],
-            ["{FULL_HOUSE}", 5],
-            ["{FLUSH}", 4],
-            ["{STRAIGHT}", 3],
-            ["{THREE_OF_A_KIND}", 2],
-            ["{TWO_PAIR}", 1]
+            [0.5, 6.5, "—", "—", "—", "—"],
+            ["—", 3, 13.5, "—", "—", "—"],
+            ["—", 1.5, 5, 35, "—", "—"],
+            ["—", 0.5, 4, 9, 55, "—"],
+            ["—", 0.5, 1.5, 7, 30, 200]
           ]
-        }
-      ]
-    },
-    {
-      "variant": ["rtp-92G100"],
-      "format": "table",
-      "payGroups": [
+        },
         {
-          "rows": 9,
+          "description": "{help_paytable_freespins_description}",
+          "rows": 4,
           "columns": 2,
-          "columnLabels": ["{pays_column_label_0}", "{pays_column_label_1}"],
+          "columnLabels": ["{help_paytable_hits}", "{paytable_win}"],
           "pays": [
-            ["{WILD_HAND}", 200],
-            ["{FIVE_OF_A_KIND}", 45],
-            ["{STRAIGHT_FLUSH}", 20],
-            ["{FOUR_OF_A_KIND}", 6],
-            ["{FULL_HOUSE}", 5],
-            ["{FLUSH}", 4],
-            ["{STRAIGHT}", 3],
-            ["{THREE_OF_A_KIND}", 2],
-            ["{TWO_PAIR}", 1]
-          ]
-        }
-      ]
-    },
-    {
-      "variant": ["rtp-95G100"],
-      "format": "table",
-      "payGroups": [
-        {
-          "rows": 9,
-          "columns": 2,
-          "columnLabels": ["{pays_column_label_0}", "{pays_column_label_1}"],
-          "pays": [
-            ["{WILD_HAND}", 250],
-            ["{FIVE_OF_A_KIND}", 50],
-            ["{STRAIGHT_FLUSH}", 25],
-            ["{FOUR_OF_A_KIND}", 6],
-            ["{FULL_HOUSE}", 5],
-            ["{FLUSH}", 4],
-            ["{STRAIGHT}", 3],
-            ["{THREE_OF_A_KIND}", 2],
-            ["{TWO_PAIR}", 1]
-          ]
-        }
-      ]
-    },
-    {
-      "variant": ["default", "rtp-94G96"],
-      "format": "table",
-      "payGroups": [
-        {
-          "rows": 9,
-          "columns": 2,
-          "columnLabels": ["{pays_column_label_0}", "{pays_column_label_1}"],
-          "pays": [
-            ["{WILD_HAND}", 250],
-            ["{FIVE_OF_A_KIND}", 50],
-            ["{STRAIGHT_FLUSH}", 20],
-            ["{FOUR_OF_A_KIND}", 6],
-            ["{FULL_HOUSE}", 5],
-            ["{FLUSH}", 4],
-            ["{STRAIGHT}", 3],
-            ["{THREE_OF_A_KIND}", 2],
-            ["{TWO_PAIR}", 1]
-          ]
-        }
-      ]
-    },
-    {
-      "variant": ["rtp-93G96X20000N"],
-      "format": "table",
-      "payGroups": [
-        {
-          "rows": 9,
-          "columns": 2,
-          "columnLabels": ["{pays_column_label_0}", "{pays_column_label_1}"],
-          "pays": [
-            ["{WILD_HAND}", 100],
-            ["{FIVE_OF_A_KIND}", 50],
-            ["{STRAIGHT_FLUSH}", 20],
-            ["{FOUR_OF_A_KIND}", 6],
-            ["{FULL_HOUSE}", 5],
-            ["{FLUSH}", 4],
-            ["{STRAIGHT}", 3],
-            ["{THREE_OF_A_KIND}", 2],
-            ["{TWO_PAIR}", 1]
+            ["1", 0.5],
+            ["2", 1],
+            ["3", 5],
+            ["4", 20]
           ]
         }
       ]

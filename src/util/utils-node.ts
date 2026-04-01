@@ -1,11 +1,16 @@
 import {gfx} from '@apila/engine';
-import {assert} from './assert';
+
+function assert(condition: boolean, errMsg?: string): asserts condition {
+  if (!condition) {
+    throw new Error(errMsg);
+  }
+}
 
 // Utility types and functions for findX functions
 // ----------------------------------------------------------------------
 
 type NodePredicate<T extends gfx.NodeProperties> = (
-  node: gfx.NodeProperties
+  node: gfx.NodeProperties,
 ) => node is T;
 type TypeCheck<T> = (v: unknown) => v is T;
 type ConditionFunc = (v: unknown) => boolean;
@@ -20,19 +25,19 @@ export function createCheck<T>(...funcs: ConditionFunc[]): TypeCheck<T> {
 // Pre-made checks
 
 export const isSprite = createCheck<gfx.Sprite>(
-  (n) => (n as gfx.Sprite).image !== undefined
+  (n) => (n as gfx.Sprite).image !== undefined,
 );
 export const isSpine = createCheck<gfx.Spine>(
-  (n) => (n as gfx.Spine).skeleton !== undefined
+  (n) => (n as gfx.Spine).skeleton !== undefined,
 );
 export const isBitmapText = createCheck<gfx.BitmapText>(
-  (n) => (n as gfx.BitmapText).text !== undefined
+  (n) => (n as gfx.BitmapText).text !== undefined,
 );
 export const isClipNode = createCheck<gfx.ClipRect>(
-  (n) => (n as gfx.ClipRect).clipRect !== undefined
+  (n) => (n as gfx.ClipRect).clipRect !== undefined,
 );
 export const withName = <T extends gfx.NodeProperties>(
-  name: string
+  name: string,
 ): TypeCheck<T> =>
   createCheck<T>((n) => (n as gfx.NodeProperties).name === name);
 
@@ -46,7 +51,7 @@ export const withName = <T extends gfx.NodeProperties>(
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export function DFSChildIterator(
-  parent: gfx.NodeProperties
+  parent: gfx.NodeProperties,
 ): Iterable<gfx.NodeProperties> {
   return {
     *[Symbol.iterator]() {
@@ -56,7 +61,6 @@ export function DFSChildIterator(
           yield* dfs(child);
         }
       }
-
       yield* dfs(parent);
     },
   };
@@ -69,7 +73,7 @@ export function DFSChildIterator(
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export function BFSChildIterator(
-  parent: gfx.NodeProperties
+  parent: gfx.NodeProperties,
 ): Iterable<gfx.NodeProperties> {
   return {
     *[Symbol.iterator]() {
@@ -95,7 +99,7 @@ export function BFSChildIterator(
  */
 export function getNode(
   parent: gfx.NodeProperties,
-  name: string
+  name: string,
 ): gfx.NodeProperties {
   const iter = DFSChildIterator(parent);
   const node = findByName(iter, name);
@@ -112,7 +116,7 @@ export function getNode(
  */
 export function getSprite(
   parent: gfx.NodeProperties,
-  name: string
+  name: string,
 ): gfx.Sprite {
   const iter = DFSChildIterator(parent);
   const node = findSprite(iter, name);
@@ -143,7 +147,7 @@ export function getSpine(parent: gfx.NodeProperties, name: string): gfx.Spine {
  */
 export function getBitmapText(
   parent: gfx.NodeProperties,
-  name: string
+  name: string,
 ): gfx.BitmapText {
   const iter = DFSChildIterator(parent);
   const node = findBitmapText(iter, name);
@@ -160,7 +164,7 @@ export function getBitmapText(
  */
 export function getClipNode(
   parent: gfx.NodeProperties,
-  name: string
+  name: string,
 ): gfx.ClipRect {
   const iter = DFSChildIterator(parent);
   const node = findClipNode(iter, name);
@@ -192,7 +196,7 @@ function findNode<T extends gfx.NodeProperties>(
 ): T | null {
   const check = createCheck<T>(
     predicate as ConditionFunc,
-    ...(extraPredicates as ConditionFunc[])
+    ...(extraPredicates as ConditionFunc[]),
   );
 
   for (const node of nodes) {
@@ -227,7 +231,7 @@ function findAllNodes<T extends gfx.NodeProperties>(
 ): T[] {
   const check = createCheck<T>(
     predicate as ConditionFunc,
-    ...(extraPredicates as ConditionFunc[])
+    ...(extraPredicates as ConditionFunc[]),
   );
 
   return [...nodes].filter(check);
@@ -245,7 +249,7 @@ function findAllNodes<T extends gfx.NodeProperties>(
  */
 function findByName(
   nodes: Iterable<gfx.NodeProperties>,
-  name: string
+  name: string,
 ): gfx.NodeProperties | null {
   return findNode(nodes, withName(name));
 }
@@ -258,7 +262,7 @@ function findByName(
  */
 function findSprite(
   nodes: Iterable<gfx.NodeProperties>,
-  name: string
+  name: string,
 ): gfx.Sprite | null {
   return findNode(nodes, isSprite, withName(name));
 }
@@ -271,7 +275,7 @@ function findSprite(
  */
 function findSpine(
   nodes: Iterable<gfx.NodeProperties>,
-  name: string
+  name: string,
 ): gfx.Spine | null {
   return findNode(nodes, isSpine, withName(name));
 }
@@ -284,7 +288,7 @@ function findSpine(
  */
 function findBitmapText(
   nodes: Iterable<gfx.NodeProperties>,
-  name: string
+  name: string,
 ): gfx.BitmapText | null {
   return findNode(nodes, isBitmapText, withName(name));
 }
@@ -297,7 +301,7 @@ function findBitmapText(
  */
 function findClipNode(
   nodes: Iterable<gfx.NodeProperties>,
-  name: string
+  name: string,
 ): gfx.ClipRect | null {
   return findNode(nodes, isClipNode, withName(name));
 }
@@ -329,7 +333,7 @@ function findAllSpines(nodes: Iterable<gfx.NodeProperties>): gfx.Spine[] {
  */
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars*/
 function findAllBitmapTexts(
-  nodes: Iterable<gfx.NodeProperties>
+  nodes: Iterable<gfx.NodeProperties>,
 ): gfx.BitmapText[] {
   return findAllNodes(nodes, isBitmapText);
 }
@@ -342,10 +346,18 @@ function findAllBitmapTexts(
  */
 export function iterateTree(
   node: gfx.NodeProperties,
-  cb: (node: gfx.NodeProperties) => void
+  cb: (node: gfx.NodeProperties) => void,
 ) {
   const nodes = DFSChildIterator(node);
   for (const node of nodes) {
     cb(node);
   }
 }
+
+export const exposeObject = {
+  getNode,
+  getSprite,
+  getSpine,
+  getBitmapText,
+  DFSChildIterator,
+};

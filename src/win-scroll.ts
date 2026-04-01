@@ -1,16 +1,21 @@
-import {gfx, input} from '@apila/engine';
+import {gfx} from '@apila/engine';
+import {clamp} from '@apila/engine/dist/apila-gfx';
+import {EventType} from '@apila/engine/dist/apila-input';
 import {anim} from '@apila/game-libraries';
-import {AnimationStateListener, TrackEntry} from '@apila/spine';
+import {AnimationStateListener, Physics, TrackEntry} from '@apila/spine';
+
+import {FireBreathState} from './dragon-panel';
 import {CORE, GAME} from './game';
 import {TimedEvent} from './game-timer';
 import {AUTO_TICK} from './main';
+import {Pool} from './pool';
+import {wait} from './util/utils';
 import {minMaxNormalize} from './util/utils-gfx';
 import {getBitmapText, getNode, getSpine, getSprite} from './util/utils-node';
-import {COIN_RAIN} from './config/particle-effects';
+import {WinScrollEffect} from './win-scroll-effect';
+import {LOCALIZER} from './framework';
 import {WebfontSprite} from './webfont/sprite';
 import {FONT, FONT_STYLE} from './webfont/config';
-import {LOCALIZER} from './framework';
-import * as particle from '@apila/particle-runtime';
 
 /**
  * notes/todo:
@@ -26,7 +31,7 @@ import * as particle from '@apila/particle-runtime';
 const ranges = [
   {
     low: 0,
-    high: 20,
+    high: 15,
     minScroll: 0.35,
     maxScroll: 2.5,
     minScaling: 1.0,
@@ -34,7 +39,7 @@ const ranges = [
     animation: '1',
   },
   {
-    low: 20,
+    low: 15,
     high: 40,
     minScroll: 0.35,
     maxScroll: 3.5,
@@ -51,13 +56,6 @@ const ranges = [
     maxScaling: 1.2,
     animation: '3',
   },
-  // {
-  //   low: 100,
-  //   high: 200,
-  //   minScroll: 0.35,
-  //   maxScroll: 5.5,
-  //   animation: '4',
-  // },
 ];
 
 const options = {
@@ -77,10 +75,10 @@ const options = {
   bigWinBumpTime: 0.3,
   bigWinBumpAmount: 0.1,
 
-  hideDuration: 0.2,
+  hideDuration: 0.5,
 
   smallWinHideDelay: 2,
-  bigWinHideDelay: 3,
+  bigWinHideDelay: 4,
 
   showScrollerOnSmallWins: false,
 
@@ -97,11 +95,11 @@ export enum ScrollStyle {
 function getLevelScrollTime(winFactor: number, level: number): number {
   const range = ranges[level];
   let winFactorN = minMaxNormalize(winFactor, range.low, range.high);
-  winFactorN = gfx.clamp(winFactorN, 0, 1);
+  winFactorN = clamp(winFactorN, 0, 1);
   const scrollTime = anim.easeLinear(
     range.minScroll,
     range.maxScroll,
-    winFactorN
+    winFactorN,
   );
   return scrollTime;
 }
@@ -109,16 +107,16 @@ function getLevelScrollTime(winFactor: number, level: number): number {
 function getLevelScaling(winFactor: number, level: number): number {
   const range = ranges[level];
   let winFactorN = minMaxNormalize(winFactor, range.low, range.high);
-  winFactorN = gfx.clamp(winFactorN, 0, 1);
+  winFactorN = clamp(winFactorN, 0, 1);
   const scaling = anim.easeLinear(
     range.minScaling,
     range.maxScaling,
-    winFactorN
+    winFactorN,
   );
   return scaling;
 }
 
-function getTargetLevel(winFactor: number): number {
+export function getTargetLevel(winFactor: number): number {
   let level = 0;
   for (; level < ranges.length - 1; ++level) {
     if (winFactor < ranges[level].high) {
@@ -129,52 +127,62 @@ function getTargetLevel(winFactor: number): number {
   return level;
 }
 
-class MoneyRainEffect {
-  public coinRain: particle.ParticleEffect;
+class MoneyRainEffect implements AnimationStateListener {
+  public spine: gfx.Spine;
   public reelIndex?: number;
   public remove?: (moneyRain: MoneyRainEffect) => void;
 
   constructor(parent: gfx.Empty) {
-    this.coinRain = particle.createEffect(COIN_RAIN, {
-      name: 'coin_rain_particle',
-      parent,
-      depthGroup: parent.depthGroup,
-    });
+    this.spine = CORE.gfx.createSpine('money_rain');
+    this.spine.parent = parent;
+    this.spine.depthGroup = parent.depthGroup;
+    this.spine.state.addListener(this);
 
-    AUTO_TICK.add(this.coinRain);
+    AUTO_TICK.add(this.spine, Physics.none);
+  }
+
+  public complete(entry: TrackEntry): void {
+    if (entry.trackIndex === 0) {
+      if (this.remove) {
+        this.remove(this);
+      }
+    }
   }
 
   public show(level: number): void {
-    this.coinRain.start();
+    const animations = ['rain_big', 'rain_mega', 'rain_epic'];
 
-    const emitrateMultipliers = [1, 2, 3];
-    const emitrateMultiplier = emitrateMultipliers[level];
+    this.spine.visible = true;
+    this.spine.state.setAnimation(
+      0,
+      animations[Math.min(Math.max(level, 0), animations.length)],
+    );
 
-    const emitrate =
-      COIN_RAIN.emitterProperties[1].emitRate.value[0] * emitrateMultiplier;
+    const randomAnimations = ['randomize_0', 'randomize_1', 'randomize_2'];
 
-    this.coinRain.emitters[1].emitRate = particle.paramScalar(emitrate);
+    const randomLevel = Math.floor(Math.random() * randomAnimations.length);
+
+    this.spine.state.setAnimation(1, randomAnimations[randomLevel]);
   }
 
   public burst(): void {
-    this.coinRain.emitters[0].restart();
-  }
-
-  public stop(): void {
-    this.coinRain.stop();
+    this.spine.visible = true;
+    this.spine.state.setAnimation(0, 'burst');
   }
 }
 
 export class WinScroll implements AnimationStateListener {
+  public extraEffect: WinScrollEffect;
+
   private scrollWinsum: gfx.BitmapText;
   private scrollTitle: WebfontSprite;
-  private scrollEffect: gfx.Spine;
+  private scrollEffects: gfx.Spine[] = [];
   private scrollRoot: gfx.Empty;
 
   private winscrollBump: gfx.Empty;
   private winscrollFade: gfx.Empty;
 
-  private moneyRain: MoneyRainEffect;
+  private moneyRain: Pool<MoneyRainEffect>;
 
   private timeline = new anim.Timeline();
   private delayedHide?: TimedEvent;
@@ -182,57 +190,88 @@ export class WinScroll implements AnimationStateListener {
 
   private winsum = 0;
   private bet = 0;
+  private multiplier = 1;
+  private isVisible = false;
+  private isQueueMultiplier = false;
+  private exceedMaxWin = false;
+  private isBaseGame = false;
   private scrollStyle = ScrollStyle.None;
   private winFactor = 0;
   private currentLevel = 0;
   private targetLevel = 0;
   private scrolling = false;
+  private scrollingTimer = 0;
   private scrollPromise?: (finished: boolean) => void;
+  private onScrollComplete?: () => void;
 
   private currentTimelines: anim.Playback[] = [];
 
   constructor(parent: gfx.NodeProperties) {
+    this.extraEffect = new WinScrollEffect(parent);
+
     this.scrollWinsum = getBitmapText(parent, 'winscroll-text');
     this.scrollTitle = new WebfontSprite(
       GAME.canvasTextBuilder,
       getSprite(parent, 'winscroll-title'),
       FONT.windisplayText,
-      FONT_STYLE.windisplayText
+      FONT_STYLE.windisplayText,
     );
+
     this.scrollRoot = getNode(parent, 'winscroll-root');
-    this.scrollEffect = getSpine(parent, 'winscroll-effect');
+
+    const scrollTint = getSpine(parent, 'winscroll-tint');
 
     this.winscrollBump = getNode(parent, 'winscroll-bump-scaling');
     this.winscrollFade = getNode(parent, 'winscroll-fade-scaling');
 
-    this.scrollEffect.glShader = 'spine_alpha';
-    this.scrollEffect.glUniform.multiplyColor = [1, 1, 1, 1];
-    this.scrollEffect.state.addListener(this);
+    scrollTint.glShader = 'spine_alpha';
+    scrollTint.glUniform['multiplyColor'] = [1, 1, 1, 1];
+    scrollTint.state.addListener(this);
+
+    this.scrollEffects.push(scrollTint);
 
     const moneyRainRoot = getNode(parent, 'moneyrain-root');
 
-    this.moneyRain = new MoneyRainEffect(moneyRainRoot);
+    this.moneyRain = new Pool<MoneyRainEffect>(() => {
+      const effect = new MoneyRainEffect(moneyRainRoot);
+      effect.remove = (item) => {
+        item.spine.state.clearTracks();
+        item.spine.skeleton.setToSetupPose();
+        item.spine.visible = false;
+        this.moneyRain.release(item);
+      };
+
+      return effect;
+    });
 
     this.scrollRoot.visible = false;
 
     CORE.input.listenNode(this.scrollWinsum, (e) => {
-      if (e.type === input.EventType.RELEASE) {
+      if (e.type === EventType.RELEASE) {
         this.scrollerClicked();
       }
     });
   }
   public start(_entry: TrackEntry): void {
-    this.scrollEffect.visible = true;
+    this.scrollEffects.forEach((effect) => {
+      effect.visible = true;
+    });
   }
 
   public scroll(
     winsum: number,
     bet: number,
-    scrollStyle: ScrollStyle
+    multiplier: number,
+    exceedMaxWin: boolean,
+    isBaseGame: boolean,
+    scrollStyle: ScrollStyle,
+    onScrollComplete?: () => void,
   ): Promise<boolean> {
+    this.onScrollComplete = onScrollComplete;
     if (
       this.winsum === winsum &&
       this.bet === bet &&
+      this.multiplier === multiplier &&
       this.scrollStyle === scrollStyle
     ) {
       return Promise.resolve(true);
@@ -247,56 +286,58 @@ export class WinScroll implements AnimationStateListener {
       this.delayedScroll = undefined;
     }
 
+    this.isVisible = true;
+    this.exceedMaxWin = exceedMaxWin;
+    this.isBaseGame = isBaseGame;
     this.winsum = winsum;
     this.bet = bet;
     this.scrollStyle = scrollStyle;
+    this.multiplier = multiplier;
+    this.isQueueMultiplier = this.multiplier > 1;
 
     this.currentLevel = 0;
-    this.winFactor = this.winsum / this.bet;
-    this.targetLevel =
-      this.scrollStyle & ScrollStyle.EnableBigWin
-        ? getTargetLevel(this.winFactor)
-        : 0;
-
-    if (this.targetLevel > 0) {
-      this.scrollWinsum.position = [0, 70];
-    } else {
-      this.scrollWinsum.position = [0, 20];
-    }
+    this.targetLevel = -1;
+    this.onMultiplierApplied();
 
     // small win, no scroll and effects
-    if (
-      !(this.scrollStyle & ScrollStyle.ShowScroller) &&
-      this.winsum <= this.bet
-    ) {
-      if (options.showScrollerOnSmallWins) {
-        this.scrollRoot.visible = true;
-        this.scrollWinsum.visible = false;
-        this.scrollTitle.visible = false;
-        this.scrollWinsum.opacity = 0;
-        this.scrollTitle.opacity = 0;
+    const noScroll = this.getWinsum() <= this.bet && isBaseGame;
 
-        this.scrollEffect.state.setAnimation(0, 'base_loop', true);
-        this.scrollEffect.glUniform.multiplyColor = [1, 1, 1, 1];
+    if (this.isQueueMultiplier) {
+      const delay = noScroll ? 0 : this.winFactor >= 10 ? 1400 : 400;
+      GAME.dragonPanel.startDragonBreath(
+        FireBreathState.WinsumMultiplierBreath,
+        delay,
+        noScroll ? 1.8 : 1,
+      );
+    }
 
-        this.scrollEffect.state.setAnimation(1, 'start_small', false);
+    if (noScroll) {
+      this.scrollRoot.visible = true;
+      this.scrollWinsum.visible = false;
+      this.scrollTitle.visible = false;
+      this.scrollWinsum.opacity = 0;
+      this.scrollTitle.opacity = 0;
 
-        this.scrollRoot.scale = [ranges[0].minScaling, ranges[0].minScaling];
+      this.scrollEffects.forEach((effect) => {
+        effect.state.setAnimation(0, 'base_loop', true);
+        effect.glUniform['multiplyColor'] = [1, 1, 1, 1];
+        effect.state.setAnimation(1, 'start_small', false);
+      });
 
-        this.scrollWinsum.visible = true;
+      this.scrollRoot.scale = [ranges[0].minScaling, ranges[0].minScaling];
 
-        this.currentTimelines.push(
-          this.timeline.animate(
-            (t) => t,
-            options.tinyWinFadeTime,
-            (value) => (this.scrollWinsum.opacity = value)
-          )
-        );
+      this.scrollWinsum.visible = true;
 
-        CORE.fx.trigger('fx_winsum_noscroll');
+      this.currentTimelines.push(
+        this.timeline.animate(
+          (t) => t,
+          options.tinyWinFadeTime,
+          (value) => (this.scrollWinsum.opacity = value),
+        ),
+      );
 
-        this.lastScrollLevel();
-      }
+      CORE.fx.trigger('fx_winsum_noscroll');
+      this.lastScrollLevel();
 
       return Promise.resolve(true);
     }
@@ -309,69 +350,48 @@ export class WinScroll implements AnimationStateListener {
 
     this.timeline = new anim.Timeline();
 
-    this.scrollEffect.state.setAnimation(0, 'base_loop', true);
-    this.scrollEffect.glUniform.multiplyColor = [1, 1, 1, 1];
+    this.scrollEffects.forEach((effect) => {
+      effect.state.setAnimation(0, 'base_loop', true);
+      effect.glUniform['multiplyColor'] = [1, 1, 1, 1];
 
-    if (this.targetLevel === 0) {
-      this.scrollEffect.state.setAnimation(1, 'start_normal', false);
-    } else {
-      const n = ranges[this.currentLevel].animation;
-      this.scrollEffect.state.setAnimation(1, `start_${n}`, false);
-    }
+      if (this.targetLevel === 0) {
+        effect.state.setAnimation(1, 'start_normal', false);
+      } else {
+        const n = ranges[this.currentLevel].animation;
+        effect.state.setAnimation(1, `start_${n}`, false);
+      }
+    });
 
     this.delayedScroll = CORE.gameTimer.invoke(
       this.targetLevel === 0 ? 0 : options.bigWinAppearDelay,
       () => {
         this.delayedScroll = undefined;
-        this.animateTextScrolling();
+        this.animateTextScrolling(0, this.getWinsum());
 
         this.scrollWinsum.visible = true;
 
-        if (this.targetLevel > 0) {
-          this.scrollTitle.visible = true;
-        }
-
-        this.timeline.animate(
-          (t) => t,
-          this.targetLevel === 0
-            ? options.smallWinFadeTime
-            : options.bigWinFadeTime,
-          (value) => {
-            this.scrollWinsum.opacity = value;
-            this.scrollTitle.opacity = value;
-          }
-        );
-
-        this.timeline.animate(
-          (t) => t,
-          this.targetLevel === 0
-            ? options.smallWinScaleTime
-            : options.bigWinScaleTime,
-          (value) => {
-            const s =
-              options.appearScaleAmount[0] +
-              (options.appearScaleAmount[1] - options.appearScaleAmount[0]) *
-                anim.easeOutCubic(0, 1, value);
-
-            this.winscrollFade.scale = [s, s];
-          }
-        );
+        this.toggleScrollTitleText();
 
         this.scrolling = true;
-        this.moneyRain.show(this.currentLevel);
+        this.scrollingTimer = 0;
 
         CORE.fx.trigger('fx_winsum_scrolling_start');
-        if (this.targetLevel > 0) {
+        if (this.targetLevel == 0) {
+          CORE.fx.trigger(
+            this.getWinsum() / this.bet < 5.0
+              ? 'fx_winsum_noscroll'
+              : 'fx_winsum_small',
+          );
+
+          this.scrollEffects.forEach((effect) => {
+            effect.state.setAnimation(1, 'start_normal', false);
+          });
+        } else {
           CORE.fx.trigger('fx_winsum_big');
           CORE.fx.trigger('fx_winsum_scrolling_bg_start');
-
           this.updateBigWinTitle();
-        } else {
-          CORE.fx.trigger('fx_winsum_small');
-
-          this.scrollEffect.state.setAnimation(1, 'start_normal', false);
         }
-      }
+      },
     );
 
     return new Promise((resolve) => {
@@ -379,21 +399,33 @@ export class WinScroll implements AnimationStateListener {
     });
   }
 
-  private animateTextScrolling(): void {
-    const scrollTime =
+  private animateTextScrolling(from: number, to: number): void {
+    let scrollTime =
       this.targetLevel === 0
         ? options.smallWinScrollTime
         : getLevelScrollTime(this.winFactor, this.currentLevel);
     const range = ranges[this.currentLevel];
-    const levelMinWinsum = range.low * this.bet;
+    const startingValue = from;
     const levelMaxWinsum = range.high * this.bet;
+
+    if (this.isQueueMultiplier) {
+      let totalScrollTime = 0;
+      for (let i = 0; i <= this.targetLevel; ++i) {
+        totalScrollTime += getLevelScrollTime(this.winFactor, i);
+      }
+      if (this.winFactor >= 10) {
+        scrollTime *= 2.0 / totalScrollTime;
+      } else {
+        scrollTime *= 1.0 / totalScrollTime;
+      }
+    }
 
     const scaling = getLevelScaling(this.winFactor, this.currentLevel);
 
     const targetScroll =
-      this.currentLevel === this.targetLevel ? this.winsum : levelMaxWinsum;
+      this.currentLevel === this.targetLevel ? to : levelMaxWinsum;
 
-    let previousSum = levelMinWinsum;
+    let scrollValue = startingValue;
     this.currentTimelines.push(
       this.timeline
         .animate(
@@ -412,25 +444,30 @@ export class WinScroll implements AnimationStateListener {
               P3 * Math.pow(value, 3);
 
             let sum = Math.floor(
-              anim.easeLinear(levelMinWinsum, targetScroll, x)
+              anim.easeLinear(startingValue, targetScroll, x),
             );
 
             // add variation to avoid patterns in scrolling sum
-            const diff = Math.min(Math.max(0, sum - previousSum), 30);
+            const diff = Math.min(Math.max(0, sum - scrollValue), 30);
             sum += Math.floor(Math.random() * diff) - diff / 2;
-            sum = gfx.clamp(sum, levelMinWinsum, targetScroll);
+            sum = clamp(sum, startingValue, targetScroll);
 
+            // this.scrollWinsum.text = CORE.localization.formatValue(
+            //   sum,
+            //   loc.MoneyContextType.Price,
+            //   {forceDecimals: true},
+            // );
             this.scrollWinsum.text = LOCALIZER.money(sum);
 
             const scaleValue = anim.easeLinear(
               range.minScaling,
               scaling,
-              value
+              value,
             );
             this.winscrollBump.scale = [scaleValue, scaleValue];
 
-            previousSum = sum;
-          }
+            scrollValue = sum;
+          },
         )
         .after(() => {
           if (this.currentLevel < this.targetLevel) {
@@ -439,16 +476,17 @@ export class WinScroll implements AnimationStateListener {
           } else {
             this.lastScrollLevel();
           }
-        })
+        }),
     );
   }
 
   private updateBigWinTitle(): void {
-    this.moneyRain.burst();
+    this.extraEffect.playBigWinParticle(this.currentLevel);
+    this.moneyRain.reserve().burst();
 
-    this.scrollTitle.text = LOCALIZER.get(
-      `win_scroll_level_${this.currentLevel}`
-    );
+    const key = `win_scroll_level_${this.currentLevel}`;
+    // CORE.localization.bind(this.scrollTitle, key as keyof Translations);
+    this.scrollTitle.text = LOCALIZER.get(key);
 
     this.currentTimelines.push(
       this.timeline.animate(
@@ -461,12 +499,17 @@ export class WinScroll implements AnimationStateListener {
               (0.5 - 0.5 * Math.cos(Math.pow(1 - value, 3) * Math.PI * 2));
 
           this.scrollTitle.scale = [scaleValue, scaleValue];
-        }
-      )
+        },
+      ),
     );
   }
 
   public hide(): void {
+    this.isVisible = false;
+    this.extraEffect.hideBigWinEffect();
+
+    CORE.fx.trigger('fx_winsum_stop_all');
+
     if (this.delayedHide !== undefined || this.scrollRoot.visible === false) {
       return;
     }
@@ -487,13 +530,16 @@ export class WinScroll implements AnimationStateListener {
     }
 
     this.scrollWinsum.visible = true;
+
     this.scrollWinsum.text = LOCALIZER.money(this.winsum);
 
     this.delayedHide = CORE.gameTimer.invoke(options.hideDuration, () => {
-      this.scrollEffect.visible = false;
+      this.scrollEffects.forEach((effect) => {
+        effect.visible = false;
+      });
       this.scrollTitle.visible = false;
       this.scrollRoot.visible = false;
-      this.scrollTitle.text = '';
+      // CORE.localization.unbind(this.scrollTitle);
       this.delayedHide = undefined;
       this.currentTimelines = [];
       this.winsum = 0;
@@ -502,76 +548,134 @@ export class WinScroll implements AnimationStateListener {
     });
 
     this.timeline.animate(anim.InOutQuad(1, 0), options.hideDuration, (t) => {
-      this.scrollEffect.glUniform.multiplyColor = [t, t, t, t];
+      this.scrollEffects.forEach((effect) => {
+        effect.glUniform['multiplyColor'] = [t, t, t, t];
+      });
       this.scrollTitle.opacity = t;
       this.scrollWinsum.opacity = t;
     });
-
-    if (this.scrolling) {
-      this.scrolling = false;
-      this.moneyRain.stop();
-      if (this.targetLevel > 0) {
-        CORE.fx.trigger('fx_winsum_scrolling_stop_big');
-      } else {
-        CORE.fx.trigger('fx_winsum_scrolling_stop_small');
-      }
-    }
   }
 
   public update(delta: number): void {
+    if (this.scrolling) {
+      if (
+        ((this.targetLevel === 0 && options.showMoneyOnSmallWins) ||
+          this.targetLevel > 0) &&
+        this.scrollingTimer <= 0.0
+      ) {
+        this.moneyRain.reserve().show(this.currentLevel);
+        this.scrollingTimer = 0.4;
+      }
+
+      this.scrollingTimer -= delta;
+    }
+    this.extraEffect.update(delta);
+    this.extraEffect.updateMultiplier(delta);
     this.timeline.tick(delta);
   }
 
   public nextScrollLevel(): void {
     ++this.currentLevel;
-    this.animateTextScrolling();
+    const range = ranges[this.currentLevel];
+    const currentValue = range.low * this.bet;
+    this.animateTextScrolling(currentValue, this.getWinsum());
 
     const n = ranges[this.currentLevel].animation;
-    this.scrollEffect.state.setAnimation(1, `start_${n}`, false);
 
-    // Increase emit rate for each scroll level
-    this.moneyRain.show(this.currentLevel);
+    this.scrollEffects.forEach((effect) => {
+      effect.state.setAnimation(1, `start_${n}`, false);
+    });
 
     this.updateBigWinTitle();
   }
 
-  public lastScrollLevel(): void {
+  public async lastScrollLevel(): Promise<void> {
     this.scrollTitle.scale = [1, 1];
-    this.scrollWinsum.text = LOCALIZER.money(this.winsum);
+    this.scrollWinsum.text = LOCALIZER.money(this.getWinsum());
     this.scrolling = false;
-    this.moneyRain.stop();
+    if (!this.isQueueMultiplier) {
+      this.onScrollComplete?.();
+    }
     if (this.targetLevel > 0) {
       CORE.fx.trigger('fx_winsum_scrolling_stop_big');
     } else {
       CORE.fx.trigger('fx_winsum_scrolling_stop_small');
     }
 
-    if (this.scrollStyle & ScrollStyle.HideAfterDelay) {
-      const hideTime =
-        this.targetLevel === 0
-          ? options.smallWinHideDelay
-          : options.bigWinHideDelay;
+    if (this.isQueueMultiplier) {
+      this.isQueueMultiplier = false;
+      await wait(1000);
+      if (!this.isVisible) {
+        return;
+      }
 
-      this.currentTimelines.push(
-        this.timeline
-          .animate(
-            (t) => t,
-            hideTime,
-            (_) => {}
-          )
-          .after(() => {
-            if (this.scrollPromise) {
-              this.scrollPromise(true);
-              this.scrollPromise = undefined;
-            }
+      if (this.getWinsum() > this.bet && this.winFactor < 10) {
+        await wait(666);
+      }
+      this.extraEffect.multiplierEffect(this.multiplier);
+      await wait(this.multiplier < 10 ? 500 : 1500);
+      if (!this.isVisible) {
+        return;
+      }
 
-            this.hide();
-          })
-      );
+      this.extraEffect.doMultiplierExplosion();
+      await wait(this.multiplier < 10 ? 500 : 700);
+      if (!this.isVisible) {
+        return;
+      }
+
+      this.onMultiplierApplied();
+      if (this.targetLevel > 0) {
+        this.toggleScrollTitleText(false);
+        this.updateBigWinTitle();
+        this.extraEffect.playBigWinParticle(this.currentLevel);
+        CORE.fx.trigger('fx_winsum_scrolling_bg_start');
+
+        this.scrollEffects.forEach((effect) => {
+          effect.state.setAnimation(0, 'base_loop', true);
+          effect.glUniform['multiplyColor'] = [1, 1, 1, 1];
+          const n = ranges[this.currentLevel].animation;
+          effect.state.setAnimation(1, `start_${n}`, false);
+        });
+      }
+      this.animateTextScrolling(this.winsum / this.multiplier, this.winsum);
+
+      await wait(3000);
+      this.extraEffect.killMultiplierEffect();
+    } else {
+      if (this.isBaseGame) {
+        CORE.fx.trigger('music_gamble_query');
+      }
+      if (this.scrollStyle & ScrollStyle.HideAfterDelay) {
+        const hideTime =
+          this.targetLevel === 0
+            ? options.smallWinHideDelay
+            : options.bigWinHideDelay;
+
+        this.currentTimelines.push(
+          this.timeline
+            .animate(
+              (t) => t,
+              hideTime,
+              (_) => {},
+            )
+            .after(() => {
+              if (this.scrollPromise) {
+                this.scrollPromise(true);
+                this.scrollPromise = undefined;
+              }
+
+              this.hide();
+            }),
+        );
+      }
     }
   }
 
   public scrollerClicked(): void {
+    if (this.isBaseGame) {
+      CORE.fx.trigger('music_gamble_query');
+    }
     if (this.scrolling) {
       this.currentTimelines.forEach((e) => e.remove());
       this.currentTimelines = [];
@@ -588,6 +692,63 @@ export class WinScroll implements AnimationStateListener {
       }
 
       this.hide();
+    }
+  }
+
+  private getWinsum(): number {
+    return this.isQueueMultiplier ? this.winsum / this.multiplier : this.winsum;
+  }
+
+  private onMultiplierApplied(): void {
+    this.winFactor = this.getWinsum() / this.bet;
+    const oldTargetLevel = this.targetLevel;
+    this.targetLevel =
+      this.scrollStyle & ScrollStyle.EnableBigWin
+        ? getTargetLevel(this.winFactor)
+        : 0;
+
+    if (this.targetLevel > 0 && oldTargetLevel < 1) {
+      this.scrollWinsum.position = [0, 20];
+      this.extraEffect.bigWinEffect();
+    } else {
+      this.scrollWinsum.position = [0, 20];
+    }
+  }
+
+  private toggleScrollTitleText(isFadeIn = true): void {
+    if (this.targetLevel > 0) {
+      this.scrollTitle.visible = true;
+    }
+
+    if (isFadeIn) {
+      this.timeline.animate(
+        (t) => t,
+        this.targetLevel === 0
+          ? options.smallWinFadeTime
+          : options.bigWinFadeTime,
+        (value) => {
+          this.scrollWinsum.opacity = value;
+          this.scrollTitle.opacity = value;
+        },
+      );
+
+      this.timeline.animate(
+        (t) => t,
+        this.targetLevel === 0
+          ? options.smallWinScaleTime
+          : options.bigWinScaleTime,
+        (value) => {
+          const s =
+            options.appearScaleAmount[0] +
+            (options.appearScaleAmount[1] - options.appearScaleAmount[0]) *
+              anim.easeOutCubic(0, 1, value);
+
+          this.winscrollFade.scale = [s, s];
+        },
+      );
+    } else {
+      this.scrollWinsum.opacity = 1;
+      this.scrollTitle.opacity = 1;
     }
   }
 }

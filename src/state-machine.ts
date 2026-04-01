@@ -35,22 +35,13 @@ export class StateMachine {
   public readonly states: StateConstructor[];
   public currentState: State;
 
-  public previousLogTime = 0;
-
   constructor(states: StateConstructor[], initState: State) {
     this.states = states;
     this.currentState = initState;
   }
 
   private logTrace(_log: string): void {
-    const timeNow = performance.now();
-    const timeTook = Math.floor(timeNow - this.previousLogTime) / 1000;
-
-    if (timeTook > 0.01) {
-      _log += ` ${timeTook}s`;
-    }
-
-    this.previousLogTime = timeNow;
+    // nop
   }
 
   public async run() {

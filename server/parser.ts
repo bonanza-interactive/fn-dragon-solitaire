@@ -7,9 +7,6 @@ export type ProgramOptions = {
   useReleaseAssets: boolean;
   useRemoteBackend: boolean;
   useAssetTracker: boolean;
-  releaseCfBaseUrl: string | undefined;
-  cfDevelopmentServer: string | undefined;
-  useLatestDevFrame: boolean;
 };
 
 const PARSER_OPTIONS = {
@@ -48,16 +45,6 @@ const PARSER_OPTIONS = {
     default: false,
     description: 'Display list of unused assets on an overlay on the web page',
   },
-  devgf: {
-    type: 'boolean',
-    default: false,
-    description: `Use casino frame development server from casino frame project to provide frame bundle and localizations.`,
-  },
-  gf: {
-    type: 'string',
-    default: '',
-    description: `Use deployed version of casino frame. Specified with environment and version (stg/v1.0.1-casino)`,
-  },
   help: {
     type: 'boolean',
     short: 'h',
@@ -85,19 +72,6 @@ export function parse(args: string[]): ProgramOptions {
       throw new Error(`Illegal port ${res.values.port}`);
     }
 
-    let releaseCfBaseUrl: string | undefined = undefined;
-    if (res.values.gf) {
-      const val = res.values.gf;
-      const [e, v] = val.split('/');
-      if (e && v) {
-        releaseCfBaseUrl = `https://static.cluster.gaas.${e}.gcp.veikkaus.com/assets/frontend/game-frame/${v}/`;
-      } else {
-        throw new Error(
-          `Could parse casino frame environment and version. Use format <env>/<version>.`
-        );
-      }
-    }
-
     if (res.values.help) {
       printHelp();
       process.exit(0);
@@ -109,11 +83,6 @@ export function parse(args: string[]): ProgramOptions {
       useReleaseAssets: res.values.release ?? false,
       useRemoteBackend: res.values.remote ?? false,
       useAssetTracker: res.values['track-assets'] ?? false,
-      releaseCfBaseUrl,
-      cfDevelopmentServer: res.values.devgf
-        ? 'http://localhost:8000/'
-        : undefined,
-      useLatestDevFrame: false,
     };
   } catch (e) {
     printHelp();

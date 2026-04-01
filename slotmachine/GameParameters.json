@@ -1,0 +1,247 @@
+{
+  "commonName": "Lohikäärmekeno",
+  "commonFeatures": [
+    "doubling",
+    "free",
+    "special"
+  ],
+  "commonGameType": [
+    "keno"
+  ],
+  "description": {
+    "fi_FI": "Lohikäärmekeno on kenopeli, jossa tavoitteenasi on valita arvottavat kortit oikein. Peruspelissä on joka kierroksella mahdollista saada lohikäärmekortti, joka aktivoi voittokertoimen tai vapaapelit.",
+    "en_FI": "Lohikäärmekeno is a game where the goal is to choose the cards that will be drawn. In the base game, it is possible to get a Dragon Card in each round, which activates a win multiplier or free games.",
+    "sv_FI": "Lohikäärmekeno är ett kenospel där ditt mål är att välja korrekt de kort som dras. I grundspelet är det möjligt att få ett drakkort i varje omgång, vilket aktiverar en vinstmultiplikator eller frispel."
+  },
+  "version": {
+    "PP": {
+      "bets": [
+        20,
+        40,
+        60,
+        80,
+        100
+      ],
+      "minBet": 20,
+      "maxBet": 100,
+      "regulations": [
+        "A"
+      ],
+      "rtp": "91.0",
+      "volatility": 2
+    },
+    "PS": {
+      "bets": [
+        20,
+        40,
+        60,
+        80,
+        100,
+        120,
+        140,
+        160,
+        180,
+        200
+      ],
+      "minBet": 20,
+      "maxBet": 200,
+      "regulations": [
+        "B",
+        "C"
+      ],
+      "rtp": "91.0",
+      "volatility": 2
+    }
+  },
+  "helpImageConfig": {
+    "empty": []
+  },
+  "loadingScreen": {
+    "hertta": {
+      "image": "menu/loading_bg.png",
+      "keyFlagLogo": true,
+      "gameStudioLogo": true,
+      "featureTexts": []
+    },
+    "voitto": {
+      "image": "menu/loading_bg.png",
+      "keyFlagLogo": true,
+      "gameStudioLogo": true,
+      "featureTexts": []
+    },
+    "voltti": {
+      "image": "menu/loading_bg.jpg",
+      "keyFlagLogo": true,
+      "gameStudioLogo": true,
+      "featureTexts": []
+    }
+  },
+  "themeSettings": {
+    "hertta": {
+      "backgroundImage": "theme/theme.png",
+      "ledFxConfiguration": "theme/fx_config.json",
+      "ledFxDefinition": "theme/fx_definitions.json",
+      "screensaverBackgroundAnimation": "theme/screensaver.webm",
+      "loggedInImage": "theme/logged_in.png"
+    },
+    "voitto": {
+      "backgroundImage": "theme/theme.png",
+      "ledFxConfiguration": "theme/fx_config.json",
+      "ledFxDefinition": "theme/fx_definitions.json",
+      "screensaverBackgroundAnimation": "theme/screensaver.webm",
+      "loggedInImage": "theme/logged_in.png"
+    },
+    "voltti": {
+      "backgroundImage": "theme/theme.png",
+      "ledFxConfiguration": "theme/fx_config.json",
+      "ledFxDefinition": "theme/fx_definitions.json",
+      "screensaverBackgroundAnimation": "theme/screensaver.webm",
+      "loggedInImage": "theme/logged_in.png",
+      "topScreenLogo": "theme/topscreenlogo.webm"
+    }
+  },
+  "menuConfig": {
+    "common": {
+      "tileS": "menu/1x1.png",
+      "tileM": "menu/1x2.png",
+      "tileL": "menu/2x2.png",
+      "videoS": "menu/1x1.webm",
+      "videoM": "menu/1x2.webm",
+      "videoL": "menu/2x2.webm",
+      "featureVideo_1x1": "menu/features_1x1.webm",
+      "featureVideo_2x2": "menu/features_2x2.webm"
+    }
+  },
+  "systemUiConfig": {
+    "hertta": {
+      "myveikkaus_button_bottommargin": 252,
+      "setting_buttons_visible": true
+    },
+    "voitto": {
+      "myveikkaus_button_bottommargin": 262,
+      "setting_buttons_bottommargin": 170,
+      "setting_buttons_visible": true
+    },
+    "voltti": {
+      "myveikkaus_button_bottommargin": 252,
+      "setting_buttons_visible": true
+    }
+  },
+  "Hertta": [
+    {
+      "gameId": 55032021,
+      "gameName": "LohikaarmekenoHerttaPP",
+      "gameGfxDllPath": "none",
+      "gameGfxDllParameterPath": "gfx_pp.xml",
+      "gameLogicDllPath": "/psi/lib/libmaya_session_server.so",
+      "gameLogicDllParameterPath": "",
+      "helpImageConfig": "empty",
+      "themeSettings": "hertta",
+      "loadingScreen": "hertta",
+      "menuConfig": "common",
+      "systemUiConfig": "hertta",
+      "version": "PP"
+    },
+    {
+      "gameId": 55032022,
+      "gameName": "LohikaarmekenoHerttaPS",
+      "gameGfxDllPath": "none",
+      "gameGfxDllParameterPath": "gfx_ps.xml",
+      "gameLogicDllPath": "/psi/lib/libmaya_session_server.so",
+      "gameLogicDllParameterPath": "",
+      "helpImageConfig": "empty",
+      "themeSettings": "hertta",
+      "loadingScreen": "hertta",
+      "menuConfig": "common",
+      "systemUiConfig": "hertta",
+      "version": "PS"
+    }
+  ],
+  "Voitto": [
+    {
+      "gameId": 55032011,
+      "gameName": "LohikaarmekenoVoittoPP",
+      "gameGfxDllPath": "none",
+      "gameGfxDllParameterPath": "gfx_pp.xml",
+      "gameLogicDllPath": "/psi/lib/libmaya_session_server.so",
+      "gameLogicDllParameterPath": "",
+      "helpImageConfig": "empty",
+      "themeSettings": "voitto",
+      "loadingScreen": "voitto",
+      "menuConfig": "common",
+      "systemUiConfig": "voitto",
+      "version": "PP"
+    },
+    {
+      "gameId": 55032012,
+      "gameName": "LohikaarmekenoVoittoPS",
+      "gameGfxDllPath": "none",
+      "gameGfxDllParameterPath": "gfx_ps.xml",
+      "gameLogicDllPath": "/psi/lib/libmaya_session_server.so",
+      "gameLogicDllParameterPath": "",
+      "helpImageConfig": "empty",
+      "themeSettings": "voitto",
+      "loadingScreen": "voitto",
+      "menuConfig": "common",
+      "systemUiConfig": "voitto",
+      "version": "PS"
+    }
+  ],
+  "Voltti": [
+    {
+      "gameId": 55032031,
+      "gameName": "LohikaarmekenoVolttiPP",
+      "gameGfxDllPath": "none",
+      "gameGfxDllParameterPath": "gfx_pp.xml",
+      "gameLogicDllPath": "/psi/lib/libmaya_session_server.so",
+      "gameLogicDllParameterPath": "",
+      "helpImageConfig": "empty",
+      "themeSettings": "voltti",
+      "loadingScreen": "voltti",
+      "menuConfig": "common",
+      "systemUiConfig": "voltti",
+      "version": "PP",
+      "ideck": {
+        "backgroundImagePath": "ideck_pp/gfx/background.png",
+        "buttonImagesPath": "ideck_pp/gfx/style/",
+        "buttons": [
+          "0.2",
+          "0.4",
+          "0.6",
+          "0.8",
+          "1.0"
+        ]
+      }
+    },
+    {
+      "gameId": 55032032,
+      "gameName": "LohikaarmekenoVolttiPS",
+      "gameGfxDllPath": "none",
+      "gameGfxDllParameterPath": "gfx_ps.xml",
+      "gameLogicDllPath": "/psi/lib/libmaya_session_server.so",
+      "gameLogicDllParameterPath": "",
+      "helpImageConfig": "empty",
+      "themeSettings": "voltti",
+      "loadingScreen": "voltti",
+      "menuConfig": "common",
+      "systemUiConfig": "voltti",
+      "version": "PS",
+      "ideck": {
+        "backgroundImagePath": "ideck_ps/gfx/background.png",
+        "buttonImagesPath": "ideck_ps/gfx/style/",
+        "buttons": [
+          "0.2",
+          "0.4",
+          "0.6",
+          "0.8",
+          "1.0",
+          "1.2",
+          "1.4",
+          "1.6",
+          "1.8",
+          "2.0"
+        ]
+      }
+    }
+  ]
+}

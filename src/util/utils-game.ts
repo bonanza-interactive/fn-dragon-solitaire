@@ -1,31 +1,34 @@
-import {ChipType} from '../chips';
-import {Win} from '../config/backend-types';
-import {GameConfig} from '../config/config';
+import {Playback} from '@apila/game-libraries/dist/game-animation';
+
+import {CARD_DRAGON, GameConfig} from '../config/config';
 import {GAME} from '../game';
 import {CLIENT_STATE} from '../main';
 import {ScrollStyle} from '../win-scroll';
+import {RoundState} from '../config/backend-types';
 
 export enum Suit {
-  Spades = 'Spades',
-  Clubs = 'Clubs',
-  Diamonds = 'Diamonds',
-  Hearts = 'Hearts',
+  Spades = 'S',
+  Clubs = 'C',
+  Diamonds = 'D',
+  Hearts = 'H',
+  Jokers = 'Jokers',
 }
 
 export enum Rank {
-  Rank_A = 'Rank_A',
-  Rank_2 = 'Rank_2',
-  Rank_3 = 'Rank_3',
-  Rank_4 = 'Rank_4',
-  Rank_5 = 'Rank_5',
-  Rank_6 = 'Rank_6',
-  Rank_7 = 'Rank_7',
-  Rank_8 = 'Rank_8',
-  Rank_9 = 'Rank_9',
-  Rank_10 = 'Rank_10',
-  Rank_J = 'Rank_J',
-  Rank_Q = 'Rank_Q',
-  Rank_K = 'Rank_K',
+  Rank_A = 'A',
+  Rank_2 = '2',
+  Rank_3 = '3',
+  Rank_4 = '4',
+  Rank_5 = '5',
+  Rank_6 = '6',
+  Rank_7 = '7',
+  Rank_8 = '8',
+  Rank_9 = '9',
+  Rank_10 = '10',
+  Rank_J = 'J',
+  Rank_Q = 'Q',
+  Rank_K = 'K',
+  Joker = 'Joker',
 }
 
 export function rankToIndex(rank: string): number {
@@ -37,89 +40,83 @@ export function suitToIndex(suit: string): number {
 }
 
 export function cardToIndex(rank: string, suit: string): number {
+  if (rank === 'Joker' || suit === 'Jokers') return CARD_DRAGON;
   const rankIndex = rankToIndex(rank);
   const suitIndex = suitToIndex(suit);
-
   return suitIndex * 13 + rankIndex;
 }
 
-export function isSwappable(cards: {rank: string; suit: string}[]): boolean {
-  const hardPairLeft = cards[0].rank === cards[1].rank;
-  const hardPairRight = cards[2].rank === cards[3].rank;
-  const softPairLeft =
-    cards[0].rank === Rank.Rank_2 || cards[1].rank === Rank.Rank_2;
-  const softPairRight =
-    cards[2].rank === Rank.Rank_2 || cards[3].rank === Rank.Rank_2;
-
-  if (
-    (hardPairRight && !hardPairLeft) ||
-    (softPairRight && !hardPairLeft && !softPairLeft)
-  ) {
-    return true;
-  }
-  return false;
+export function indexToCard(index: number): string {
+  const suit = Math.floor(index / 13);
+  const rank = index % 13;
+  return Object.values(Suit)[suit] + Object.values(Rank)[rank];
 }
 
-export function hasJoker(cards: {rank: string; suit: string}[]): boolean {
-  return cards.find((e) => e.rank === Rank.Rank_2) !== undefined;
-}
-
-export function getWinIndex(win: Win): number {
-  return GameConfig.gameConfig.paytable.findIndex((e) => e.rank === win.hand);
-}
-
-export function getWinningCards(
-  result: {rank: string; suit: string}[],
-  winningCards: {rank: string; suit: string}[]
-): number[] {
-  const winningIndices = result
-    .map((resultCard, i) =>
-      winningCards.find(
-        (winningCard) =>
-          winningCard.rank === resultCard.rank &&
-          winningCard.suit === resultCard.suit
-      )
-        ? i
-        : -1
-    )
-    .filter((e) => e !== -1);
-
-  return winningIndices;
+export function isExceedMaxWin(round: RoundState): boolean {
+  return round.maxWinFactorReached;
 }
 
 export async function showWin(
   winAmount: number,
-  enableBigWin = false
+  enableBigWin: boolean,
+  isHideAfterDelay: boolean,
+  exceedMaxWin: boolean,
+  isBaseGame: boolean,
+  onScrollComplete?: () => void,
 ): Promise<void> {
-  if (CLIENT_STATE.bonusWon) {
-    GAME.chips.playAnimation(ChipType.LEFT, 2);
-    GAME.chips.playAnimation(ChipType.RIGHT1, 2);
-    GAME.chips.playAnimation(ChipType.RIGHT2, 2);
-  } else {
-    GAME.chips.playAnimation(ChipType.LEFT, 0);
-    GAME.chips.playAnimation(ChipType.RIGHT1, 0);
-    GAME.chips.playAnimation(ChipType.RIGHT2, 0);
-  }
+  const scrollStyle = isHideAfterDelay
+    ? enableBigWin
+      ? ScrollStyle.HideAfterDelay |
+        ScrollStyle.ShowScroller |
+        ScrollStyle.EnableBigWin
+      : ScrollStyle.HideAfterDelay | ScrollStyle.ShowScroller
+    : enableBigWin
+      ? ScrollStyle.ShowScroller | ScrollStyle.EnableBigWin
+      : ScrollStyle.ShowScroller;
 
-  const scrollStyle = enableBigWin
+  await GAME.winScroll.scroll(
+    winAmount,
+    CLIENT_STATE.bet,
+    1,
+    exceedMaxWin,
+    isBaseGame,
+    scrollStyle,
+    onScrollComplete,
+  );
+
+  if (enableBigWin) {
+    GAME.dragonPanel.stopDragonBreath();
+  }
+}
+
+export async function showWinWithMultiplier(
+  winAmount: number,
+  multiplier: number,
+  isHideAfterDelay: boolean,
+  exceedMaxWin: boolean,
+  isBaseGame: boolean,
+  onScrollComplete?: () => void,
+): Promise<void> {
+  const scrollStyle = isHideAfterDelay
     ? ScrollStyle.HideAfterDelay |
       ScrollStyle.ShowScroller |
       ScrollStyle.EnableBigWin
-    : ScrollStyle.HideAfterDelay | ScrollStyle.ShowScroller;
-
-  return GAME.winScroll
-    .scroll(winAmount, CLIENT_STATE.bet, scrollStyle)
-    .then((_) => {});
+    : ScrollStyle.ShowScroller | ScrollStyle.EnableBigWin;
+  await GAME.winScroll.scroll(
+    winAmount,
+    CLIENT_STATE.bet,
+    multiplier,
+    exceedMaxWin,
+    isBaseGame,
+    scrollStyle,
+    onScrollComplete,
+  );
 }
 
-export function gambleMusicLevel(winAmount: number, bet: number): number {
-  const winsum = winAmount / bet;
-
-  if (winsum < 10) return 0;
-  else if (winsum < 25) return 1;
-  else if (winsum < 50) return 2;
-  else if (winsum < 100) return 3;
-  else return 4;
+export function playbackAsync(playback: Playback): Promise<void> {
+  return new Promise<void>((resolve) => {
+    playback.after(resolve);
+  });
 }
 
 // input: h in [0,360] and s,v in [0,1] - output: r,g,b in [0,1]
@@ -136,7 +133,77 @@ export function hexColor(h: number, s: number, v: number): string {
     .map((e) =>
       Math.floor(e * 255)
         .toString(16)
-        .padStart(2, '0')
+        .padStart(2, '0'),
     )
     .join('');
+}
+
+export function getMaxMultiplier(): number | undefined {
+  const multipliers = [
+    ...GameConfig.gameConfig.dragonMultipliers.basegame,
+    ...GameConfig.gameConfig.dragonMultipliers.freespin,
+  ];
+  return multipliers.reduce(
+    (maxMultiplier, dragonMultiplier) => {
+      const maxInDragonMultiplier = dragonMultiplier.weightedDraw.reduce(
+        (maxItemMultiplier, item) => {
+          const itemMultiplier = item.item.multiplier;
+          if (
+            itemMultiplier !== undefined &&
+            (maxItemMultiplier === undefined ||
+              itemMultiplier > maxItemMultiplier)
+          ) {
+            return itemMultiplier;
+          }
+          return maxItemMultiplier;
+        },
+        undefined as number | undefined,
+      );
+
+      if (
+        maxInDragonMultiplier !== undefined &&
+        (maxMultiplier === undefined || maxInDragonMultiplier > maxMultiplier)
+      ) {
+        return maxInDragonMultiplier;
+      }
+
+      return maxMultiplier;
+    },
+    undefined as number | undefined,
+  );
+}
+
+export function getAllMultipliers(isFreespins: boolean): number[] {
+  const multipliers = isFreespins
+    ? GameConfig.gameConfig.dragonMultipliers.freespin
+    : GameConfig.gameConfig.dragonMultipliers.basegame;
+  return [
+    ...new Set(
+      multipliers
+        .flatMap((dragonMultiplier) =>
+          dragonMultiplier.weightedDraw.map((item) => item.item.multiplier),
+        )
+        .filter((multiplier): multiplier is number => multiplier !== undefined),
+    ),
+  ].sort((a, b) => a - b);
+}
+
+export function getMultipliersAsText(
+  isFreespins: boolean,
+  replaceLastComma: string | undefined = undefined,
+): string {
+  const multipliers: number[] = getAllMultipliers(isFreespins);
+  const multipliersString = multipliers
+    .map((multiplier) => `${multiplier}x`)
+    .join(', ');
+
+  if (replaceLastComma !== undefined) {
+    const formattedString = multipliersString.replace(
+      /, ([^,]*)$/,
+      ` ${replaceLastComma} $1`,
+    );
+    return formattedString;
+  }
+
+  return multipliersString;
 }

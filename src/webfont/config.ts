@@ -14,10 +14,13 @@ export type CanvasFontConfig = gfx.CanvasFont & Partial<{pad: number}>;
 
 export const FONT = {
   windisplayText: {family: 'BoxedHeavy', heightPx: 92, pad: 32},
+  freespinPopupContent: {family: 'BoxedHeavy', heightPx: 150, pad: 32},
   windisplayMoney: {family: 'BoxedHeavy', heightPx: 128},
   superText: {family: 'Overlock-Black', heightPx: 140},
   basic: {family: 'Overlock-Bold', heightPx: 36},
-} as const satisfies Record<string, CanvasFontConfig>;
+  basicBig: {family: 'Overlock-Bold', heightPx: 80},
+  paytableBasic: {family: 'Overlock-Bold', heightPx: 46},
+} satisfies Record<string, CanvasFontConfig>;
 
 export const FONT_STYLE = {
   windisplayText: [
@@ -36,7 +39,7 @@ export const FONT_STYLE = {
         [0.78125, '#ffb122'],
         [1, '#fecf41'],
       ],
-      {bounds: 'line-content'}
+      {bounds: 'line-content'},
     ),
     DrawFilledText(),
     popState,
@@ -76,7 +79,7 @@ export const FONT_STYLE = {
         [0.7228059789847565, '#e8a627'],
         [0.8800256524098465, '#f3d466'],
       ],
-      {bounds: 'line'}
+      {bounds: 'line'},
     ),
     DrawFilledText(),
     popState,
@@ -99,7 +102,7 @@ export const FONT_STYLE = {
         [0.65, '#d48a18'],
         [0.95, '#deb216'],
       ],
-      {bounds: 'line'}
+      {bounds: 'line'},
     ),
     DrawFilledText(),
     popState,

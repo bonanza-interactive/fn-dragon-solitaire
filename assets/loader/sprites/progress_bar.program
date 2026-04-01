@@ -1,0 +1,6 @@
+{
+  "id": "progress_bar",
+  "type": "Program",
+  "vs": "Default.Sprite",
+  "fs": "progress_bar.frag"
+}

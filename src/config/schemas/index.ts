@@ -2,12 +2,12 @@ import {schema} from '@apila/game-libraries';
 
 //Game schemas
 import {BASE_GAME} from './base-schema';
-import {GameLayer} from './schema-layers';
-import {UI_COMMON_ROOT} from './win-scroller-schema';
+import {GameLayer} from './common-schema';
+import {LOADING_SCREEN} from './loading-schema';
 
-export {BASE_GAME, GameLayer, UI_COMMON_ROOT};
+export {BASE_GAME, GameLayer, LOADING_SCREEN};
 
 schema.enableHotReload(module, {
   BASE_GAME,
-  UI_COMMON_ROOT,
+  LOADING_SCREEN,
 });

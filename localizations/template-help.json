@@ -1,22 +1,24 @@
 {
   "variants": [
     {
-      "variant": ["default", "rtp-90G100", "rtp-92G100", "rtp-95G100"],
+      "variant": "default",
       "sections": [
         {
           "paragraphs": [
             {
-              "text": "<div style='display: flex; justify-content: center; text-align: left;'><ul style='list-style-type: none;'><li><strong style='font-weight: bold;'>{WILD_HAND}:</strong> {help_hands_description_wild_hand}</li><li><strong style='font-weight: bold;'>{FIVE_OF_A_KIND}:</strong> {help_hands_description_five_of_a_kind}</li><li><strong style='font-weight: bold;'>{STRAIGHT_FLUSH}:</strong> {help_hands_description_straight_flush}</li><li><strong style='font-weight: bold;'>{FOUR_OF_A_KIND}:</strong> {help_hands_description_four_of_a_kind}</li><li><strong style='font-weight: bold;'>{FULL_HOUSE}:</strong> {help_hands_description_full_house}</li><li><strong style='font-weight: bold;'>{FLUSH}:</strong> {help_hands_description_flush}</li><li><strong style='font-weight: bold;'>{STRAIGHT}:</strong> {help_hands_description_straight}</li><li><strong style='font-weight: bold;'>{THREE_OF_A_KIND}:</strong> {help_hands_description_three_of_a_kind}</li><li><strong style='font-weight: bold;'>{TWO_PAIR}:</strong> {help_hands_description_two_pair}</li></ul></div>"
-            }
-          ]
-        },
-        {
-          "paragraphs": [
-            {
-              "header": "{help_header}"
+              "header": "{help_introduction_header}"
             },
             {
-              "text": "{help_description}"
+              "text": "{help_introduction_description_0}"
+            },
+            {
+              "text": "{help_introduction_description_1}"
+            },
+            {
+              "text": "{help_introduction_description_2}"
+            },
+            {
+              "text": "{help_introduction_description_3}"
             }
           ]
         },
@@ -29,10 +31,23 @@
               "text": "{help_how_to_play_description_0}"
             },
             {
-              "text": "{help_how_to_play_description_1}"
+              "text": "{help_how_to_play_description_1}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_back_button.png",
+                "style": "small",
+                "alt": "info_back_button"
+              }
             },
             {
-              "text": "{help_how_to_play_description_2}"
+              "text": "{help_how_to_play_description_2}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_swap_button.png",
+                "style": "small",
+                "alt": "info_swap_button"
+              }
+            },
+            {
+              "text": "{help_how_to_play_description_3}"
             }
           ]
         },
@@ -50,57 +65,88 @@
             },
             {
               "text": "{help_wins_description_2}"
-            },
-            {
-              "text": "{help_wins_description_3}"
             }
           ]
         },
         {
           "paragraphs": [
             {
-              "header": "{help_deck_header}"
+              "header": "{help_card_deck_header}"
             },
             {
-              "text": "{help_deck_description_0}"
+              "text": "{help_card_deck_description_0}"
             },
             {
-              "text": "{help_deck_description_1}"
+              "text": "{help_card_deck_description_1}"
             },
             {
-              "text": "{help_deck_description_2}"
+              "text": "{help_card_deck_description_2}"
+            },
+            {
+              "text": "{help_card_deck_description_3}"
+            },
+            {
+              "text": "{help_card_deck_description_4}"
+            },
+            {
+              "text": "{help_card_deck_description_5}"
+            },
+            {
+              "text": "{help_card_deck_description_6}"
             }
           ]
         },
         {
           "paragraphs": [
             {
-              "header": "{help_cardswap_header}"
-            },
-            {
-              "text": "{help_cardswap_description_0}"
-            },
-            {
+              "header": "{help_dragon_card_header}",
               "image": {
-                "src": "{assets_url}slot-ui/paytable/swap_button.png",
-                "alt": "Swap button"
+                "src": "{assets_url}slot-ui/paytable/info_dragon_free.png",
+                "style": "medium",
+                "alt": "info_dragon_free"
               }
             },
             {
-              "text": "{help_cardswap_description_1}"
+              "text": "{help_dragon_card_description_0}"
             },
             {
-              "text": "{help_cardswap_description_2}"
+              "text": "{help_dragon_card_description_1}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_dragon_card.png",
+                "alt": "info_dragon_card"
+              }
+            },
+            {
+              "text": "{help_dragon_card_description_2}"
             }
           ]
         },
         {
           "paragraphs": [
             {
-              "header": "{help_superround_header}"
+              "header": "{help_freespins_header}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_freespin_image.png",
+                "alt": "info_freespin_image"
+              }
             },
             {
-              "text": "{help_superround_description}"
+              "text": "{help_freespins_description_0}"
+            },
+            {
+              "text": "{help_freespins_description_1}"
+            },
+            {
+              "text": "{help_freespins_description_2}"
+            },
+            {
+              "text": "{help_freespins_description_3}"
+            },
+            {
+              "text": "{help_freespins_description_4}"
+            },
+            {
+              "text": "{help_freespins_description_5}"
             }
           ]
         },
@@ -127,7 +173,7 @@
               "gamble": true
             },
             {
-              "text": "{help_gamble_description_4}",
+              "text": "{help_gamble_description_4_tie_win}",
               "gamble": true
             },
             {
@@ -137,182 +183,30 @@
             {
               "text": "{help_gamble_description_6}",
               "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_7}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_8_bet_win}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_9}",
-              "gamble": true
-            }
-          ]
-        },
-        {
-          "paragraphs": [
-            {
-              "header": "{help_strategy_header}"
-            },
-            {
-              "text": "{help_player_decisions_description_0}"
-            },
-            {
-              "text": "{help_player_decisions_description_1}"
-            },
-            {
-              "table": {
-                "description": "{help_strategy_table_0_description}",
-                "rows": 6,
-                "columns": 2,
-                "rowHeader": "{help_strategy_table_0_column_label_0}",
-                "columnHeader": "{help_strategy_table_0_column_label_1}",
-                "pays": [
-                  [
-                    "{help_strategy_table_0_column_0_row_0}",
-                    "{help_strategy_table_0_column_1_row_0}"
-                  ],
-                  [
-                    "{help_strategy_table_0_column_0_row_1}",
-                    "{help_strategy_table_0_column_1_row_1}"
-                  ],
-                  [
-                    "{help_strategy_table_0_column_0_row_2}",
-                    "{help_strategy_table_0_column_1_row_2}"
-                  ],
-                  [
-                    "{help_strategy_table_0_column_0_row_3}",
-                    "{help_strategy_table_0_column_1_row_3}"
-                  ],
-                  [
-                    "{help_strategy_table_0_column_0_row_4}",
-                    "{help_strategy_table_0_column_1_row_4}"
-                  ],
-                  [
-                    "{help_strategy_table_0_column_0_row_5}",
-                    "{help_strategy_table_0_column_1_row_5}"
-                  ]
-                ]
-              }
-            },
-            {
-              "table": {
-                "description": "{help_strategy_table_1_description}",
-                "rows": 10,
-                "columns": 2,
-                "rowHeader": "{help_strategy_table_1_column_label_0}",
-                "columnHeader": "{help_strategy_table_1_column_label_1}",
-                "pays": [
-                  [
-                    "{help_strategy_table_1_column_0_row_0}",
-                    "{help_strategy_table_1_column_1_row_0}"
-                  ],
-                  [
-                    "{help_strategy_table_1_column_0_row_1}",
-                    "{help_strategy_table_1_column_1_row_1}"
-                  ],
-                  [
-                    "{help_strategy_table_1_column_0_row_2}",
-                    "{help_strategy_table_1_column_1_row_2}"
-                  ],
-                  [
-                    "{help_strategy_table_1_column_0_row_3}",
-                    "{help_strategy_table_1_column_1_row_3}"
-                  ],
-                  [
-                    "{help_strategy_table_1_column_0_row_4}",
-                    "{help_strategy_table_1_column_1_row_4}"
-                  ],
-                  [
-                    "{help_strategy_table_1_column_0_row_5}",
-                    "{help_strategy_table_1_column_1_row_5}"
-                  ],
-                  [
-                    "{help_strategy_table_1_column_0_row_6}",
-                    "{help_strategy_table_1_column_1_row_6}"
-                  ],
-                  [
-                    "{help_strategy_table_1_column_0_row_7}",
-                    "{help_strategy_table_1_column_1_row_7}"
-                  ],
-                  [
-                    "{help_strategy_table_1_column_0_row_8}",
-                    "{help_strategy_table_1_column_1_row_8}"
-                  ],
-                  [
-                    "{help_strategy_table_1_column_0_row_9}",
-                    "{help_strategy_table_1_column_1_row_9}"
-                  ]
-                ]
-              }
-            },
-            {
-              "table": {
-                "description": "{help_strategy_table_2_description}",
-                "rows": 8,
-                "columns": 2,
-                "rowHeader": "{help_strategy_table_2_column_label_0}",
-                "columnHeader": "{help_strategy_table_2_column_label_1}",
-                "pays": [
-                  [
-                    "{help_strategy_table_2_column_0_row_0}",
-                    "{help_strategy_table_2_column_1_row_0}"
-                  ],
-                  [
-                    "{help_strategy_table_2_column_0_row_1}",
-                    "{help_strategy_table_2_column_1_row_1}"
-                  ],
-                  [
-                    "{help_strategy_table_2_column_0_row_2}",
-                    "{help_strategy_table_2_column_1_row_2}"
-                  ],
-                  [
-                    "{help_strategy_table_2_column_0_row_3}",
-                    "{help_strategy_table_2_column_1_row_3}"
-                  ],
-                  [
-                    "{help_strategy_table_2_column_0_row_4}",
-                    "{help_strategy_table_2_column_1_row_4}"
-                  ],
-                  [
-                    "{help_strategy_table_2_column_0_row_5}",
-                    "{help_strategy_table_2_column_1_row_5}"
-                  ],
-                  [
-                    "{help_strategy_table_2_column_0_row_6}",
-                    "{help_strategy_table_2_column_1_row_6}"
-                  ],
-                  [
-                    "{help_strategy_table_2_column_0_row_7}",
-                    "{help_strategy_table_2_column_1_row_7}"
-                  ]
-                ]
-              }
             }
           ]
         }
       ]
     },
     {
-      "variant": "rtp-94G96",
+      "variant": "rtp-94G97",
       "sections": [
         {
           "paragraphs": [
             {
-              "text": "<div style='display: flex; justify-content: center; text-align: left;'><ul style='list-style-type: none;'><li><strong style='font-weight: bold;'>{WILD_HAND}:</strong> {help_hands_description_wild_hand}</li><li><strong style='font-weight: bold;'>{FIVE_OF_A_KIND}:</strong> {help_hands_description_five_of_a_kind}</li><li><strong style='font-weight: bold;'>{STRAIGHT_FLUSH}:</strong> {help_hands_description_straight_flush}</li><li><strong style='font-weight: bold;'>{FOUR_OF_A_KIND}:</strong> {help_hands_description_four_of_a_kind}</li><li><strong style='font-weight: bold;'>{FULL_HOUSE}:</strong> {help_hands_description_full_house}</li><li><strong style='font-weight: bold;'>{FLUSH}:</strong> {help_hands_description_flush}</li><li><strong style='font-weight: bold;'>{STRAIGHT}:</strong> {help_hands_description_straight}</li><li><strong style='font-weight: bold;'>{THREE_OF_A_KIND}:</strong> {help_hands_description_three_of_a_kind}</li><li><strong style='font-weight: bold;'>{TWO_PAIR}:</strong> {help_hands_description_two_pair}</li></ul></div>"
-            }
-          ]
-        },
-        {
-          "paragraphs": [
-            {
-              "header": "{help_header}"
+              "header": "{help_introduction_header}"
             },
             {
-              "text": "{help_description}"
+              "text": "{help_introduction_description_0}"
+            },
+            {
+              "text": "{help_introduction_description_1}"
+            },
+            {
+              "text": "{help_introduction_description_2}"
+            },
+            {
+              "text": "{help_introduction_description_3}"
             }
           ]
         },
@@ -325,10 +219,23 @@
               "text": "{help_how_to_play_description_0}"
             },
             {
-              "text": "{help_how_to_play_description_1}"
+              "text": "{help_how_to_play_description_1}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_back_button.png",
+                "style": "small",
+                "alt": "info_back_button"
+              }
             },
             {
-              "text": "{help_how_to_play_description_2}"
+              "text": "{help_how_to_play_description_2}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_swap_button.png",
+                "style": "small",
+                "alt": "info_swap_button"
+              }
+            },
+            {
+              "text": "{help_how_to_play_description_3}"
             }
           ]
         },
@@ -346,57 +253,88 @@
             },
             {
               "text": "{help_wins_description_2}"
-            },
-            {
-              "text": "{help_wins_description_3}"
             }
           ]
         },
         {
           "paragraphs": [
             {
-              "header": "{help_deck_header}"
+              "header": "{help_card_deck_header}"
             },
             {
-              "text": "{help_deck_description_0}"
+              "text": "{help_card_deck_description_0}"
             },
             {
-              "text": "{help_deck_description_1}"
+              "text": "{help_card_deck_description_1}"
             },
             {
-              "text": "{help_deck_description_2}"
+              "text": "{help_card_deck_description_2}"
+            },
+            {
+              "text": "{help_card_deck_description_3}"
+            },
+            {
+              "text": "{help_card_deck_description_4}"
+            },
+            {
+              "text": "{help_card_deck_description_5}"
+            },
+            {
+              "text": "{help_card_deck_description_6}"
             }
           ]
         },
         {
           "paragraphs": [
             {
-              "header": "{help_cardswap_header}"
-            },
-            {
-              "text": "{help_cardswap_description_0}"
-            },
-            {
+              "header": "{help_dragon_card_header}",
               "image": {
-                "src": "{assets_url}slot-ui/paytable/swap_button.png",
-                "alt": "Swap button"
+                "src": "{assets_url}slot-ui/paytable/info_dragon_free.png",
+                "style": "medium",
+                "alt": "info_dragon_free"
               }
             },
             {
-              "text": "{help_cardswap_description_1}"
+              "text": "{help_dragon_card_description_0}"
             },
             {
-              "text": "{help_cardswap_description_2}"
+              "text": "{help_dragon_card_description_1}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_dragon_card.png",
+                "alt": "info_dragon_card"
+              }
+            },
+            {
+              "text": "{help_dragon_card_description_2}"
             }
           ]
         },
         {
           "paragraphs": [
             {
-              "header": "{help_superround_header}"
+              "header": "{help_freespins_header}",
+              "image": {
+                "src": "{assets_url}slot-ui/paytable/info_freespin_image.png",
+                "alt": "info_freespin_image"
+              }
             },
             {
-              "text": "{help_superround_description}"
+              "text": "{help_freespins_description_0}"
+            },
+            {
+              "text": "{help_freespins_description_1}"
+            },
+            {
+              "text": "{help_freespins_description_2}"
+            },
+            {
+              "text": "{help_freespins_description_3}"
+            },
+            {
+              "text": "{help_freespins_description_4}"
+            },
+            {
+              "text": "{help_freespins_description_5}"
             }
           ]
         },
@@ -423,7 +361,15 @@
               "gamble": true
             },
             {
-              "text": "{help_gamble_description_4}",
+              "text": "{help_gamble_description_4_tie_break}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_4_tie_break_red}",
+              "gamble": true
+            },
+            {
+              "text": "{help_gamble_description_4_tie_break_black}",
               "gamble": true
             },
             {
@@ -433,198 +379,6 @@
             {
               "text": "{help_gamble_description_6}",
               "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_7}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_8_bet_return}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_9}",
-              "gamble": true
-            }
-          ]
-        },
-        {
-          "paragraphs": [
-            {
-              "header": "{help_strategy_header}"
-            },
-            {
-              "text": "{help_player_decisions_description_0}"
-            },
-            {
-              "text": "{help_player_decisions_description_1}"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "variant": "rtp-93G96X20000N",
-      "sections": [
-        {
-          "paragraphs": [
-            {
-              "text": "<div style='display: flex; justify-content: center; text-align: left;'><ul style='list-style-type: none;'><li><strong style='font-weight: bold;'>{WILD_HAND}:</strong> {help_hands_description_wild_hand}</li><li><strong style='font-weight: bold;'>{FIVE_OF_A_KIND}:</strong> {help_hands_description_five_of_a_kind}</li><li><strong style='font-weight: bold;'>{STRAIGHT_FLUSH}:</strong> {help_hands_description_straight_flush}</li><li><strong style='font-weight: bold;'>{FOUR_OF_A_KIND}:</strong> {help_hands_description_four_of_a_kind}</li><li><strong style='font-weight: bold;'>{FULL_HOUSE}:</strong> {help_hands_description_full_house}</li><li><strong style='font-weight: bold;'>{FLUSH}:</strong> {help_hands_description_flush}</li><li><strong style='font-weight: bold;'>{STRAIGHT}:</strong> {help_hands_description_straight}</li><li><strong style='font-weight: bold;'>{THREE_OF_A_KIND}:</strong> {help_hands_description_three_of_a_kind}</li><li><strong style='font-weight: bold;'>{TWO_PAIR}:</strong> {help_hands_description_two_pair}</li></ul></div>"
-            }
-          ]
-        },
-        {
-          "paragraphs": [
-            {
-              "header": "{help_header}"
-            },
-            {
-              "text": "{help_description}"
-            }
-          ]
-        },
-        {
-          "paragraphs": [
-            {
-              "header": "{help_how_to_play_header}"
-            },
-            {
-              "text": "{help_how_to_play_description_0}"
-            },
-            {
-              "text": "{help_how_to_play_description_1}"
-            },
-            {
-              "text": "{help_how_to_play_description_2}"
-            }
-          ]
-        },
-        {
-          "paragraphs": [
-            {
-              "header": "{help_wins_header}"
-            },
-            {
-              "text": "{help_wins_description_0}"
-            },
-            {
-              "text": "{help_wins_description_1}",
-              "gamble": true
-            },
-            {
-              "text": "{help_wins_description_2}"
-            },
-            {
-              "text": "{help_wins_description_3}"
-            }
-          ]
-        },
-        {
-          "paragraphs": [
-            {
-              "header": "{help_deck_header}"
-            },
-            {
-              "text": "{help_deck_description_0}"
-            },
-            {
-              "text": "{help_deck_description_1}"
-            },
-            {
-              "text": "{help_deck_description_2}"
-            }
-          ]
-        },
-        {
-          "paragraphs": [
-            {
-              "header": "{help_cardswap_header}"
-            },
-            {
-              "text": "{help_cardswap_description_0}"
-            },
-            {
-              "image": {
-                "src": "{assets_url}slot-ui/paytable/swap_button.png",
-                "alt": "Swap button"
-              }
-            },
-            {
-              "text": "{help_cardswap_description_1}"
-            },
-            {
-              "text": "{help_cardswap_description_2}"
-            }
-          ]
-        },
-        {
-          "paragraphs": [
-            {
-              "header": "{help_superround_header}"
-            },
-            {
-              "text": "{help_superround_description}"
-            }
-          ]
-        },
-        {
-          "paragraphs": [
-            {
-              "header": "{help_gamble_header}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_0}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_1}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_2}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_3}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_4}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_5}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_6}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_7}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_8_bet_return}",
-              "gamble": true
-            },
-            {
-              "text": "{help_gamble_description_9}",
-              "gamble": true
-            }
-          ]
-        },
-        {
-          "paragraphs": [
-            {
-              "header": "{help_strategy_header}"
-            },
-            {
-              "text": "{help_player_decisions_description_0}"
-            },
-            {
-              "text": "{help_player_decisions_description_1}"
             }
           ]
         }

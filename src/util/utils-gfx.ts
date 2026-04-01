@@ -2,9 +2,11 @@ import {Const, gfx} from '@apila/engine';
 import {anim} from '@apila/game-libraries';
 
 import {layoutConfig} from '../config/config';
-import {CORE, GAME} from '../game';
 import {AUTO_TICK} from '../main';
 import {IS_MOBILE_DEVICE} from '../framework';
+
+//import { layoutConfig } from './config/config';
+//import { minMaxNormalize } from './utils';
 
 export type ReelGameKitLayout = Const<gfx.Layout> & {
   readonly worldScale: number;
@@ -16,7 +18,7 @@ export type ReelGameKitLayout = Const<gfx.Layout> & {
 
 export function getWorldPosition(
   anchor: gfx.VectorT,
-  layout: ReelGameKitLayout
+  layout: ReelGameKitLayout,
 ): gfx.VectorT {
   return [
     layout.worldTopLeft[0] + anchor[0] * layout.worldVisibleSize[0],
@@ -46,7 +48,7 @@ export function getWorldSize(layout: Const<gfx.Layout>) {
 }
 
 export const getReelGameKitLayout = (
-  layout: Const<gfx.Layout>
+  layout: Const<gfx.Layout>,
 ): ReelGameKitLayout => {
   const worldScale = getWorldScale(layout);
 
@@ -80,7 +82,7 @@ export const getReelGameKitLayout = (
 export function minMaxNormalize(
   value: number,
   min: number,
-  max: number
+  max: number,
 ): number {
   return (value - min) / (max - min);
 }
@@ -92,7 +94,7 @@ export function minMaxNormalize(
  * 1 for maximum scale reduction (minimum aspect ratio)
  */
 export function getWorldScaleReductionFactor(
-  layout: Const<gfx.Layout>
+  layout: Const<gfx.Layout>,
 ): number {
   const defaultAspectRatio = layoutConfig.aspectRatioDefault;
   const minAspectRatio = layoutConfig.aspectRatioMin;
@@ -105,7 +107,7 @@ export function getWorldScaleReductionFactor(
   const scaleFactor = gfx.clamp(
     1 - minMaxNormalize(aspectRatio, minAspectRatio, defaultAspectRatio),
     0,
-    1
+    1,
   );
   return scaleFactor;
 }
@@ -137,7 +139,7 @@ export class InterpolatedPosition {
   constructor(
     node: gfx.Empty,
     deck: {position: gfx.VectorT},
-    card: {position: gfx.VectorT}
+    card: {position: gfx.VectorT},
   ) {
     this.node = node;
     this.start = deck;
@@ -163,7 +165,7 @@ export function dimNode(
   node: gfx.Sprite,
   time: number,
   from: number,
-  to: number
+  to: number,
 ): void {
   node.visible = true;
   const tl = new anim.Timeline();
@@ -173,7 +175,7 @@ export function dimNode(
       if (to < 0.0001) {
         node.visible = false;
       }
-    }
+    },
   );
   AUTO_TICK.add(tl);
 }
@@ -182,7 +184,7 @@ export function createGaussinBlurTexture(
   stage: gfx.Stage,
   texSize: [number, number],
   texIdStr: string,
-  g: gfx.Gfx
+  g: gfx.Gfx,
 ) {
   const worldSize = getWorldSize(g.layout);
 
@@ -204,7 +206,7 @@ export function createGaussinBlurTexture(
       false,
       true,
       [0, 0, 0, 0],
-      {}
+      {},
     );
 
     g.createRenderTarget(
@@ -220,14 +222,14 @@ export function createGaussinBlurTexture(
       false,
       false,
       [0, 0, 0, 0],
-      {}
+      {},
     );
 
     g.createImage(
       texImgId,
       texId2,
       [worldSize[0], worldSize[1]],
-      [0, 0, 1.0, 1.0]
+      [0, 0, 1.0, 1.0],
     );
   } else {
     g.modifyRenderTarget(texId2, texSize[0], texSize[1], [
@@ -259,13 +261,4 @@ export function createGaussinBlurTexture(
   g.renderOffscreen(blurStage, texId);
 
   g.destroyStage(blurStage);
-}
-
-export function showSuperRoundText(): void {
-  const from = CORE.gfx.normalizedCanvasToWorld(0.5, 1);
-  const to = CORE.gfx.normalizedCanvasToWorld(0.5, 0.5);
-
-  GAME.superRoundText.move(from[0], from[1], to[0], to[1], 0.5);
-  GAME.superRoundText.pulse(1.0, 1.2, 0.2, 0.5);
-  GAME.superRoundText.hilite(1.0, 0.0, 1.0, 2.8);
 }

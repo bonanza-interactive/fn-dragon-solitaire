@@ -1,129 +1,100 @@
 import {gfx} from '@apila/engine';
-import {ScaleImage} from './scale-image';
-import {CORE} from './game';
+import {GameConfig} from './config/config';
+import {GameLayer} from './config/schemas';
+import {CORE, GAME} from './game';
 import {HiliteAnimation} from './hilite-animation';
-import {MoveAnimation} from './move-animation';
+import {Signal} from './util/signal';
+import {assert} from './util/utils';
 import {hexColor} from './util/utils-game';
 import {getNode} from './util/utils-node';
-import {LOCALIZER} from './framework';
-import {computeWinCents} from './util/win-amount';
+import {GAMEFW, LOCALIZER} from './framework';
 
-const WINTABLE_WINSUM_Y = 20;
-const WINTABLE_DESCRIPTION_Y = 47;
-const WINTABLE_DY = 44.5;
-const BET_GLOW_X = -6;
-const BET_GLOW_Y = 7;
-const BET_COORDS = [280, 496, 712, 928];
-const WINTABLE_COMBINATION_NAME_X = 0;
-const WINTABLE_COMBINATION_WIN_X = 480;
-const WINTABLE_COMBINATION_WIN_DX = 216;
-const WINTABLE_SUM_MAX_SIZE = 200;
-const WINTABLE_DESCRIPTION_MAX_SIZE = 260;
+export const WINTABLE_COUNT_X = 20;
+export const WINTABLE_WIN_X = 240;
+export const WINTABLE_Y = 20;
+export const WINTABLE_WINTEXT_Y = 48;
+export const WINTABLE_DY = 43;
+export const WINTABLE_WINTEXT_MAX_WIDTH = 180;
+//const BET_GLOW_X = -6;
+//const BET_GLOW_Y = 7;
+
+type CombinationData = {
+  selected: number;
+  payout: {
+    count: number;
+    win: number;
+  }[];
+};
 
 export class Paytable {
-  private winsumElements: gfx.BitmapText[][] = [];
-  private winsumMultipliers: number[] = [];
+  public onVisibilityChanged: Signal<boolean>;
 
-  private betLevels: number[];
   private betLevel = 0;
-  private multiplier = 1;
-  private multiplierAsked = 1;
-  private betColumns: number;
-  private betLevelColumn = 0;
+  private selected = 0;
+  private isFreespins = false;
+  private hilite = -1;
+  private matchCount = -1;
 
-  private betColor: string;
-  private betColorSprite: gfx.Sprite;
-
-  private betGlow: string;
-  private betGlowSprite: gfx.Sprite;
-  private betGlowScaler: ScaleImage;
-  private betGlowMover: MoveAnimation;
-  private betGlowHilite: HiliteAnimation;
-
-  private winGlow: string;
   private winGlowSprite: gfx.Sprite;
   private winGlowHilite: HiliteAnimation;
 
+  private root: gfx.Empty;
+  private countTexts: gfx.BitmapText[] = [];
+  private winTexts: gfx.BitmapText[] = [];
+
+  private readonly basegameCombinations: CombinationData[];
+  private readonly freespinCombinations: CombinationData[];
+
+  private readonly textColorDefault = hexColor(0, 0, 0.75);
+  private readonly textColorHilite = hexColor(57, 1, 0.7);
+
   constructor(
     root: gfx.NodeProperties,
-    betLevels: number[],
-    wincombinations: {
-      rank: string;
-      multiplier: number;
-    }[]
+    basegameWincombinations: CombinationData[],
+    freespinWincombinations: CombinationData[],
   ) {
+    this.root = root;
+    this.basegameCombinations = basegameWincombinations;
+    this.freespinCombinations = freespinWincombinations;
+    this.onVisibilityChanged = new Signal<boolean>();
+
     const contentRoot = getNode(root, 'paytable_content');
-    this.betColor = 'bet_color';
-    this.betColorSprite = CORE.gfx.createSprite();
-    this.betColorSprite.image = this.betColor;
-    this.betColorSprite.parent = contentRoot;
 
-    this.betLevels = betLevels;
-    this.betColumns = Math.min(this.betLevels.length, BET_COORDS.length);
+    const maxSelection = Math.max(
+      GameConfig.gameConfig.basegame.maxSelections,
+      GameConfig.gameConfig.freespin.maxSelections,
+    );
 
-    const color = hexColor(0, 0, 0.75);
+    for (let i = 0; i < maxSelection; ++i) {
+      const countText = CORE.gfx.createBitmapText('basic_text');
+      countText.position[0] = WINTABLE_COUNT_X;
+      countText.position[1] = WINTABLE_Y + (maxSelection - i - 1) * WINTABLE_DY;
+      countText.fontSize = 46;
+      countText.pivot = [0.5, 0];
+      countText.parent = contentRoot;
+      countText.visible = false;
+      countText.depthGroup = GameLayer.BehindCards + 1;
+      this.countTexts.push(countText);
 
-    const descriptions: {text: gfx.BitmapText; scale: number}[] = [];
-    for (let i = 0; i < wincombinations.length; i++) {
-      const text = CORE.gfx.createBitmapText('basic_text');
-      text.position[0] = WINTABLE_COMBINATION_NAME_X;
-      text.position[1] = WINTABLE_DESCRIPTION_Y + i * WINTABLE_DY;
-      text.fontSize = 42;
-      text.pivot = [0, 0.5];
-      text.parent = contentRoot;
-
-      const key = wincombinations[i].rank;
-      text.text = `{${color}}${LOCALIZER.get(key)}`;
-
-      // Set maximum size for text
-      const size = text.size[0];
-
-      let scale = 1;
-      if (size > WINTABLE_DESCRIPTION_MAX_SIZE) {
-        scale = WINTABLE_DESCRIPTION_MAX_SIZE / size;
-      }
-      descriptions.push({text, scale: scale});
+      const winText = CORE.gfx.createBitmapText('basic_text');
+      winText.position[0] = WINTABLE_WIN_X;
+      winText.position[1] =
+        WINTABLE_WINTEXT_Y + (maxSelection - i - 1) * WINTABLE_DY;
+      winText.fontSize = 46;
+      winText.align = gfx.TextAlignment.RIGHT;
+      winText.pivot = [0.5, 0.5];
+      winText.parent = contentRoot;
+      winText.visible = false;
+      winText.depthGroup = GameLayer.BehindCards + 1;
+      this.winTexts.push(winText);
     }
-    const smallestScale = Math.min(...descriptions.map((e) => e.scale));
-    if (smallestScale < 1) {
-      for (const {text} of descriptions) {
-        text.scale = [smallestScale, smallestScale];
-      }
-    }
-    for (let j = 0; j < this.betColumns; j++) {
-      const winsumElementColumn: gfx.BitmapText[] = [];
-
-      for (let i = 0; i < wincombinations.length; i++) {
-        const text = CORE.gfx.createBitmapText('basic_text');
-        text.position[0] =
-          WINTABLE_COMBINATION_WIN_X + j * WINTABLE_COMBINATION_WIN_DX;
-        text.position[1] = WINTABLE_WINSUM_Y + i * WINTABLE_DY;
-        text.fontSize = 42;
-        text.pivot = [1, 0];
-        text.parent = contentRoot;
-
-        winsumElementColumn.push(text);
-      }
-
-      this.winsumElements.push(winsumElementColumn);
-    }
-
-    this.winsumMultipliers = wincombinations.map((e) => e.multiplier);
-
-    // bet column glow
-    this.betGlow = 'bet_glow';
-    this.betGlowSprite = CORE.gfx.createSprite();
-    this.betGlowSprite.image = this.betGlow;
-    this.betGlowSprite.parent = contentRoot;
-
-    this.betGlowScaler = new ScaleImage(this.betGlowSprite);
-    this.betGlowMover = new MoveAnimation(this.betGlowSprite);
-    this.betGlowHilite = new HiliteAnimation(this.betGlowSprite);
+    this.setwinTextMaxSize(WINTABLE_WINTEXT_MAX_WIDTH);
 
     // win glow
-    this.winGlow = 'win_glow';
     this.winGlowSprite = CORE.gfx.createSprite();
-    this.winGlowSprite.image = this.winGlow;
+    this.winGlowSprite.image = 'kakkospipo_win_glow';
+    this.winGlowSprite.glShader = 'sprite_alpha';
+    this.winGlowSprite.glUniform.tint = [1, 1, 1, 1];
     this.winGlowSprite.parent = contentRoot;
 
     this.winGlowHilite = new HiliteAnimation(this.winGlowSprite);
@@ -132,88 +103,169 @@ export class Paytable {
     this.winGlowSprite.visible = false;
   }
 
-  public setSuperround(multiplier: number): void {
-    this.multiplierAsked = multiplier;
+  public updateContentBetChanged(): void {
+    this.updateContent(this.selected, this.isFreespins);
   }
 
-  public updateWinsums(bet: number): void {
-    if (this.betLevel === bet && this.multiplier === this.multiplierAsked) {
+  public updateContent(
+    selected: number,
+    isFreespins: boolean,
+    hilite = -1,
+  ): void {
+    const bet = GAMEFW.state().bet;
+    this.winGlowSprite.visible = false;
+
+    if (isFreespins) {
+      selected = this.freespinCombinations[0].selected;
+    }
+
+    if (
+      this.betLevel === bet &&
+      this.selected === selected &&
+      this.isFreespins === isFreespins &&
+      this.hilite === hilite
+    ) {
       return;
     }
 
-    this.refreshWintable();
-
     this.betLevel = bet;
-    this.multiplier = this.multiplierAsked;
-    const targetBetIndex = this.betLevels.findIndex((e) => e === this.betLevel);
+    this.selected = selected;
+    this.isFreespins = isFreespins;
+    this.hilite = hilite;
 
-    if (targetBetIndex > this.betLevelColumn + (this.betColumns - 1)) {
-      this.betLevelColumn = targetBetIndex - (this.betColumns - 1);
-    } else if (targetBetIndex < this.betLevelColumn) {
-      this.betLevelColumn = targetBetIndex;
+    for (let i = 0; i < this.countTexts.length; ++i) {
+      this.countTexts[i].visible = false;
+    }
+    for (let i = 0; i < this.winTexts.length; ++i) {
+      this.winTexts[i].visible = false;
     }
 
-    for (let k = 0; k < this.betColumns; k++) {
-      const j = k + this.betLevelColumn;
+    const payout = this.getPayout();
+    if (payout === undefined) {
+      return;
+    }
 
-      let color;
-      let opacity = 1;
+    assert(
+      payout.length <= this.winTexts.length,
+      'Not enough count text nodes for paytable!',
+    );
+    assert(
+      payout.length <= this.countTexts.length,
+      'Not enough win text nodes for paytable!',
+    );
+    for (let i = 0; i < payout.length; ++i) {
+      const textIndex = i + (this.countTexts.length - payout.length);
+      const color = hilite === i ? this.textColorHilite : this.textColorDefault;
+      const opacity = 1;
 
-      for (let i = 0; i < this.winsumElements[k].length; i++) {
-        if (bet === this.betLevels[j]) {
-          this.betGlowSprite.visible = true;
-          this.betGlowSprite.position = [
-            BET_COORDS[k] + BET_GLOW_X,
-            BET_GLOW_Y,
-          ];
-          color = hexColor(48, 1 - i / this.winsumElements[k].length, 1);
-          this.betColorSprite.opacity = 0.2 + (j / this.betLevels.length) * 0.8;
-          this.betColorSprite.position = [
-            BET_COORDS[k] + BET_GLOW_X,
-            BET_GLOW_Y,
-          ];
-        } else {
-          color = hexColor(0, 0, 0.75);
-          opacity = 0.5;
-        }
+      this.countTexts[textIndex].text = `{${color}}${payout[i].count}`;
+      this.countTexts[textIndex].opacity = opacity;
+      this.countTexts[textIndex].visible = true;
 
-        const winsumText = LOCALIZER.money(
-          computeWinCents(
-            this.betLevels[j],
-            this.winsumMultipliers[i] * this.multiplier
-          )
-        );
+      const winsumText = LOCALIZER.money((this.betLevel * payout[i].win) / 100);
 
-        this.winsumElements[k][i].text = `{${color}}${winsumText}`;
-        this.winsumElements[k][i].opacity = opacity;
+      this.winTexts[textIndex].text = `{${color}}${winsumText}`;
+      this.setwinTextMaxSize(WINTABLE_WINTEXT_MAX_WIDTH);
+      this.winTexts[textIndex].opacity = opacity;
+      this.winTexts[textIndex].visible = true;
+    }
+  }
 
-        // Set maximum size for text
-        const size = this.winsumElements[k][i].size[0];
-
-        let scale = 1;
-        if (size > WINTABLE_SUM_MAX_SIZE) {
-          scale = WINTABLE_SUM_MAX_SIZE / size;
-        }
-        this.winsumElements[k][i].scale = [scale, scale];
+  private setwinTextMaxSize(maxWidth: number) {
+    let smallestScale = 1;
+    for (const winText of this.winTexts) {
+      const size = winText.size[0];
+      if (size > maxWidth) {
+        const downsizedScale = maxWidth / size;
+        smallestScale = Math.min(smallestScale, downsizedScale);
       }
     }
+    for (const winText of this.winTexts) {
+      winText.scale = [smallestScale, smallestScale];
+    }
   }
 
-  public refreshWintable(): void {
-    this.betGlowSprite.scale = [1, 1];
-    this.betGlowSprite.opacity = 1;
-    this.betGlowSprite.visible = true;
-    this.betGlowSprite.position[1] = BET_GLOW_Y;
+  private getPayout():
+    | {
+        count: number;
+        win: number;
+      }[]
+    | undefined {
+    const allCombinations = this.isFreespins
+      ? this.freespinCombinations
+      : this.basegameCombinations;
+    return allCombinations.find((e) => e.selected === this.selected)?.payout;
+  }
+
+  public refreshWintable(selected: number | undefined = undefined): void {
     this.winGlowSprite.visible = false;
+    this.matchCount = -1;
+    const count = selected === undefined ? GAME.cards.getHandSize() : selected;
+    this.updateContent(count, this.isFreespins);
   }
 
-  public hiliteWins(winIndex: number): void {
+  public hiliteWin(): void {
+    const payout = this.getPayout();
+    assert(payout !== undefined, 'Paytable payout is undefined!');
+
+    this.matchCount = this.matchCount < 0 ? 1 : this.matchCount + 1;
+    const winIndex = payout.findIndex((c) => c.count === this.matchCount);
+    this.updateContent(this.selected, this.isFreespins, winIndex);
+
+    if (winIndex === -1) {
+      return;
+    }
+
+    /*
+    const rowCount = this.countTexts.filter((t) => t.visible).length;
+    const x = 0;
+    const y = BET_GLOW_Y + (rowCount - winIndex - 1) * WINTABLE_DY;
+    this.winGlowSprite.position = [x - 50, y];
     this.winGlowSprite.visible = true;
-    const x = this.betGlowSprite.position[0];
-    const y = BET_GLOW_Y + winIndex * WINTABLE_DY + (winIndex < 4 ? 0 : 1);
-    this.betGlowScaler.scale(1.0, 1.0, 1.0, 0.1, 0.2, 0.0); //, false);
-    this.betGlowMover.move(x, BET_GLOW_Y, x, y + 18, 0.2);
-    this.betGlowHilite.hilite(1, 0, 0.1, 0.2);
-    this.winGlowSprite.position = [x - 30, y];
+    */
+  }
+
+  public show(): void {
+    if (!this.root.visible) {
+      this.root.visible = true;
+      this.onVisibilityChanged.emit(true);
+    }
+  }
+
+  public hide(): void {
+    if (this.root.visible) {
+      this.root.visible = false;
+      this.onVisibilityChanged.emit(false);
+    }
+  }
+
+  public isVisible(): boolean {
+    return this.root.visible;
+  }
+
+  public getSmallestCombinationCount(
+    selected: number,
+    isFreespins: boolean,
+  ): number {
+    const combinations = isFreespins
+      ? this.freespinCombinations
+      : this.basegameCombinations;
+    const payout = combinations.find((e) => e.selected === selected)?.payout;
+    return payout ? payout[0].count : 0;
+  }
+
+  public getPayoutWin(
+    selected: number,
+    matches: number,
+    isFreespins: boolean,
+  ): number {
+    const combinations = isFreespins
+      ? this.freespinCombinations
+      : this.basegameCombinations;
+    const payout = combinations.find((e) => e.selected === selected)?.payout;
+    const win = payout
+      ? payout.find((e) => e.count === matches)?.win
+      : undefined;
+    return win ?? 0;
   }
 }

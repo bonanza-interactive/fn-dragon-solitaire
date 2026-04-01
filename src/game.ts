@@ -1,26 +1,29 @@
 import {gfx, input, sound} from '@apila/engine';
+import {Gfx} from '@apila/engine/dist/apila-gfx';
+import {Input} from '@apila/engine/dist/apila-input';
+import {SoundPlayer} from '@apila/engine/dist/apila-sound';
 import {fx} from '@apila/game-libraries';
-import {Background} from './background';
-import {Button} from './button';
-import {Chips} from './chips';
-import {Cards} from './cards';
 
-import {Paytable} from './paytable';
-import {SuperText} from './super-text';
+import {Background} from './background';
+import {CardChangeButtons} from './card-change-buttons';
+import {CardPickGui} from './card-pick-gui';
+import {Cards} from './cards';
 import {fxConfig, gfxConfig} from './config/config';
 import {FX_DEFS} from './config/fx-defs-game';
+import {DragonPanel} from './dragon-panel';
 import {FrameText} from './frame-text';
+import {FreespinPopup} from './freespin-popup';
+import {FreespinTransition} from './freespin-transition';
 import {GameTimer} from './game-timer';
 import {NodeSchemaLoader} from './node-schema-loader';
 import {NodeStorage} from './node-storage';
+import {ParticlePlayer} from './particle-player';
+import {Paytable} from './Paytable';
+import {PaytableButton} from './paytable-button';
+import {TopElementsMover} from './top-elements-mover';
 import {MessageQueue} from './util/message-queue';
 import {WinScroll} from './win-scroll';
 import * as particle from '@apila/particle-runtime';
-import {GambleButtons} from './gamble-buttons';
-
-type Gfx = gfx.Gfx;
-type SoundPlayer = sound.SoundPlayer;
-type Input = input.Input;
 
 type Game = {
   nodeSchemaLoader: NodeSchemaLoader;
@@ -31,23 +34,23 @@ type Game = {
   winScroll: WinScroll;
 
   cards: Cards;
-  superRoundText: SuperText;
-  chips: Chips;
-  superBack: Background;
+  background: Background;
+  dragonPanel: DragonPanel;
+  particlePlayer: ParticlePlayer;
+  cardPickGui: CardPickGui;
+  cardChangeButtons: CardChangeButtons;
   paytable: Paytable;
-  swapButton: Button;
-
-  gambleButtons: GambleButtons;
-
+  paytableButton: PaytableButton;
+  freespinPopup: FreespinPopup;
   baseGameFrameText: FrameText;
-  gambleGameFrameText: FrameText;
+  freespinTransition: FreespinTransition;
+  topElementsMover: TopElementsMover;
 
   entered: boolean;
 };
 
 type Core = {
   gfx: Gfx;
-  canvas: HTMLCanvasElement;
   sound: SoundPlayer;
   input: Input;
   fx: fx.FxPlayer;
@@ -69,9 +72,8 @@ export const CORE: Core = {} as Core;
  */
 export const initializeApila = (
   canvas: HTMLCanvasElement,
-  context: WebGLRenderingContext
+  context: WebGLRenderingContext,
 ): void => {
-  CORE.canvas = canvas;
   CORE.gfx = gfx.create({canvas, context, ...gfxConfig});
   CORE.messageQueue = new MessageQueue();
 

@@ -31,7 +31,7 @@ function loadSettings(): typeof SETTINGS {
 function getStoredValue<T extends JsonValue>(
   key: string,
   version: number,
-  defaultValue: T
+  defaultValue: T,
 ): T {
   const storedValue = SETTINGS[key];
   return storedValue?.version === version
@@ -42,7 +42,7 @@ function getStoredValue<T extends JsonValue>(
 export function useSetting<T extends JsonValue>(
   key: string,
   version: number,
-  defaultValue: T
+  defaultValue: T,
 ): [T, (newValue: T) => void] {
   const setter = (value: T) => {
     SETTINGS[key] = {version, value};

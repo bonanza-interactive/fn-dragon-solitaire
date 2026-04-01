@@ -58,14 +58,14 @@ export const ParticleAtlas = ap.makeTransform(
   ParticleAtlasImpl,
   ap.HasKind('particle', 'texture'),
   ap.NoFallback(),
-  globalTransformCache()
+  globalTransformCache(),
 );
 
 function ParticleAtlasImpl(env: ap.Env, _cfg: unknown): ap.Transform {
   return async (res: ap.FileDescriptor[]) => {
     const [particles, rest] = ap.partition(res, ap.HasKind('particle'));
     const [images, unused] = ap.partition(rest, (e) =>
-      BelongsToParticle(particles)(e.src)
+      BelongsToParticle(particles)(e.src),
     );
 
     const binPath = env.toolPath('convert');
@@ -80,15 +80,15 @@ function ParticleAtlasImpl(env: ap.Env, _cfg: unknown): ap.Transform {
         .flat()
         .map(ap.Property('path'))
         .every((e) => images.map(ap.pathOf).includes(e)),
-      'All image files of .parts were not provided as inputs'
+      'All image files of .parts were not provided as inputs',
     );
 
     await Promise.all(
       GetAtlasInfos(images, particles).map(async (atlasInfo) =>
         outputImages.push(
-          await createAtlas(atlasInfo, outputPath, binPath, env)
-        )
-      )
+          await createAtlas(atlasInfo, outputPath, binPath, env),
+        ),
+      ),
     );
 
     return ap.concat(particles, outputImages, unused);
@@ -112,7 +112,7 @@ interface AtlasInfo {
 
 function GetAtlasInfos(
   images: ap.FileDescriptor[],
-  particles: ap.FileDescriptor[]
+  particles: ap.FileDescriptor[],
 ): AtlasInfo[] {
   const maxWidth = 2048;
   const maxHeight = 2048;
@@ -174,7 +174,7 @@ function GetAtlasInfos(
         const imgDescriptions = takeParticleDescriptor(p).images;
         imgDescriptions.forEach((description) => {
           const img = images.find(
-            (im) => im.originalSrc.path == description.path
+            (im) => im.originalSrc.path == description.path,
           );
           if (img) {
             const texture = ap.takeTextureDescriptor(img);
@@ -196,7 +196,7 @@ function GetAtlasInfos(
           imgDescriptions.forEach((description) => {
             const part = effectAtlases.find((p) => p.id === effectId);
             const input = effectInputs.find(
-              (input) => input.file === description.path
+              (input) => input.file === description.path,
             );
             if (input) {
               const data = {
@@ -222,7 +222,7 @@ function GetAtlasInfos(
           packer.reset();
         } else {
           throw Error(
-            `Effect "${effectId}" doesn't fit into one atlas:\n Only ${packer.bins[0].rects.length}/${effectInputs.length} could be fitted\n Allowed texture size: ${maxWidth}x${maxHeight}`
+            `Effect "${effectId}" doesn't fit into one atlas:\n Only ${packer.bins[0].rects.length}/${effectInputs.length} could be fitted\n Allowed texture size: ${maxWidth}x${maxHeight}`,
           );
         }
       });
@@ -237,7 +237,7 @@ async function createAtlas(
   atlas: AtlasInfo,
   outputPath: string,
   binPath: ap.ExtBinary,
-  env: ap.Env
+  env: ap.Env,
 ): Promise<ap.FileDescriptor> {
   const imgPath = path.join(outputPath, ap.stem(atlas.id) + '.png');
   const args = ['-size', `${atlas.size[0]}x${atlas.size[1]}`, 'xc:none'];
@@ -272,8 +272,8 @@ async function createAtlas(
           id,
           rect: {l: img.x, t: img.y, w: img.w, h: img.h},
           originalSize: {w: img.w, h: img.h},
-        })
-      )
+        }),
+      ),
     );
   }
 

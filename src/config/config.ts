@@ -2,18 +2,18 @@ import {gfx} from '@apila/engine';
 import {CanvasResizePolicy} from '@apila/engine/dist/apila-gfx';
 import {fx} from '@apila/game-libraries';
 
-import * as btypes from './backend-types';
+import {GameConfig as BackendGameConfig} from './backend-types';
 
-const aspectRatioMin = 1 / 3;
+const aspectRatioMin = 5 / 4; // ("tablet")
 const aspectRatioDefault = 16 / 9;
-const aspectRatioMax = 3 / 1;
+const aspectRatioMax = 2880 / 1080;
 const worldLandscapeMinHeight = 1200;
 const worldPortraitMinWidth = 1300;
 
 export class GameConfig {
-  public static gameConfig: btypes.GameConfig;
+  public static gameConfig: BackendGameConfig;
   public static GAME_PATH = '';
-  public static GAME_NAME = 'villitkakkoset';
+  public static GAME_NAME = 'lohikaarmekeno';
 }
 
 export type LayoutConfig = {
@@ -29,6 +29,11 @@ export type LayoutConfig = {
     readonly worldMaxWidth: number;
   };
   readonly margins: [number, number, number, number];
+  readonly handScale: [number, number];
+  readonly handScaleMobile: [number, number];
+  readonly cardScale: [number, number];
+  readonly cardScaleMobile: [number, number];
+  readonly gambleCardScale: [number, number];
 };
 
 export const layoutConfig: LayoutConfig = {
@@ -46,6 +51,11 @@ export const layoutConfig: LayoutConfig = {
       (aspectRatioDefault / aspectRatioMin) * worldPortraitMinWidth,
   },
   margins: [100, 0, 100, 0],
+  cardScale: [0.8, 0.8],
+  cardScaleMobile: [0.74, 0.74],
+  handScale: [0.7, 0.7],
+  handScaleMobile: [0.85, 0.85],
+  gambleCardScale: [0.9, 0.9],
 };
 
 export const gfxConfig: Omit<gfx.GfxConfig, 'canvas' | 'context'> = {
@@ -62,7 +72,6 @@ export const gfxConfig: Omit<gfx.GfxConfig, 'canvas' | 'context'> = {
   resolutionScale: window.devicePixelRatio,
   canvasResizePolicy: CanvasResizePolicy.FILL_PARENT,
   canvasBufferResizeIntervalMs: 0,
-  enableHotReload: process.env.NODE_ENV === 'development',
 };
 
 export const fxConfig: fx.FxPlayerParams = {
@@ -80,47 +89,55 @@ export enum Recovery {
   Full,
 }
 
-export type MiscConfig = {
+export type RecoveryConfig = {
   readonly recovery: Recovery;
+  readonly maxRecoveryCount: number;
+};
+
+export const recoveryConfig: Readonly<RecoveryConfig> = {
+  recovery: Recovery.Full,
+  maxRecoveryCount: 10,
+};
+
+export type MiscConfig = {
+  readonly recovery: RecoveryConfig;
+  readonly skipLoadingScreen: boolean;
   readonly userStartFreespins: boolean;
   readonly startWithSpacebar: boolean;
   readonly preloadConfirmation: boolean;
-  readonly quickPlaySpeed: number;
+  spinSpeed: number;
 };
 
 export const miscConfig: MiscConfig = {
-  recovery: Recovery.Full,
+  recovery: recoveryConfig,
+  skipLoadingScreen: false,
   userStartFreespins: false,
   startWithSpacebar: true,
   preloadConfirmation: true,
-  quickPlaySpeed: 3,
+  spinSpeed: 1,
 };
 
 export const debugConfig = {
   autoPlay: false,
-  pause: false,
-  stepFrames: -1,
   speed: 1.0,
   simulateSlowDevice: 0,
   elapsedTimeOffset: 0.0,
   trace: false,
   collectSoundOnReveal: false,
-  showSafeZone: false,
+  expose: true,
 };
 
 export enum CardName {
   Discard = 'discard',
   Deck = 'deck',
-  StackLeft = 'stack_left',
-  StackLeftDiscard = 'stack_left_discard',
-  StackRight = 'stack_right',
-  StackRightDiscard = 'stack_right_discard',
+  StackSpades = 'stack_spades',
+  StackClubs = 'stack_clubs',
+  StackDiamonds = 'stack_diamonds',
+  StackHearts = 'stack_hearts',
   Hand = 'hand',
-  FourOfAKindReserve = '4OAK_reserve',
-  FourOfAKindHand = '4OAK_hand',
-  FourOfAKindDiscard = '4OAK_discard',
-  GambleHand = 'gamble_hand',
-  GambleDiscard = 'gamble_discard',
+  Table = 'table',
+  TableDeck = 'table_deck',
+  Gamble = 'gamble',
 }
 
 export const CARD_LOCATION_PREFIX = 'card_location';
@@ -130,3 +147,24 @@ export type CardMovement = {
   start: CardLocation;
   target: CardLocation;
 };
+
+export const rankAnimationNames = [
+  'ace',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  'jack',
+  'queen',
+  'king',
+];
+
+export const suitSkinNames = ['spade', 'club', 'diamond', 'heart'];
+
+export const CARD_BACK = 52; // ID of the card backside
+export const CARD_DRAGON = 53; // ID of the dragon card

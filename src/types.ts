@@ -41,6 +41,10 @@ export interface SpineAnimationProps {
   }[];
 }
 
+export interface LocalizedTextProps {
+  localizationKey: string;
+}
+
 export enum ButtonVisualState {
   ActiveReleased,
   ActivePressed,
@@ -60,34 +64,44 @@ export enum ButtonBlinkState {
 export type ButtonVisualUpdateFunc = (
   node: gfx.Sprite,
   state: ButtonVisualState,
-  GFX: gfx.Gfx
+  GFX: gfx.Gfx,
 ) => void;
 
 export type ButtonMeta = ButtonProps & MetaProps<MetaType.Button>;
+export type LocalizedTextMeta = LocalizedTextProps &
+  MetaProps<MetaType.LocalizedText>;
 export type SpineAnimationMeta = SpineAnimationProps &
   MetaProps<MetaType.SpineAnimation>;
 
-export type MetaData = ButtonMeta | SpineAnimationMeta;
+export type MetaData = ButtonMeta | LocalizedTextMeta | SpineAnimationMeta;
 
 export function createButtonMeta(init: ButtonProps): ButtonMeta {
   return {...{type: MetaType.Button}, ...init};
 }
 
+export function createLocalizedTextMeta(
+  init: LocalizedTextProps,
+): LocalizedTextMeta {
+  return {...{type: MetaType.LocalizedText}, ...init};
+}
+
 export function createSpineAnimationMeta(
-  init: SpineAnimationProps
+  init: SpineAnimationProps,
 ): SpineAnimationMeta {
   return {...{type: MetaType.SpineAnimation}, ...init};
 }
 
 export function isMeta<T extends MetaType>(
   meta: unknown | null | undefined,
-  type: T
+  type: T,
 ): meta is MetaData & {type: T} {
   if (meta === null || meta === undefined) return false;
 
   switch (type) {
     case MetaType.Button:
       return isButtonMeta(meta);
+    case MetaType.LocalizedText:
+      return isLocalizedTextMeta(meta);
     case MetaType.SpineAnimation:
       return isSpineAnimationMeta(meta);
     default:
@@ -98,6 +112,10 @@ export function isMeta<T extends MetaType>(
 // Type guards
 function isButtonMeta(meta: unknown): meta is ButtonMeta {
   return (meta as ButtonMeta).type === MetaType.Button;
+}
+
+function isLocalizedTextMeta(meta: unknown): meta is LocalizedTextMeta {
+  return (meta as LocalizedTextMeta).type === MetaType.LocalizedText;
 }
 
 function isSpineAnimationMeta(meta: unknown): meta is SpineAnimationMeta {

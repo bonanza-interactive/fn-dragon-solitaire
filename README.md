@@ -64,6 +64,12 @@ Client server can be launched with:
 yarn start
 ```
 
+You can use shorhand for launching both:
+
+```bash
+yarn start-all
+```
+
 By default, this will serve the project at: `http://localhost:8080`.
 The entrypoint for your project is in `./src/main.ts`.
 
@@ -82,7 +88,7 @@ Install ESLint plugin. Add following to user or workspace configuration:
 "[typescript]": {
     "editor.codeActionsOnSave": {
         "source.fixAll": true
-    }
+    }        
 },
 ```
 

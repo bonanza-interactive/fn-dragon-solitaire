@@ -1,6 +1,6 @@
 import {core} from '@apila/engine';
-
 import {CORE} from './game';
+import {Signal} from './util/signal';
 
 //import { Config } from './config/config';
 /**
@@ -39,27 +39,33 @@ export class Loader {
   /**
    * Collection of loaded bundles & groups.
    */
-  public bundleGroups = new Map<string, Map<string, BundleGroup>>();
+  public bundleGroups: Map<string, Map<string, BundleGroup>> = new Map<
+    string,
+    Map<string, BundleGroup>
+  >();
+
+  /**
+   * Progress signal.
+   * Passed value is the percent loaded.
+   */
+  public progress: Signal<number> = new Signal<number>();
 
   /**
    * Load a single group.
    * @param group Group id.
-   * @param bundleName Identifier for the bundle this group resides in.
-   * @param res List of assets in the bundle.
+   * @param bundle Bundle to load from.
+   * @param groupNumber Group number.
+   * @param groupsInTotal How many groups in total there are.
    * @param loadImmediately Should the asset be loaded into memory
-   * immediatly after download is complete.
-   * @param progress Callback function to invoke whenever a file download
-   * finishes.
+   * immediately after download is complete.
    */
   public loadGroup = async (
     group: string,
     bundleName: string,
     res: core.ResourceDownloadParams[],
     loadImmediately: boolean,
-    progress?: (size: number) => void
+    progress?: (size: number) => void,
   ): Promise<void> => {
-    //trace(`loadGroup: ${group}`);
-
     // Create new bundlegroup map if bundle is not yet managed.
     if (!this.bundleGroups.has(bundleName)) {
       this.bundleGroups.set(bundleName, new Map<string, BundleGroup>());
@@ -77,17 +83,17 @@ export class Loader {
           bundleGroup.downloadComplete = () => {
             bundleGroup.resident = core.createResources(
               bundleGroup.asset ?? [],
-              CORE.gfx
+              CORE.gfx,
             );
             bundleGroup.loaded = true;
             resolve();
           };
         });
       } else {
-        // Everythings waiting for assets to be loaded into gpu.
+        // Everything waiting for assets to be loaded into gpu.
         bundleGroup.resident = core.createResources(
           bundleGroup.asset ?? [],
-          CORE.gfx
+          CORE.gfx,
         );
         bundleGroup.loaded = true;
       }
@@ -103,7 +109,6 @@ export class Loader {
 
       // Only update the loader when there's groups to update.
       // 0 is used mainly for those that are downloaded hidden.
-      //trace(groupsInTotal);
 
       // For the download phase, we separate sound assets from other types of
       // assets, in order to make it easier to ignore errors related to sound
@@ -122,7 +127,7 @@ export class Loader {
       ]);
 
       // If sound downloads finished without errors, continue as usual.
-      // Otherwise we erase all sound assets from bookeeping. This has little
+      // Otherwise we erase all sound assets from bookkeeping. This has little
       // effect on the loader, since sound assets do not have a create phase,
       // and cannot be unloaded.
       const downloads = soundError
@@ -148,19 +153,6 @@ export class Loader {
       }
     }
   };
-
-  public unloadGroup(bundleName: string, group: string): void {
-    const entry = this.bundleGroups.get(bundleName)?.get(group);
-    if (entry && entry.loaded) {
-      entry.resident.forEach(core.release);
-      entry.loaded = false;
-      entry.resident.length = 0;
-    } else {
-      throw new Error(
-        `Attempted to unload group which is not currently in memory (${bundleName}/${group})`
-      );
-    }
-  }
 
   /**
    * Is the assetgroup ready to be used without any additional loading.

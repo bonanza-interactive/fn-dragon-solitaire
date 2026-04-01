@@ -94,16 +94,7 @@ bin/
 deploy/
 server/game-backend/target
 server/game-maya/target
+history/dist-local
 
 #MacOS meta
 .DS_Store
-
-# Direnv
-.direnv
-.envrc
-
-# Neoconf.nvim
-.neoconf.json
-
-# Neovim
-.nvim.lua

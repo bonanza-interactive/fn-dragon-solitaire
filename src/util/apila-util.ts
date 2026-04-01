@@ -13,13 +13,13 @@ export class ApilaUtil {
    */
   public static toWorld(
     position: WritableArrayLike<number>,
-    from: NodeProperties
+    from: NodeProperties,
   ): WritableArrayLike<number> {
     return vec3
       .transformMat3(
         [0, 0, 0],
         [position[0], position[1], 1],
-        from.worldTransformMatrix as mat3
+        from.worldTransformMatrix as mat3,
       )
       .slice(0, 2);
   }
@@ -34,7 +34,7 @@ export class ApilaUtil {
   public static toLocal(
     position: WritableArrayLike<number>,
     to: NodeProperties,
-    from?: NodeProperties
+    from?: NodeProperties,
   ): WritableArrayLike<number> {
     if (from) {
       position = this.toWorld(position, from);
@@ -43,7 +43,7 @@ export class ApilaUtil {
       .transformMat3(
         [0, 0, 0],
         [position[0], position[1], 1],
-        mat3.invert(mat3.create(), to.worldTransformMatrix as mat3)
+        mat3.invert(mat3.create(), to.worldTransformMatrix as mat3),
       )
       .slice(0, 2);
   }

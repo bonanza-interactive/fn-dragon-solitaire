@@ -16,35 +16,30 @@ function pollResources() {
 
   if (gfx && BUNDLE.length > 0) {
     for (const as of BUNDLE) {
-      switch (as.type) {
-        case 'Texture':
-          {
-            if (isOwned(gfx.textures, as.id)) LOADED.add(as.src);
+      switch(as.type) {
+        case 'Texture': {
+          if (isOwned(gfx.textures, as.id)) LOADED.add(as.src);
+        }
+        break;
+        case 'Program': {
+          if (isOwned(gfx.programs, as.id)) {
+            LOADED.add(as.fs);
+            LOADED.add(as.vs);
           }
-          break;
-        case 'Program':
-          {
-            if (isOwned(gfx.programs, as.id)) {
-              LOADED.add(as.fs);
-              LOADED.add(as.vs);
-            }
-          }
-          break;
-        case 'SpineSkeleton':
-          {
-            if (isOwned(gfx.spineSkeletons, as.id)) LOADED.add(as.src);
-          }
-          break;
-        case 'SpineAtlas':
-          {
-            if (isOwned(gfx.spineAtlases, as.id)) LOADED.add(as.src);
-          }
-          break;
-        case 'BitmapFont':
-          {
-            if (isOwned(gfx.bmFonts, as.id)) LOADED.add(as.id);
-          }
-          break;
+        }
+        break;
+        case 'SpineSkeleton': {
+          if (isOwned(gfx.spineSkeletons, as.id)) LOADED.add(as.src);
+        }
+        break;
+        case 'SpineAtlas': {
+          if (isOwned(gfx.spineAtlases, as.id)) LOADED.add(as.src);
+        }
+        break;
+        case 'BitmapFont': {
+          if (isOwned(gfx.bmFonts, as.id)) LOADED.add(as.id);
+        }
+        break;
       }
     }
   }
@@ -60,25 +55,20 @@ function handleMessage(msg) {
 
 // Remove filenames found in LOADED from BUNDLE and return resulting set
 function calcSetDifference() {
-  const allFiles = new Set(
-    BUNDLE.map((e) => {
-      switch (e.type) {
-        case 'Program':
-          return [e.vs, e.fs];
-        case 'BitmapFont':
-          return [e.id];
-        case 'Sound':
-          return [];
-        default:
-          return [e.src];
-      }
-    })
-      .flat()
-      .filter(Boolean)
-  );
+  const allFiles = new Set(BUNDLE.map(e => {
+    switch (e.type) {
+      case 'Program':
+        return [e.vs, e.fs];
+      case 'BitmapFont':
+        return [e.id];
+      case 'Sound': return [];
+      default:
+        return [e.src];
+    }
+  }).flat().filter(Boolean));
 
   return Array.from(allFiles.values())
-    .filter((e) => !LOADED.has(e))
+    .filter(e => !LOADED.has(e))
     .sort();
 }
 
@@ -86,12 +76,13 @@ function renderSetDifference() {
   if (BUNDLE.length > 0) {
     if (window.Core?.gfx) {
       const unused = calcSetDifference();
-      grid.innerHTML = unused.map((e) => `<div>${e}</div>`).join('\n');
+      grid.innerHTML = unused.map(e => `<div>${e}</div>`).join('\n');
       button.innerText = `Unused assets (${unused.length})`;
 
       clipboardCpy.style.visibility = unused.length > 0 ? 'visible' : 'hidden';
     } else {
-      grid.innerHTML = `<div style="color: salmon"><code style="font-family: revert">Core</code> was not present in global window object. Execute <code style="font-family: revert">expose('Core', CORE)</code> in main.ts to fix.</div>`;
+      grid.innerHTML =
+        `<div style="color: salmon"><code style="font-family: revert">Core</code> was not present in global window object. Execute <code style="font-family: revert">expose('Core', CORE)</code> in main.ts to fix.</div>`
     }
   }
 }
@@ -100,8 +91,7 @@ function applyButtonStyle(btn) {
   btn.style.float = 'right';
   btn.style.backgroundColor = '#394b59';
   btn.style.color = '#f5f8fa';
-  btn.style.backgroundImage =
-    'linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0))';
+  btn.style.backgroundImage = 'linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0))';
   btn.style.borderRadius = '3px';
   btn.style.borderWidth = '1px';
   btn.style.borderColor = '#202B33';
@@ -121,7 +111,7 @@ grid.style.maxWidth = '60vh';
 grid.style.overflowY = 'auto';
 grid.style.clear = 'both';
 grid.style.columnGap = '1em';
-grid.style.backdropFilter = 'blur(4px)';
+grid.style.backdropFilter = "blur(4px)";
 grid.style.fontSize = '.9rem';
 
 // Style visibility button
@@ -143,7 +133,7 @@ clipboardCpy.addEventListener('click', () => {
 
 // Insert UI components into HTML page
 elem.appendChild(button);
-elem.appendChild(clipboardCpy);
+elem.appendChild(clipboardCpy)
 elem.appendChild(grid);
 document.body.appendChild(elem);
 
@@ -154,4 +144,4 @@ setInterval(renderSetDifference, 2000);
 // Connect to dev-server to receive bundle contents
 const sock = new WebSocket(`ws://${new URL(location.origin).host}/__tracker`);
 sock.addEventListener('open', () => sock.send(JSON.stringify('bundle')));
-sock.addEventListener('message', (e) => handleMessage(JSON.parse(e.data)));
+sock.addEventListener('message', e => handleMessage(JSON.parse(e.data)));

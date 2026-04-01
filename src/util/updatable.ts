@@ -1,5 +1,4 @@
 type Unknowns = ReadonlyArray<unknown>;
-
 export interface Updatable {
   /**
    * Updates the object.
@@ -39,7 +38,7 @@ export interface AutoUpdate {
    * @param obj The object to not update anymore
    */
   remove<T extends Unknowns>(
-    obj: Updatable | Tickable | UpdatableWithArgs<T>
+    obj: Updatable | Tickable | UpdatableWithArgs<T>,
   ): void;
   /**
    * Updates all added updatable objects.

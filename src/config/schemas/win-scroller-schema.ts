@@ -1,12 +1,19 @@
 import {gfx} from '@apila/engine';
 import {schema} from '@apila/game-libraries';
 
-import {GameLayer} from './schema-layers';
-import {INITIALLY_HIDDEN} from './common-schema';
+import {GameLayer, INITIALLY_HIDDEN} from './common-schema';
 
 export const WIN_SCROLLER: schema.NodeSchema = {
   type: gfx.DrawableType.Empty,
   name: 'scroller-root',
+  if: {
+    portrait: {
+      position: [0, 100],
+    },
+    landscape: {
+      position: [0, -30],
+    },
+  },
   children: [
     {
       type: gfx.DrawableType.Empty,
@@ -21,9 +28,17 @@ export const WIN_SCROLLER: schema.NodeSchema = {
       children: [
         {
           type: gfx.DrawableType.Spine,
-          name: 'winscroll-effect',
-          skeleton: 'bigwin',
+          name: 'winscroll-tint',
+          skeleton: 'bigwin_tint',
           depthGroup: GameLayer.BigWinEffect,
+          ...INITIALLY_HIDDEN,
+        },
+        {
+          type: gfx.DrawableType.Spine,
+          name: 'big_win_spine',
+          skeleton: 'big_win',
+          position: [0, 0],
+          depthGroup: GameLayer.BigWinEffect + 1,
           ...INITIALLY_HIDDEN,
         },
         {
@@ -45,9 +60,9 @@ export const WIN_SCROLLER: schema.NodeSchema = {
                 {
                   type: gfx.DrawableType.Sprite,
                   name: 'winscroll-title',
-                  pivot: [0.5, 0.525],
+                  pivot: [0.5, 0.6],
                   depthGroup: GameLayer.WinscrollText,
-                  position: [0, -70],
+                  position: [0, -100],
                   ...INITIALLY_HIDDEN,
                 },
               ],
@@ -57,10 +72,4 @@ export const WIN_SCROLLER: schema.NodeSchema = {
       ],
     },
   ],
-};
-
-export const UI_COMMON_ROOT: schema.NodeSchema = {
-  type: gfx.DrawableType.Empty,
-  name: 'ui_common_root',
-  children: [WIN_SCROLLER],
 };

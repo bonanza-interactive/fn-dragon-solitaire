@@ -45,7 +45,7 @@ export class RafTimer {
   public static delay(
     time: number,
     handler?: () => void,
-    autostart = true
+    autostart = true,
   ): RafTimer {
     return new RafTimer(time, true, handler, autostart);
   }
@@ -90,7 +90,7 @@ export class RafTimer {
     time: number,
     once?: boolean,
     handler?: () => void,
-    autostart?: boolean
+    autostart?: boolean,
   ) {
     this.time = time;
     this.once = once === undefined ? true : once;

@@ -1,37 +1,42 @@
-import {ChipType} from '../chips';
 import {CORE, GAME} from '../game';
 import {CLIENT_STATE} from '../main';
 import {AnyState, State} from '../state-machine';
-import {Ready} from './ready';
 import {BackendUtil} from '../util/backend-util';
-import {BasegameRound} from './basegame-round';
-import {ReplayFinished} from './replay-finished';
-import {GAMEFW} from '../framework';
+import {BasegameRound} from './BasegameRound';
+import {Ready} from './Ready';
+import {ReplayFinished} from './ReplayFinished';
 
-export class SettleBet extends State<boolean> {
-  public async run(collectAndPlay: boolean): Promise<AnyState> {
+export class SettleBet extends State {
+  private autoPlayTimer = 0.5;
+  private allowAutoPlayAttempt?: () => void;
+
+  public async run(): Promise<AnyState> {
     if (CLIENT_STATE.replay) {
       return new ReplayFinished();
     }
-
-    GAMEFW.updateWins(CLIENT_STATE.winsum);
-
+    CORE.fx.trigger('music_game_spinning');
     await BackendUtil.complete();
+    CLIENT_STATE.roundInProgress = false;
 
-    if (CLIENT_STATE.bonusWon) {
-      CORE.fx.trigger('fx_super_end');
-      GAME.chips.playAnimation(ChipType.LEFT, 3);
-      GAME.chips.playAnimation(ChipType.RIGHT1, 3);
-      GAME.chips.playAnimation(ChipType.RIGHT2, 3);
-      GAME.superBack.hilite(1, 0, 0.5);
-    }
+    console.log('Settle bet');
 
-    GAME.paytable.setSuperround(1);
+    CLIENT_STATE.winsum = 0;
+
+    GAME.baseGameFrameText.hide();
+    GAME.winScroll.hide();
+
     GAME.paytable.refreshWintable();
 
-    if (collectAndPlay) {
+    if (CLIENT_STATE.attemptAutoPlay) {
       return new BasegameRound();
+    } else {
+      return new Ready();
     }
-    return new Ready();
+  }
+
+  public update(dt: number): void {
+    if (CLIENT_STATE.attemptAutoPlay) {
+      this.autoPlayTimer -= dt;
+    }
   }
 }

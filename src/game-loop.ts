@@ -1,56 +1,62 @@
-import {State} from '@apila/casino-frame/types';
 import {Time, clamp} from '@apila/engine/dist/apila-gfx';
-import {GameConfig, debugConfig, miscConfig} from './config/config';
-import {forwardInput} from './forward-input';
-import {GAMEFW} from './framework';
 import {CORE, GAME, initializeApila} from './game';
 import {AUTO_TICK, TICK} from './main';
-import {onLayoutChanged} from './node-storage';
 import {StateMachine} from './state-machine';
 import * as States from './states';
-import {BackendUtil} from './util/backend-util';
 import {RafTimer} from './util/raf-timer';
-import {lerp} from './util/utils';
+import {onLayoutChanged} from './node-storage';
 import {getReelGameKitLayout} from './util/utils-gfx';
-import {marginLTRB} from './util/utils-schema';
+import {forwardInput} from './util/forward-input';
+import {GameConfig} from './config/config';
+import {BackendUtil} from './util/backend-util';
+import {GAMEFW} from './framework';
+import {State} from '@apila/casino-frame/types';
 
 export class Main {
   private stateMachine?: StateMachine;
   private paused = false;
 
-  public createStates(gamble: boolean): void {
+  public createStates(): void {
+    const states = [
+      States.EndRound,
+      States.Spinning,
+      States.FreespinSpinning,
+      States.ResultNoWin,
+      States.BasegameRound,
+      States.Preload,
+      States.PreloadDone,
+      States.MaxWin,
+      States.LoadingRecovery,
+      States.ReadyRecovery,
+      States.SettleBet,
+      States.Ready,
+      States.FreespinIntro,
+      States.FreespinOutro,
+      States.FreespinRound,
+      States.ResultFreespins,
+      States.ResultWinBasegame,
+      States.ResultWinFreespins,
+      States.CardSelection,
+      States.FreespinMaxWin,
+      States.CarouselIntro,
+      States.Replay,
+      States.ReplayFinished,
+    ];
+
+    const gambleStates = [
+      States.Gamble,
+      States.GamblePick,
+      States.GambleContinue,
+      States.GambleQuery,
+      States.GambleRound,
+      States.GambleEnter,
+      States.GambleExit,
+      States.GambleMaxWin,
+    ];
+
     this.stateMachine = new StateMachine(
-      [
-        States.EndRound,
-        States.Spinning,
-        States.ResultNoWin,
-        States.BasegameRound,
-        States.PreloadDone,
-        States.ReadyRecovery,
-        States.SettleBet,
-        States.ResultWinBasegame,
-        States.Ready,
-        States.Preload,
-        States.PickADeck,
-        States.Result,
-        States.FourOfAKind,
-        States.Replay,
-        States.ReplayFinished,
-        States.CarouselIntro,
-        ...(gamble
-          ? [
-              States.Gamble,
-              States.GambleSelect,
-              States.GambleContinue,
-              States.GambleQuery,
-              States.GambleRound,
-              States.GambleEnter,
-              States.GambleExit,
-              States.GambleMaxWin,
-            ]
-          : []),
-      ],
-      new States.Preload()
+      [...states, ...(GAMEFW.settings().game.gamble ? gambleStates : [])],
+      new States.Preload(),
     );
   }
 
@@ -66,7 +72,6 @@ export class Main {
         hasSlamstop: false,
         hasFeature: false,
         hasGamble: true,
-        hasStrategy: true,
       },
       {
         mute: () => {
@@ -90,45 +95,23 @@ export class Main {
         resize: () => {
           onLayoutChanged(
             GAME.nodeStorage,
-            getReelGameKitLayout(CORE.gfx.layout)
+            getReelGameKitLayout(CORE.gfx.layout),
           );
         },
         state: (state: Partial<State>) => {
-          if (state.quickplay !== undefined)
-            GAME.cards.timeScale = lerp(
-              1,
-              miscConfig.quickPlaySpeed,
-              state.quickplay
-            );
-
-          if (state.bet !== undefined) {
-            const index = GAMEFW.settings().game.bets.findIndex(
-              (v: number) => v === state.bet
-            );
-            if (index >= 0) {
-              const clampedIndex = clamp(index, 0, 14);
-              CORE.fx.trigger(`fx_bet_${clampedIndex}`);
-            }
-          } else {
-            CORE.fx.trigger(`fx_button_release`);
+          if (state.bet) {
+            GAME?.paytable?.updateContentBetChanged();
           }
         },
-      }
+      },
     );
-
-    GameConfig.gameConfig = await BackendUtil.init();
-
-    this.createStates(GAMEFW.settings().game.gamble);
-
     if (GAMEFW.settings().casino.mute) {
       CORE.sound.mute();
     }
 
-    CORE.gfx.addLayoutChanged((): void => {
-      CORE.gfx.updateConfig({
-        resolutionScale: window.devicePixelRatio,
-      });
-    });
+    GameConfig.gameConfig = await BackendUtil.init();
+
+    this.createStates();
 
     CORE.gfx.run(this.onRender);
 
@@ -136,51 +119,29 @@ export class Main {
   }
 
   private onRender = (time: Time) => {
-    time = this.paused ? {...time, delta: 0} : time;
+    let delta = this.paused ? 0 : time.delta;
+
     CORE.messageQueue.flush();
 
-    this.stateMachine?.update(time.delta);
+    this.stateMachine?.update(delta);
 
-    if (debugConfig.showSafeZone) {
-      const rect = marginLTRB();
-      CORE.gfx.debugDraw.setDrawColor([1, 0.5, 0.5, 1]);
-      CORE.gfx.debugDraw.rect(
-        [rect.left, rect.top],
-        [
-          CORE.gfx.layout.canvasPixelSize[0] - rect.right - 1,
-          CORE.gfx.layout.canvasPixelSize[1] - rect.bottom - 1,
-        ]
-      );
+    // Limit delta so that at after 10fps
+    // game will start just rendering slower
+    delta = clamp(time.delta, 0, 1 / 10);
+
+    RafTimer.doStep(delta);
+
+    AUTO_TICK.update(delta);
+
+    TICK.emit(delta);
+
+    CORE.sound.update(delta);
+
+    if (GAME.entered) {
+      CORE.fx.update(delta);
     }
+    CORE.gameTimer.update(time);
 
-    if (!debugConfig.pause) {
-      // Limit delta so that at after 10fps
-      // game will start just rendering slower
-      time.delta = clamp(time.delta, 0, 1 / 10);
-
-      RafTimer.doStep(time.delta);
-
-      AUTO_TICK.update(time.delta);
-
-      TICK.emit(time.delta);
-
-      GAME.paytable?.updateWinsums(GAMEFW.state().bet);
-
-      CORE.sound.update(time.delta);
-
-      if (GAME.entered) {
-        CORE.fx.update(time.delta);
-      }
-      CORE.gameTimer.update(time);
-
-      CORE.gfx.render(GAME.nodeStorage.stage);
-    } else {
-      CORE.gfx.render(GAME.nodeStorage.stage);
-    }
-
-    if (debugConfig.stepFrames >= 0) {
-      --debugConfig.stepFrames;
-      debugConfig.pause = debugConfig.stepFrames < 0;
-    }
+    CORE.gfx.render(GAME.nodeStorage.stage);
   };
 }

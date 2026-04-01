@@ -6,7 +6,8 @@ include:
 
 # Required variables on a per-game basis.
 variables:
-  WEB_NAME: pickngopokerdeuceswild
-  BACKEND_ID: villitkakkoset
-  BACKEND_VERSION: 1.0.0-1738660011-SNAPSHOT
+  WEB_NAME: dragonscrownkeno
+  SLOT_NAME: dragonscrownkeno
+  SLOT_VERSION: pipeline
+  BACKEND_VERSION: 1.1.0
 

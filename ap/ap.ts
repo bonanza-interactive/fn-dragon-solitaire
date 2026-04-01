@@ -6,9 +6,11 @@
 
 registerSignalHandlers();
 
-import * as ap from '@apila/asset-pipeline';
 import * as fs from 'fs';
 import * as path from 'path';
+
+import * as ap from '@apila/asset-pipeline';
+
 import {OVERLAY_VALUES, createAndStartOverlayBackend} from './ap-overlay';
 import * as particle from './particle';
 
@@ -46,9 +48,14 @@ interface UserEnv extends ap.Env {
 // be part of. Each entry may also specify an optional string element which
 // will be used as the resource id of that file.
 const CONDITIONAL_FILES: ConditionalFiles = {
-  'common/new/logo.png': [OperatorIs('veikkaus')],
-  'common/new/logo_en.png': [OperatorIs('international')],
-  'common/new/logo_nl.png': [OperatorIs('international')],
+  // 'sub2/identical.png': [() => true, 'red'],
+  // 'images/logo-fi.png': [LanguageIs('fi'), 'logo'],
+  // 'images/logo-int.png': [ap.Not(LanguageIs('fi')), 'logo'],
+  // 'shaders/background-hd.frag': [PlatformIs('desktop'), 'background'],
+  // 'shaders/background-fast.frag': [PlatformIs('mobile'), 'background'],
+  // 'images/its-complicated.png': [
+  //   ap.AllOf(OperatorIs('svenskaspel'), LanguageIs('se')),
+  // ],
 };
 
 // If an image does not have an explicitly set scale value, use this
@@ -75,27 +82,41 @@ const DEFAULT_PLATFORM_SPINE_SCALES: PlatformScales = {
   mobile: 0.5,
 };
 
-const SPINE_ATLAS_CONFIG: SpineAtlasConfigs = {};
+const SPINE_ATLAS_CONFIG: SpineAtlasConfigs = {
+  // 'common/spine/high3.atlas': {stripWhitespace: false},
+  // 'common/spine/logo.atlas': {stripWhitespace: false},
+  // 'common/spine/low4.atlas': {stripWhitespace: false},
+  // 'common/spine/low3.atlas': {stripWhitespace: false},
+  // 'common/spine/symbol_kultaholvi_free.atlas': {stripWhitespace: false},
+  // 'common/spine/reel_anticipate.atlas': {stripWhitespace: false},
+  // 'common/spine/symbol_kultaholvi_sack.atlas': {stripWhitespace: false},
+};
 
 const SPINE_SKELETON_DEFAULT_ATLASES: Record<string, string> = {};
 
 // Texture files that are used by shaders programs and their content can be
 // processed with for example webp compression.
 const PROCESSED_SHADER_IMAGE_INPUTS: ReadonlyArray<string> = [
-  'common/new/bg_green.png',
-  'common/new/bg_red.png',
+  'loader/sprites/progress_bar.png',
 ] as const;
 
 // Resources that have been manually prepared, and should not be processed
 // any further. *NOTE* that these are files that require an entry in
 // bundle.json, as opposed to extra files that simply need to be copied into
 // the deployment target (see NON_BUNDLE_FILES).
-const UNPROCESSED_FILES: ReadonlyArray<string> = [] as const;
+const UNPROCESSED_FILES: ReadonlyArray<string> = [
+  'loader/sprites/splash_screen_color.jpg',
+  'loader/sprites/splash_screen_alpha.jpg',
+  'loader/sprites/bg_gradient.png',
+  'common/particle/images/doubling_first_card-mask-card_mask.png',
+  'common/particle/images/doubling_win_2-mask-card_mask.png',
+  'common/particle/images/big_win_1-mask-crown_mask.png',
+] as const;
 
 // Any file whose top directory appears in this list will be assigned to
 // a group of the same name. All other resources will be assigned to group
 // 'common'.
-const GROUP_DIRECTORIES = [] as const;
+const GROUP_DIRECTORIES = ['initial'] as const;
 
 // Define shader program ids manually by specifying vertex and fragment stages.
 // If stage is part of any explicitly defined program here, there will not
@@ -105,22 +126,47 @@ const GROUP_DIRECTORIES = [] as const;
 // stage based on file name postfix (foo.sprite.vert becomes a program named
 // 'foo' using the default fragment shader for sprites; postfix is one of the
 // drawable types: sprite, spine, bmfont or mesh.)
-const PROGRAM_STAGES: Record<string, Array<string>> = {};
+const PROGRAM_STAGES: Record<string, Array<string>> = {
+  region: ['common/shaders/region.vert', 'common/shaders/region.frag'],
+  region_blurred_h: [
+    'common/shaders/region.vert',
+    'common/shaders/region_blurred_h.frag',
+  ],
+  region_blurred_v: [
+    'common/shaders/region.vert',
+    'common/shaders/region_blurred_v.frag',
+  ],
+};
 
 // Resources not included in bundle that are just copied without any processing.
 // These resources keep their relative path when deployed. The second argument
 // is any function that takes in a 'UserEnv' object and returns 'true' if that
 // object specifies a bundle variant a given file should be part of.
 const NON_BUNDLE_FILES: NonBundleFiles = [
-  ['slot-ui/paytable/swap_button.png', ap.always],
-  ['slot-ui/intro/hero_bg.png', ap.always],
-  ['slot-ui/intro/hero_image.png', ap.always],
-  ['slot-ui/intro/hero_image_nl.png', ap.always],
-  ['slot-ui/intro/hero_image_en.png', ap.always],
-  ['slot-ui/intro/feature_bg.png', ap.always],
-  ['slot-ui/intro/feature_deuces.png', ap.always],
-  ['slot-ui/intro/feature_card_swap.png', ap.always],
-  ['slot-ui/intro/feature_random_super.png', ap.always],
+  ['slot-ui/BoxedRegular-Bold.woff', ap.always],
+  ['slot-ui/BoxedRegular-Bold.woff2', ap.always],
+  ['slot-ui/BoxedRegular.woff', ap.always],
+  ['slot-ui/BoxedRegular.woff2', ap.always],
+  ['slot-ui/paytable/info_back_button.png', ap.always],
+  ['slot-ui/paytable/info_bet_button.png', ap.always],
+  ['slot-ui/paytable/info_collect_button.png', ap.always],
+  ['slot-ui/paytable/info_dragon.png', ap.always],
+  ['slot-ui/paytable/info_dragon_mobile.png', ap.always],
+  ['slot-ui/paytable/info_dragon_free.png', ap.always],
+  ['slot-ui/paytable/info_freespin_image.png', ap.always],
+  ['slot-ui/paytable/info_dragon_card.png', ap.always],
+  ['slot-ui/paytable/info_gamble_button.png', ap.always],
+  ['slot-ui/paytable/info_play_button.png', ap.always],
+  ['slot-ui/paytable/info_swap_button.png', ap.always],
+  ['slot-ui/infotext-fi', ap.always],
+  ['slot-ui/infotext-sv', ap.always],
+  ['slot-ui/infotext-en', ap.always],
+  ['slot-ui/intro/intro_card_image.png', ap.always],
+  ['slot-ui/intro/intro_bg.png', ap.always],
+  ['slot-ui/intro/intro_freespin_image.png', ap.always],
+  ['slot-ui/intro/intro_hero_image_veikkaus.png', ap.always],
+  ['slot-ui/intro/intro_hero_image_international.png', ap.always],
+  ['slot-ui/intro/intro_hero_image_nl.png', ap.always],
 ];
 
 // Image compression settings for different formats; all images assigned a given
@@ -171,7 +217,7 @@ function getNonBundleFileOps(env: UserEnv): ap.CopyOps {
 
 function imageShouldBeAtlased(
   env: UserEnv,
-  res: ap.FileDescriptor | ap.Source
+  res: ap.FileDescriptor | ap.Source,
 ): boolean {
   const src = 'src' in res ? res.src : res;
   return !PROCESSED_SHADER_IMAGE_INPUTS.includes(relativePath(env, src));
@@ -203,7 +249,7 @@ function generateResourceGroup(env: UserEnv, file: ap.Source): string {
 function imageConfig(
   env: UserEnv,
   file: ap.Source,
-  info: ap.TextureDescriptor
+  info: ap.TextureDescriptor,
 ): ap.ImageConfig {
   // If this file has an entry in IMAGE_CONFIG, use any values specified there;
   // otherwise use the defaults provided here.
@@ -244,7 +290,7 @@ function spineAtlasConfig(env: UserEnv, file: ap.Source): ap.SpineAtlasConfig {
 function soundConfig(
   env: UserEnv,
   file: ap.Source,
-  info: ap.SoundDescriptor
+  info: ap.SoundDescriptor,
 ): {
   [key in ap.CompressedSoundFormat]: ap.SoundCompressionSettings;
 } {
@@ -308,7 +354,7 @@ process.argv.forEach((e, i, all) => {
   if (i <= 1) return;
   console.log(
     'Invalid parameters. Usage: yarn ap <options>\nValid options:',
-    validArguments
+    validArguments,
   );
   process.exit();
 });
@@ -363,7 +409,7 @@ console.log(
       : '\nFAST_MODE OFF (process all assets)') +
     (DEPLOY_ALL
       ? '\nDEPLOY_ALL'
-      : '\nPLATFORM: ' + PLATFORM + ' OPERATOR: ' + OPERATOR)
+      : '\nPLATFORM: ' + PLATFORM + ' OPERATOR: ' + OPERATOR),
 );
 
 // Program output verbosity; '-v' for slightly increased, '-V' for everything
@@ -372,7 +418,7 @@ ap.setLogLevel(
     ? ap.Level.DEBUG
     : process.argv.includes('-v')
       ? ap.Level.INFO
-      : ap.Level.STATUS
+      : ap.Level.STATUS,
 );
 
 /*****************************************************************************
@@ -416,7 +462,7 @@ console.log('Output path: ' + DEPLOY_PATH);
         makeUserEnv(
           BUNDLE_TYPES.filter((e) => {
             return e[0] == OPERATOR && e[1] === PLATFORM;
-          })[0]
+          })[0],
         ),
       ];
   ap.assert(ap.notEmpty(envs), 'No bundles were selected');
@@ -456,7 +502,7 @@ console.log('Output path: ' + DEPLOY_PATH);
         watchOpt: {minWriteWatcherTimeMs: 800},
         // Overlay events object can be given as callbacks
         callbacks: events,
-      }
+      },
     );
   } else {
     if (DISK_CACHE) {
@@ -478,7 +524,7 @@ console.log('Output path: ' + DEPLOY_PATH);
 
       ap.validate(
         ap.validateSkeletonsHaveDefaultAtlases(res.bundleData),
-        'Potentially broken Spine atlas setup detected in bundle. Exiting.'
+        'Potentially broken Spine atlas setup detected in bundle. Exiting.',
       );
 
       // Check that all images adhere to the specified dimension limits
@@ -488,8 +534,8 @@ console.log('Output path: ' + DEPLOY_PATH);
         .filter(
           ap.spipe(
             ap.takeTextureDescriptor,
-            (e) => e.w > MAX_DIM || e.h > MAX_DIM
-          )
+            (e) => e.w > MAX_DIM || e.h > MAX_DIM,
+          ),
         );
       ap.validate(
         ap.empty(invalidImages),
@@ -498,10 +544,10 @@ console.log('Output path: ' + DEPLOY_PATH);
             invalidImages.map(ap.pathOf).map(ap.basename),
             invalidImages
               .map(ap.takeTextureDescriptor)
-              .map((e) => `${e.w} x ${e.h}`)
+              .map((e) => `${e.w} x ${e.h}`),
           )
           .map((e) => ` ${e[0]} - ${e[1]}`)
-          .join('\n')}`
+          .join('\n')}`,
       );
 
       // Print some information about bundle space requirements
@@ -527,17 +573,17 @@ console.log('Output path: ' + DEPLOY_PATH);
       await ap.deployBundle(bundle);
     }
 
-    // Optimize space by deleting duplicate resources and reusing same
+    // Optimize space by deleting duplicate resources and re-using same
     // resources in different bundles.
     if (envs.length > 1) {
       await ap.deduplicateBundleFiles(
         distinctBundles.map((d) => d.bundleFile),
-        true
+        true,
       );
     }
     fs.writeFileSync(
       path.join(DEPLOY_PATH, 'assets.md5'),
-      JSON.stringify(ap.hashDirectory(ASSET_PATH))
+      JSON.stringify(ap.hashDirectory(ASSET_PATH)),
     );
 
     if (DISK_CACHE) {
@@ -592,50 +638,51 @@ async function executePipelines(env: UserEnv): Promise<ap.FileDescriptor[]> {
   // Separate images that should not be atlased
   const [atlasedImages, standaloneImages] = ap.partition(
     images,
-    ap.Bind(imageShouldBeAtlased, env)
+    ap.Bind(imageShouldBeAtlased, env),
   );
+
   checkUnusedConfigEntries(
     env,
     SPINE_ATLAS_CONFIG,
     atlases,
-    'SPINE_ATLAS_CONFIG'
+    'SPINE_ATLAS_CONFIG',
   );
   checkUnusedConfigEntries(
     env,
     IMAGE_CONFIG,
     concat(atlasedImages, standaloneImages),
-    'IMAGE_CONFIG'
+    'IMAGE_CONFIG',
   );
   checkUnusedConfigEntries(
     env,
     CONDITIONAL_FILES,
     Object.values(descriptors).flat(),
-    'CONDITIONAL_FILES'
+    'CONDITIONAL_FILES',
   );
   checkUnusedConfigEntries(env, SOUND_CONFIG, sounds, 'SOUND_CONFIG');
   checkUnusedConfigEntries(
     env,
     PROCESSED_SHADER_IMAGE_INPUTS,
     standaloneImages,
-    'PROCESSED_SHADER_IMAGE_INPUTS'
+    'PROCESSED_SHADER_IMAGE_INPUTS',
   );
   checkUnusedConfigEntries(
     env,
     UNPROCESSED_FILES,
     Object.values(descriptors).flat(),
-    'UNPROCESSED_FILES'
+    'UNPROCESSED_FILES',
   );
   checkUnusedConfigEntries(
     env,
     SPINE_SKELETON_DEFAULT_ATLASES,
     Object.values(descriptors).flat(),
-    'SPINE_SKELETON_DEFAULT_ATLASES'
+    'SPINE_SKELETON_DEFAULT_ATLASES',
   );
 
   // Assign explicitly defined 'defaultAtlasId's
   skeletons
     .map(
-      (e) => SPINE_SKELETON_DEFAULT_ATLASES[relativePath(env, e.originalSrc)]
+      (e) => SPINE_SKELETON_DEFAULT_ATLASES[relativePath(env, e.originalSrc)],
     )
     .forEach((e, i) => {
       if (ap.notUndefined(e)) {
@@ -651,7 +698,7 @@ async function executePipelines(env: UserEnv): Promise<ap.FileDescriptor[]> {
   return (
     await Promise.all([
       SkipUnprocessed(spinePipeline)(env, concat(atlases, skeletons)).then(
-        ap.Bind(skeletonPipeline, env)
+        ap.Bind(skeletonPipeline, env),
       ),
       SkipUnprocessed(imagePipeline)(env, atlasedImages),
       SkipUnprocessed(standaloneImagePipeline)(env, standaloneImages),
@@ -693,52 +740,52 @@ async function describeFiles(env: UserEnv, files: ap.Source[]) {
 
   const spineAtlasFiles = await pipe(
     filter(HasExtension('.atlas')),
-    map(Bind(describeSpineAtlasFile, env))
+    map(Bind(describeSpineAtlasFile, env)),
   )(files);
   const spineAtlasImages = await pipe(
     filter(BelongsToSpineAtlas(spineAtlasFiles)),
-    map(Bind(describeImageFile, env))
+    map(Bind(describeImageFile, env)),
   )(allImages);
   const atlases = concat(spineAtlasFiles, spineAtlasImages);
 
   const skeletons = await pipe(
     filter(HasExtension('.json', '.skel')),
     filter(HasSkeletonData()),
-    map(Bind(describeSkeletonFile, env))
+    map(Bind(describeSkeletonFile, env)),
   )(files);
 
   const fontFiles = await pipe(
     filter(HasExtension('.bmfont')),
-    map(Bind(describeFontFile, env))
+    map(Bind(describeFontFile, env)),
   )(files);
   const fontImages = await pipe(
     filter(BelongsToFont(fontFiles)),
-    map(Bind(describeImageFile, env))
+    map(Bind(describeImageFile, env)),
   )(allImages);
   const fonts = concat(fontFiles, fontImages);
 
   const shaderStages = await pipe(
     filter(HasExtension('.frag', '.vert')),
-    map(Bind(describeShaderStageFile, env))
+    map(Bind(describeShaderStageFile, env)),
   )(files);
 
   const tpsFiles = await pipe(
     filter(HasExtension('.tps')),
-    map(Bind(describeTpsFile, env))
+    map(Bind(describeTpsFile, env)),
   )(files);
   const tpsImages = await pipe(
     filter(BelongsToTps(tpsFiles)),
-    map(Bind(describeImageFile, env))
+    map(Bind(describeImageFile, env)),
   )(allImages);
 
   const particleFiles = await pipe(
     filter(HasExtension('.part')),
-    map(Bind(describeParticleFile, env))
+    map(Bind(describeParticleFile, env)),
   )(files);
 
   const partImages = await pipe(
     filter(BelongsToParticle(particleFiles)),
-    map(Bind(describeImageFile, env))
+    map(Bind(describeImageFile, env)),
   )(allImages);
 
   const images = await pipe(
@@ -746,17 +793,17 @@ async function describeFiles(env: UserEnv, files: ap.Source[]) {
     filter(Not(BelongsToSpineAtlas(spineAtlasFiles))),
     filter(Not(BelongsToFont(fontFiles))),
     filter(Not(BelongsToParticle(particleFiles))),
-    map(Bind(describeImageFile, env))
+    map(Bind(describeImageFile, env)),
   )(allImages);
 
   const sounds = await pipe(
     filter(HasExtension('.wav', '.mp3', '.ogg')),
-    map(Bind(describeSoundFile, env))
+    map(Bind(describeSoundFile, env)),
   )(files);
 
   const webfonts = await pipe(
     filter(HasExtension('.woff', '.woff2', '.ttf', '.otf')),
-    map(Bind(ap.describeWebfontFile, env))
+    map(Bind(ap.describeWebfontFile, env)),
   )(files);
 
   // Name resources and assign groups to files. This simply delegates the task
@@ -771,7 +818,7 @@ async function describeFiles(env: UserEnv, files: ap.Source[]) {
     tpsFiles,
     particleFiles,
     sounds,
-    webfonts
+    webfonts,
   ).forEach(Bind(nameResources, env));
   shaderStages.forEach(Bind(setProgramIds, env));
 
@@ -800,7 +847,7 @@ async function describeFiles(env: UserEnv, files: ap.Source[]) {
 
 async function spinePipeline(
   env: UserEnv,
-  res: ap.FileDescriptor[]
+  res: ap.FileDescriptor[],
 ): Promise<ap.FileDescriptor[]> {
   // Map each file to its requested configuration
   const configs = ap.asObject(
@@ -808,8 +855,8 @@ async function spinePipeline(
       res.filter(ap.HasKind('spineatlas')).map(ap.pathOf),
       res
         .filter(ap.HasKind('spineatlas'))
-        .map((r) => spineAtlasConfig(env, r.src))
-    )
+        .map((r) => spineAtlasConfig(env, r.src)),
+    ),
   );
 
   // Scale atlases (if required) and create compressed png and webp variants
@@ -823,14 +870,14 @@ async function spinePipeline(
     ap.FormatVariants(
       ap.HasTextureAndCompression('png'),
       ap.PngQuant(env),
-      ap.WebpCompress(env, COMPRESSION.webp)
-    )
+      ap.WebpCompress(env, COMPRESSION.webp),
+    ),
   )(res);
 }
 
 async function skeletonPipeline(
   env: UserEnv,
-  res: ap.FileDescriptor[]
+  res: ap.FileDescriptor[],
 ): Promise<ap.FileDescriptor[]> {
   // Convert JSON skeletons into binary format
   return ap.pipe(ap.EnsureBinarySkeleton(env))(res);
@@ -838,14 +885,14 @@ async function skeletonPipeline(
 
 async function imagePipeline(
   env: UserEnv,
-  res: ap.FileDescriptor[]
+  res: ap.FileDescriptor[],
 ): Promise<ap.FileDescriptor[]> {
   // Map each file to its requested configuration
   const configs = ap.asObject(
     zip(
       res.map(ap.pathOf),
-      res.map((r) => imageConfig(env, r.src, ap.takeTextureDescriptor(r)))
-    )
+      res.map((r) => imageConfig(env, r.src, ap.takeTextureDescriptor(r))),
+    ),
   );
 
   // Using 'configs', create atlases of images that have compatible properties
@@ -857,13 +904,13 @@ async function imagePipeline(
 
 async function standaloneImagePipeline(
   env: UserEnv,
-  res: ap.FileDescriptor[]
+  res: ap.FileDescriptor[],
 ): Promise<ap.FileDescriptor[]> {
   const configs = ap.asObject(
     zip(
       res.map(ap.pathOf),
-      res.map((r) => imageConfig(env, r.src, ap.takeTextureDescriptor(r)))
-    )
+      res.map((r) => imageConfig(env, r.src, ap.takeTextureDescriptor(r))),
+    ),
   );
 
   return ap.pipe(ap.BasicImage(env, configs))(res);
@@ -871,21 +918,21 @@ async function standaloneImagePipeline(
 
 async function tpsPipeline(
   env: UserEnv,
-  res: ap.FileDescriptor[]
+  res: ap.FileDescriptor[],
 ): Promise<ap.FileDescriptor[]> {
   return ap.pipe(ap.TpsAtlas(env, {}))(res);
 }
 
 async function particlePipeline(
   env: UserEnv,
-  res: ap.FileDescriptor[]
+  res: ap.FileDescriptor[],
 ): Promise<ap.FileDescriptor[]> {
   return ap.pipe(particle.ParticleAtlas(env, {}))(res);
 }
 
 async function fontPipeline(
   env: UserEnv,
-  res: ap.FileDescriptor[]
+  res: ap.FileDescriptor[],
 ): Promise<ap.FileDescriptor[]> {
   // Break up fonts into SDF and bitmap types
   const sdfs = res.filter(ap.HasFontType('sdf'));
@@ -896,32 +943,32 @@ async function fontPipeline(
     ap.FormatVariants(
       ap.BelongsToFont(sdfs),
       ap.WebpCompress(env, {kind: 'webp', lossless: true, quality: 100}),
-      ap.Passthrough(env) // use the original pngs as a fallback
+      ap.Passthrough(env), // use the original pngs as a fallback
     ),
     ap.FormatVariants(
       ap.BelongsToFont(bms),
       ap.WebpCompress(env, COMPRESSION['webp']),
-      ap.PngQuant(env)
-    )
+      ap.PngQuant(env),
+    ),
   )(res);
 }
 
 async function soundPipeline(
   env: UserEnv,
-  res: ap.FileDescriptor[]
+  res: ap.FileDescriptor[],
 ): Promise<ap.FileDescriptor[]> {
   // Map each file to its requested configuration
   const mp3Configs = ap.asObject(
     zip(
       res.map(ap.pathOf),
-      res.map((r) => soundConfig(env, r.src, ap.takeSoundDescriptor(r)).mp3)
-    )
+      res.map((r) => soundConfig(env, r.src, ap.takeSoundDescriptor(r)).mp3),
+    ),
   );
   const oggConfigs = ap.asObject(
     zip(
       res.map(ap.pathOf),
-      res.map((r) => soundConfig(env, r.src, ap.takeSoundDescriptor(r)).ogg)
-    )
+      res.map((r) => soundConfig(env, r.src, ap.takeSoundDescriptor(r)).ogg),
+    ),
   );
 
   // For each .wav file, produce an ogg and mp3 variant of that file
@@ -929,20 +976,20 @@ async function soundPipeline(
     ap.FormatVariants(
       ap.HasSoundFormat('wav'),
       ap.SoundCompress(env, 'ogg', oggConfigs),
-      ap.SoundCompress(env, 'mp3', mp3Configs)
-    )
+      ap.SoundCompress(env, 'mp3', mp3Configs),
+    ),
   )(res);
 }
 
 type PipelineFunc = (
   e: UserEnv,
-  res: ap.FileDescriptor[]
+  res: ap.FileDescriptor[],
 ) => Promise<ap.FileDescriptor[]>;
 
 function SkipUnprocessed(f: PipelineFunc): PipelineFunc {
   return async (e, res) => {
     const [unprocessed, rest] = ap.partition(res, (file) =>
-      UNPROCESSED_FILES.includes(relativePath(e, file.originalSrc))
+      UNPROCESSED_FILES.includes(relativePath(e, file.originalSrc)),
     );
     return (await f(e, rest)).concat(unprocessed);
   };
@@ -953,7 +1000,7 @@ function SkipUnprocessed(f: PipelineFunc): PipelineFunc {
  */
 function relativePath(env: UserEnv, src: ap.Source | string): string {
   return ap.win32PathToPosix(
-    path.relative(env.assetPath, typeof src === 'string' ? src : src.path)
+    path.relative(env.assetPath, typeof src === 'string' ? src : src.path),
   );
 }
 
@@ -998,20 +1045,20 @@ function validateFileDoesNotHaveCompression(
   env: UserEnv,
   files: ap.FileDescriptor[],
   illegals: ap.FilterFunc<ap.FileDescriptor>,
-  srcWhiteList: readonly string[]
+  srcWhiteList: readonly string[],
 ): void {
   files.filter(illegals).forEach((f) => {
     if (!srcWhiteList.includes(relativePath(env, f.src))) {
       throw new Error(
         `"${f.src.path}" is already compressed and should not be passed to a pipeline.
-Place it in UNPROCESSED_FILES to skip pipelines.`
+Place it in UNPROCESSED_FILES to skip pipelines.`,
       );
     }
   });
 }
 
 function makeUserEnv(
-  bundleType: readonly [operator: string, platform: string]
+  bundleType: readonly [operator: string, platform: string],
 ): UserEnv {
   const commonEnvProps: Pick<
     UserEnv,
@@ -1044,7 +1091,7 @@ function checkUnusedConfigEntries(
   env: UserEnv,
   config: Record<string, unknown> | ReadonlyArray<string>,
   files: ap.FileDescriptor[],
-  configName: string
+  configName: string,
 ): void {
   const inputPaths = files.map(ap.pathOf).map(ap.Bind(relativePath, env));
   const confPaths = Array.isArray(config) ? config : Object.keys(config);
@@ -1054,9 +1101,9 @@ function checkUnusedConfigEntries(
     console.warn(
       ap.Yellow(
         `Detected unused asset configurations for [${configName}]:\n  ${unused.join(
-          '\n  '
-        )}`
-      )
+          '\n  ',
+        )}`,
+      ),
     );
   }
 }
@@ -1080,13 +1127,13 @@ async function strictModeAssetChecks(path: string): Promise<void> {
 
   if (sizeStatus.status != 0) {
     console.warn(
-      ap.Red(sizeStatus.stdout.substring(sizeStatus.stdout.indexOf('\n')))
+      ap.Red(sizeStatus.stdout.substring(sizeStatus.stdout.indexOf('\n'))),
     );
   }
 
   if (pmaStatus.status != 0) {
     console.warn(
-      ap.Red(pmaStatus.stdout.substring(pmaStatus.stdout.indexOf('\n')))
+      ap.Red(pmaStatus.stdout.substring(pmaStatus.stdout.indexOf('\n'))),
     );
   }
 
@@ -1103,7 +1150,7 @@ function registerSignalHandlers(): void {
 
   process.on('unhandledRejection', (reason, promise) => {
     console.error(
-      reason instanceof Error ? reason.toString() : 'Unknown rejection error'
+      reason instanceof Error ? reason.toString() : 'Unknown rejection error',
     );
     console.error(promise);
     process.exit(1);

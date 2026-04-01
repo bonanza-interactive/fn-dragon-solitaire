@@ -2,14 +2,10 @@ import {gfx} from '@apila/engine';
 import {EventType} from '@apila/engine/dist/apila-input';
 
 import {CORE} from './game';
-import {
-  ButtonBlinkMode,
-  ButtonBlinkState,
-  ButtonMeta,
-  ButtonVisualState,
-} from './types';
+import {customInput} from './util/forward-input';
 import {IS_MOBILE_DEVICE} from './framework';
-import {customInput} from './forward-input';
+import {ButtonMeta, ButtonVisualState} from './types';
+import {CLIENT_STATE} from './main';
 
 export interface Button {
   node: gfx.Sprite;
@@ -20,8 +16,7 @@ export interface Button {
     highlight: boolean;
     hover: boolean;
     listenerId?: number;
-    blinkListenerId?: number;
-    suiReleasedCallback?: (name: string) => void;
+    releasedCallback?: (name: string) => void;
   };
 }
 
@@ -34,8 +29,7 @@ export function registerButton(button: Button): void {
 export const handleInputEvent = (
   button: Button,
   type: EventType,
-  isMobile: boolean,
-  isCabinet: boolean
+  _isMobile: boolean,
 ): void => {
   if (button.node.visible) {
     if (type === EventType.PRESS) {
@@ -45,7 +39,7 @@ export const handleInputEvent = (
     } else if (type === EventType.EXIT) {
       handleButtonExited(button);
     } else if (type === EventType.ENTER) {
-      handleButtonEntered(button, !isCabinet);
+      handleButtonEntered(button, true);
     }
   }
 };
@@ -59,8 +53,8 @@ export const handleButtonPressed = (button: Button): void => {
 export const handleButtonReleased = (button: Button): void => {
   if (button.state.pressed) {
     button.state.pressed = false;
-    if (button.state.active && button.state.suiReleasedCallback) {
-      button.state.suiReleasedCallback(button.node.name);
+    if (button.state.active && button.state.releasedCallback) {
+      button.state.releasedCallback(button.node.name);
     }
   }
   button.state.hover = false;
@@ -84,10 +78,23 @@ export const handleButtonExited = (button: Button): void => {
 
 export const setButtonVisible = (button: Button, visible: boolean): void => {
   button.node.visible = visible;
+
   if (!visible) {
     button.state.hover = false;
     button.state.highlight = false;
   }
+};
+
+export const setButtonState = (
+  buttonId: string,
+  active: boolean,
+  visible: boolean,
+): void => {
+  const button = buttons.get(buttonId);
+  if (!button) return;
+  const activeAllowed = CLIENT_STATE.replay ? false : active;
+  setButtonVisible(button, visible);
+  setButtonActive(button, activeAllowed);
 };
 
 export const setButtonHighlight = (buttonId: string, hl: boolean): void => {
@@ -95,55 +102,13 @@ export const setButtonHighlight = (buttonId: string, hl: boolean): void => {
   if (!button) return;
   button.state.highlight = hl;
   updateButtonState(button);
-  updateBlinkState(button, ButtonBlinkState.Normal);
 };
 
-export const setButtonActive = (
-  button: Button,
-  active: boolean,
-  blinkState: ButtonBlinkState
-): void => {
+export const setButtonActive = (button: Button, active: boolean): void => {
   if (button.state.active !== active) {
     button.state.active = active;
-    updateButtonState(button);
-    updateBlinkState(button, blinkState);
   }
-};
-
-export const setButtonBlinkMode = (
-  button: Button,
-  buttonBlinkMode: ButtonBlinkMode,
-  blinkState: ButtonBlinkState
-): void => {
-  button.meta.blinkMode = buttonBlinkMode;
-  updateBlinkState(button, blinkState);
-};
-
-export const updateBlinkState = (
-  button: Button,
-  blinkState: ButtonBlinkState
-): void => {
-  if (button.meta.blinkMode !== undefined) {
-    /*
-    LED buttons need the 'lamp' parameter to be true in both blink states.
-    However, Voltti iDeck and Valtti use 'lamp' for physical button lights
-    (true for bright state, false for normal state)
-    */
-    if (button.state.active) {
-      if (button.meta.blinkMode === ButtonBlinkMode.Off) {
-        button.state.highlight = false;
-      }
-      if (button.meta.blinkMode === ButtonBlinkMode.Normal) {
-        button.state.highlight = blinkState === ButtonBlinkState.Bright;
-      } else if (button.meta.blinkMode === ButtonBlinkMode.Inverted) {
-        button.state.highlight = blinkState === ButtonBlinkState.Normal;
-      }
-
-      if (button.meta.blinkMode !== ButtonBlinkMode.Off) {
-        updateButtonState(button);
-      }
-    }
-  }
+  updateButtonState(button);
 };
 
 export function updateButtonStates(): void {
@@ -189,12 +154,12 @@ export const updateButtonState = (button: Button): void => {
 };
 
 export function setPickedGambleButton(buttonIds: string[], pick: string): void {
-  buttonIds.forEach((e) => {
-    const btn = buttons.get(e) as Button;
-    btn.state.active = e === pick;
-    btn.state.highlight = e === pick;
-    updateButtonState(btn);
-    updateBlinkState(btn, ButtonBlinkState.Normal);
+  buttonIds.forEach((id) => {
+    const button = buttons.get(id);
+    if (!button) return;
+    button.state.active = id === pick;
+    button.state.highlight = id === pick;
+    updateButtonState(button);
   });
 }
 
@@ -207,43 +172,22 @@ export function disableButtonInputListeners(buttons: Button[]) {
   });
 }
 
-export function enableButtonsInputListeners(buttonIds: string[]) {
-  buttonIds.forEach((id) => {
-    const button = buttons.get(id);
-    if (!button) return;
-    if (!button.state.listenerId) {
-      const listenerId = CORE.input.listenNode(button.node, (event) => {
-        handleInputEvent(button, event.type, IS_MOBILE_DEVICE, false);
-      });
-      button.state.listenerId = listenerId;
-      button.state.active = true;
-      button.state.pressed = false;
-      button.state.highlight = false;
-
-      updateButtonState(button);
-      updateBlinkState(button, ButtonBlinkState.Normal);
-    }
-  });
-}
-
 export function bindButtonListeners(buttonIds: string[]) {
+  if (CLIENT_STATE.replay) {
+    return;
+  }
   buttonIds.forEach((id) => {
     const button = buttons.get(id);
     if (!button) return;
     if (!button.state.listenerId) {
+      button.state.active = true;
       button.state.listenerId = CORE.input.listenNode(button.node, (event) => {
-        handleInputEvent(button, event.type, IS_MOBILE_DEVICE, false);
+        handleInputEvent(button, event.type, IS_MOBILE_DEVICE);
       });
     }
-    button.state.suiReleasedCallback = (_name) => {
-      customInput('custom/'.concat(_name));
+    button.state.releasedCallback = (name) => {
+      customInput('custom/'.concat(name));
     };
-
-    button.state.active = true;
-    button.state.pressed = false;
-    button.state.highlight = false;
-
-    updateButtonState(button);
   });
 }
 
@@ -254,12 +198,11 @@ export function unbindButtonListeners(buttonIds: string[]) {
     if (button.state.listenerId) {
       CORE.input.removeListener(button.state.listenerId);
       button.state.listenerId = undefined;
+      button.state.active = false;
+      button.state.pressed = false;
+      button.state.highlight = false;
+      button.state.hover = false;
+      updateButtonState(button);
     }
-
-    button.state.active = false;
-    button.state.pressed = false;
-    button.state.highlight = false;
-    button.state.hover = false;
-    updateButtonState(button);
   });
 }

@@ -1,6 +1,12 @@
-import {RoundState} from '../config/backend-types';
-import {CARD_LOCATION_PREFIX, CardName} from '../config/config';
+import {
+  CARD_LOCATION_PREFIX,
+  CardName,
+  Recovery,
+  miscConfig,
+} from '../config/config';
 import {CORE} from '../game';
+import {CLIENT_STATE, StateMachineRoundData} from '../main';
+import {computeWinAmount} from './win-amount';
 
 export function lerp(v0: number, v1: number, t: number) {
   return v0 * (1 - t) + v1 * t;
@@ -22,10 +28,23 @@ export function roundToNextPowerOfTwo(n: number): number {
   return v;
 }
 
+export function getRTPString(rtp: number): string {
+  return rtp.toLocaleString('fi', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
 export function wait(milliseconds: number): Promise<void> {
   return new Promise((resolve) => {
     CORE.gameTimer.invoke(milliseconds / 1000, () => resolve());
   });
+}
+
+export function assert(condition: boolean, msg?: string): asserts condition {
+  if (!condition) {
+    throw new Error(msg);
+  }
 }
 
 /**
@@ -46,7 +65,7 @@ export function getResolutionScale(
   devicePixelRatio: number,
   isMobileDevice: boolean,
   maxScreenHeight: number,
-  maxScreenHeightMobile: number
+  maxScreenHeightMobile: number,
 ): number {
   let resolutionScale = 1;
   const screenLandscapeHeight =
@@ -73,8 +92,90 @@ export function getResolutionScale(
   return resolutionScale;
 }
 
-export function winningRound(round: RoundState): boolean {
-  return round.win !== undefined;
+export function getAssetsBaseUrl(gameId: string): string {
+  let assetsBaseUrl = '';
+  const releaseVersion = window.RELEASE_VERSION;
+
+  // add gameId and release versioin to the base url (if not in dev environment)
+  const givenAssetsBaseUrl = getURLValue('assetsBaseUrl');
+  if (givenAssetsBaseUrl !== undefined) {
+    assetsBaseUrl = givenAssetsBaseUrl + gameId + '/' + releaseVersion + '/';
+  }
+
+  return assetsBaseUrl;
+}
+
+function getURLValue(name: string): string | undefined {
+  const re =
+    new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(
+      location.search,
+    ) || undefined;
+
+  if (re !== undefined && re[1] !== undefined) {
+    return decodeURIComponent(re[1].replace(/\+/g, '%20')) || undefined;
+  } else {
+    return undefined;
+  }
+}
+
+export function winningRound(data: StateMachineRoundData): boolean {
+  const winAmount = computeWinAmount(data.roundState.winFactor, data.bet);
+  return winAmount > 0 || data.roundState.rounds.length > 1;
+}
+
+export function maxWinReached(data: StateMachineRoundData): boolean {
+  return data.roundState.maxWinFactorReached;
+}
+
+export function isRecovery(): boolean {
+  return !CLIENT_STATE.replay && miscConfig.recovery.recovery === Recovery.Full;
+}
+
+export const isMobileAndroidFirefox = () =>
+  /^(?=.*Mobile)(?=.*Android)(?=.*Firefox).*$/.test(navigator.userAgent);
+
+export const isMobileiOSFirefox = () =>
+  /^(?=.*Mobile)(?=.*Firefox)(?=.*(?:iPhone|iPad|iPod)).*$/.test(
+    navigator.userAgent,
+  );
+
+/**
+ * Checks if a recovery point should be saved for the given round step.
+ *
+ * It tries to evenly spread out recovery points among all of the rounds.
+ * For simpler logic, use isRecovery() if e.g. roundStep is 0.
+ *
+ * @note On the last freespin round roundStep === roundCount - 1.
+ * @param roundStep The round step index
+ * @param maxRoundSteps Number of round steps (base game, each freespin, etc.)
+ */
+export function isRoundStepRecoverable(
+  roundStep: number,
+  maxRoundSteps: number,
+): boolean {
+  if (!isRecovery()) {
+    return false;
+  }
+
+  const maxRecoveryCount = miscConfig.recovery.maxRecoveryCount;
+
+  if (maxRecoveryCount <= 0) {
+    return false;
+  }
+
+  if (maxRoundSteps <= maxRecoveryCount) {
+    return true;
+  }
+
+  // The last freespin round should always be recoverable
+  // (prevRecoveryPoint !== curRecoveryPoint).
+  // To achieve this, +1 is added so that roundStep / roundCount equals 1.
+  const step = roundStep + 1;
+  // stepSize guaranteed to be ]0, 1[
+  const stepSize = maxRecoveryCount / maxRoundSteps;
+  const prevRecoveryPoint = Math.floor((step - 1) * stepSize);
+  const curRecoveryPoint = Math.floor(step * stepSize);
+  return prevRecoveryPoint !== curRecoveryPoint;
 }
 
 /**
@@ -83,10 +184,14 @@ export function winningRound(round: RoundState): boolean {
 export function voidPromise(): {promise: Promise<void>; resolve: () => void} {
   let resolve = () => {};
   const promise = new Promise<void>(
-    (resolveCallback) => (resolve = resolveCallback)
+    (resolveCallback) => (resolve = resolveCallback),
   );
   return {promise, resolve};
 }
+
+// export function isRecovery(): boolean {
+//   return !PLATFORM.isCabinet && miscConfig.recovery === Recovery.Full;
+// }
 
 export function getCardNodeName(name: CardName, index?: number): string {
   let nodeName = `${CARD_LOCATION_PREFIX}_${name}`;
@@ -96,6 +201,3 @@ export function getCardNodeName(name: CardName, index?: number): string {
 
   return nodeName;
 }
-
-export const isMobileAndroidFirefox = () =>
-  /^(?=.*Mobile)(?=.*Android)(?=.*Firefox).*$/.test(navigator.userAgent);

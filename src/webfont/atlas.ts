@@ -39,7 +39,7 @@ export type AtlasOpts = {
 function glyphBounds(
   builder: gfx.CanvasTextBuilder,
   font: gfx.CanvasFont,
-  glyphs: string[]
+  glyphs: string[],
 ): Array<GlyphRect> {
   builder.begin({font, text: ''});
 
@@ -74,11 +74,11 @@ export function atlasGlyphs(
   font: gfx.CanvasFont,
   glyphs: GlyphRect[],
   style: gfx.CanvasTextDrawFn[],
-  opts?: Partial<AtlasOpts>
+  opts?: Partial<AtlasOpts>,
 ): object {
   // Find the widest number character in the set.
   const maxAdvance = Math.max(
-    ...glyphs.filter(glyphIsNumber).map((e) => e.width)
+    ...glyphs.filter(glyphIsNumber).map((e) => e.width),
   );
 
   // Extend glyph rects by padding value
@@ -94,7 +94,7 @@ export function atlasGlyphs(
     2048,
     2048,
     opts?.padOuter ?? 0,
-    {pot: false, allowRotation: false}
+    {pot: false, allowRotation: false},
   );
   packer.addArray(glyphs);
   const bins = packer.bins;
@@ -108,7 +108,7 @@ export function atlasGlyphs(
       .pushState()
       .move(
         rect.x + Math.floor(padInnerX / 2),
-        rect.y + Math.floor(padInnerY / 2)
+        rect.y + Math.floor(padInnerY / 2),
       )
       .drawLines(rect.glyph, ...style)
       .popState();
@@ -139,8 +139,8 @@ export function atlasGlyphs(
               ? Math.max(
                   0,
                   Math.floor(
-                    (maxAdvance - Math.ceil(builder.measure(e.glyph)[0])) / 2
-                  )
+                    (maxAdvance - Math.ceil(builder.measure(e.glyph)[0])) / 2,
+                  ),
                 )
               : 0,
           bearingY: 0,
@@ -151,7 +151,7 @@ export function atlasGlyphs(
               ? maxAdvance
               : Math.ceil(builder.measure(e.glyph)[0]),
         },
-      ])
+      ]),
     ),
     fontSize: font.heightPx,
     lineHeight: opts?.lineHeight ?? font.heightPx,
@@ -186,7 +186,7 @@ export function webfontToBitmapFont(
   font: gfx.CanvasFont,
   glyphs: string[],
   style: gfx.CanvasTextDrawFn[],
-  atlasOpts?: Partial<AtlasOpts>
+  atlasOpts?: Partial<AtlasOpts>,
 ) {
   const rects = glyphBounds(builder, font, glyphs);
   const bmfont = atlasGlyphs(
@@ -196,7 +196,7 @@ export function webfontToBitmapFont(
     font,
     rects,
     style,
-    atlasOpts
+    atlasOpts,
   );
   g.createBitmapFont(resourceId, resourceId, bmfont);
 }

@@ -1,8 +1,9 @@
-import {CasinoFrameMiddleware} from '@apila/casino-frame/express';
 import type * as gf from '@apila/casino-frame/server-types';
+import {CasinoLoaderMiddleware} from '@apila/casino-loader/express';
 import * as dev from '@apila/dev-server';
 import * as fs from 'fs';
 import * as Path from 'path';
+import {DevCasinoFrameMiddleware} from './dev-cf-middleware';
 import {parse} from './parser';
 import {SwcLoader, TypeCheckPlugin} from './plugin';
 import {getEndpoint as getRemoteBackendEndpoint} from './remote-backend';
@@ -17,9 +18,27 @@ type LauncherParams = {
 // Path to game client's entrypoint file
 const ENTRY = Path.resolve(Path.join('src', 'main.ts'));
 const ENGINE = 'ECasino';
-const GAME = 'villitkakkoset';
+const GAME = 'templategame';
 
-const options = parse(process.argv.slice(2));
+let gfReleaseUrl = '';
+const p = process.argv.indexOf('--gf');
+
+if (p !== -1) {
+  if (process.argv.length > p) {
+    const a = process.argv[p + 1];
+    const [e, v] = a.split('/');
+    gfReleaseUrl = `https://static.cluster.gaas.${e}.gcp.veikkaus.com/assets/frontend/game-frame/${v}/`;
+  } else {
+    throw 'Could not read game-frame release version';
+  }
+}
+const DEV_GAMEFRAME_ENDPOINT = process.argv.includes('--devgf')
+  ? 'http://localhost:8000/'
+  : undefined;
+
+const options = parse(
+  process.argv.slice(2).filter((e) => e !== '--devgf' && e !== '--gf'),
+);
 
 const EXTRA_ENTRYPOINTS = [
   dev.overlayEntry(),
@@ -56,12 +75,13 @@ app
     // Configure GameFrame. The 'id' arguments are mandatory, the rest
     // are optional GameFrame parameters (see gf.Adapter.ConstructOptions).
     // NOTE: the page needs to be reloaded for these changes to take effect.
+    // prettier-ignore
     dev.InjectQueryParams({
       gameId: GAME,
       engineId: ENGINE,
       tenantId: 'templatetenant',
       localization: 'fi-FI',
-    } satisfies LauncherParams & Record<string, string>)
+    } satisfies LauncherParams & Partial<LauncherParams>),
   )
   .get(
     '/app.bundle.js',
@@ -75,8 +95,9 @@ app
         USE_AP_OVERLAY ? '/overlay.js' : '',
         '/game.js',
       ].filter(Boolean);
-    })
+    }),
   )
+  .use(`/cheats/${ENGINE}/:GAME/:VARIANT/`, dev.Static('cheats'))
   .use(
     // Setup client code compilation.
     dev.WebpackBuild(
@@ -105,21 +126,27 @@ app
           }),
         ],
         stats: 'errors-only',
-      })
-    )
+      }),
+    ),
   )
   // Game asset path is hard-coded to the following form. We ignore the last
   // part ('version') since there are never multiple versions in use
   // concurrently.
-  .use(`/assets/${ENGINE}/${GAME}/:ver`, dev.Static(ASSETS))
-  // Use frame middleware to serve js-bundles and localizations
+  .use(`/assets/${ENGINE}/${GAME}/:ver`, dev.Static(ASSETS));
+if (gfReleaseUrl !== '') {
+  app.get(
+    '/gf/cf-ecasino.min.js',
+    dev.Redirect(gfReleaseUrl + 'cf-ecasino.min.js'),
+  );
+}
+app
+  // Use loader middleware to serve index, loader and needed localizations
+  .use(CasinoLoaderMiddleware())
   .use(
-    CasinoFrameMiddleware({
-      cfJsBaseUrl: options.releaseCfBaseUrl,
+    DevCasinoFrameMiddleware({
+      endpoint: DEV_GAMEFRAME_ENDPOINT,
       type: 'ecasino',
-      frameDevServer: options.cfDevelopmentServer,
-      gitlabMasterFrame: options.useLatestDevFrame,
-    })
+    }),
   )
   // This endpoint allows users to toggle the engine debugger on/off by
   // opening 'http://localhost:XXX/_dbg' from their browsers. The middleware
@@ -128,7 +155,7 @@ app
   // behaves)
   .use(
     '/_dbg',
-    dev.DebuggerToggle((b) => (USE_DEBUGGER = b), {initial: USE_DEBUGGER})
+    dev.DebuggerToggle((b) => (USE_DEBUGGER = b), {initial: USE_DEBUGGER}),
   )
   // Serve engine debugger assets. These are shipped as part of the
   // @apila/engine NPM package.
@@ -145,9 +172,6 @@ app
       resCb: (r) => ({
         ...r,
         assetDomain: ``,
-        backendSettings: {
-          autoResolveDelaySeconds: 100000,
-        },
         clientSettings: {
           autoplay: {
             enabled: true,
@@ -176,16 +200,8 @@ app
             enabled: true,
           },
         } satisfies gf.ECClientSettings,
-        // NOTE: A simple way to test gamble being disabled
-        // gameSettings: {
-        //   defaultBet: 20,
-        //   betLevels: [20, 40, 60, 80, 100],
-        //   gamble: {
-        //     enabled: false,
-        //   },
-        // },
       }),
-    })
+    }),
   )
   // TODO: Temporary reroute: remove this when EGS supports /api/v2/game/:GAME/balance
   .all('/api/v2/game/:GAME/balance', dev.Redirect('/api/v2/balance'))
@@ -208,7 +224,7 @@ app
       } catch {
         return {};
       }
-    })
+    }),
   )
   .post('/history', (req, res) => {
     const filename = `history/${req.body.filename}.json`;
@@ -235,8 +251,8 @@ wss.onMessage('__tracker', (d, c) => {
   if (bundleFile) {
     c.send(
       JSON.parse(
-        fs.readFileSync(Path.join(ASSETS, bundleFile)) as unknown as string
-      )
+        fs.readFileSync(Path.join(ASSETS, bundleFile)) as unknown as string,
+      ),
     );
   } else {
     c.send([]);

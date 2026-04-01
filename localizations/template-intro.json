@@ -1,36 +1,23 @@
 {
   "variants": [
     {
-      "variant": [
-        "default",
-        "rtp-94G96",
-        "rtp-90G100",
-        "rtp-92G100",
-        "rtp-95G100",
-        "rtp-93G96X20000N"
-      ],
+      "variant": ["default", "rtp-94G97"],
       "pages": [
         {
-          "background": "slot-ui/intro/hero_bg.png",
-          "image": "slot-ui/intro/{_hero_image}.png"
+          "image": "slot-ui/intro/{_intro_hero_image}",
+          "background": "slot-ui/intro/intro_bg.png"
         },
         {
-          "background": "slot-ui/intro/feature_bg.png",
-          "image": "slot-ui/intro/feature_deuces.png",
-          "header": "{intro_feature_deuces_header}",
-          "text": "{intro_feature_deuces_text}"
+          "background": "slot-ui/intro/intro_bg.png",
+          "image": "slot-ui/intro/{_intro_feature_1_image}",
+          "header": "{intro_dragon_card_header}",
+          "text": "{intro_dragon_card_text}"
         },
         {
-          "background": "slot-ui/intro/feature_bg.png",
-          "image": "slot-ui/intro/feature_card_swap.png",
-          "header": "{intro_feature_card_swap_header}",
-          "text": "{intro_feature_card_swap_text}"
-        },
-        {
-          "background": "slot-ui/intro/feature_bg.png",
-          "image": "slot-ui/intro/feature_random_super.png",
-          "header": "{intro_feature_random_super_header}",
-          "text": "{intro_feature_random_super_text}"
+          "background": "slot-ui/intro/intro_bg.png",
+          "image": "slot-ui/intro/{_intro_feature_2_image}",
+          "header": "{intro_freespin_header}",
+          "text": "{intro_freespin_text}"
         }
       ]
     }
