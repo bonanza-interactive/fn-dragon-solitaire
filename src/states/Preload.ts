@@ -9,7 +9,7 @@ import {CardPickGui} from '../card-pick-gui';
 import {Cards} from '../cards';
 import {
   CARD_BACK,
-  GameConfig,
+  // GameConfig,
   miscConfig,
   rankAnimationNames,
   suitSkinNames,
@@ -408,24 +408,36 @@ export class Preload extends State {
 
     GAME.cardPickGui = new CardPickGui(baseGameRoot);
     GAME.cardChangeButtons = new CardChangeButtons(baseGameRoot);
+    const tempPaytable = [
+      {
+        selected: 2,
+        payout: [
+          {
+            count: 1,
+            winFactor: 50,
+          },
+          {
+            count: 2,
+            winFactor: 650,
+          },
+        ],
+      },
+    ];
+    const basegameWincombinations = tempPaytable.map((e) => ({
+      selected: e.selected,
+      payout: e.payout.map((p) => ({
+        count: p.count,
+        win: p.winFactor,
+      })),
+    }));
 
-    const basegameWincombinations =
-      GameConfig.gameConfig.paytables.basegame.map((e) => ({
-        selected: e.selected,
-        payout: e.payout.map((p) => ({
-          count: p.count,
-          win: p.winFactor,
-        })),
-      }));
-
-    const freespinWincombinations =
-      GameConfig.gameConfig.paytables.freespin.map((e) => ({
-        selected: e.selected,
-        payout: e.payout.map((p) => ({
-          count: p.count,
-          win: p.winFactor,
-        })),
-      }));
+    const freespinWincombinations = tempPaytable.map((e) => ({
+      selected: e.selected,
+      payout: e.payout.map((p) => ({
+        count: p.count,
+        win: p.winFactor,
+      })),
+    }));
 
     GAME.paytable = new Paytable(
       getNode(baseGameRoot, 'paytable_content'),

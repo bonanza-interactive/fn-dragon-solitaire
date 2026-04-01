@@ -1,6 +1,6 @@
 import {Playback} from '@apila/game-libraries/dist/game-animation';
 
-import {CARD_DRAGON, GameConfig} from '../config/config';
+import {CARD_DRAGON} from '../config/config';
 import {GAME} from '../game';
 import {CLIENT_STATE} from '../main';
 import {ScrollStyle} from '../win-scroll';
@@ -13,6 +13,61 @@ export enum Suit {
   Hearts = 'H',
   Jokers = 'Jokers',
 }
+export const tempData = [
+  {
+    selections: 2,
+    weightedDraw: [
+      {
+        item: {
+          freespinAmount: 3,
+        },
+        weight: 70,
+      },
+      {
+        item: {
+          multiplier: 2,
+        },
+        weight: 400,
+      },
+      {
+        item: {
+          multiplier: 3,
+        },
+        weight: 500,
+      },
+      {
+        item: {
+          multiplier: 5,
+        },
+        weight: 250,
+      },
+      {
+        item: {
+          multiplier: 7,
+        },
+        weight: 100,
+      },
+      {
+        item: {
+          multiplier: 10,
+        },
+        weight: 100,
+      },
+      {
+        item: {
+          multiplier: 50,
+        },
+        weight: 5,
+      },
+      {
+        item: {
+          multiplier: 100,
+        },
+        weight: 1,
+      },
+    ],
+  },
+];
 
 export enum Rank {
   Rank_A = 'A',
@@ -139,13 +194,23 @@ export function hexColor(h: number, s: number, v: number): string {
 }
 
 export function getMaxMultiplier(): number | undefined {
-  const multipliers = [
-    ...GameConfig.gameConfig.dragonMultipliers.basegame,
-    ...GameConfig.gameConfig.dragonMultipliers.freespin,
+  const weightedDraw = [
+    {
+      item: {
+        freespinAmount: 3,
+      },
+      weight: 40,
+    },
+    {
+      item: {
+        multiplier: 2,
+      },
+    },
   ];
+  const multipliers = [tempData, tempData];
   return multipliers.reduce(
-    (maxMultiplier, dragonMultiplier) => {
-      const maxInDragonMultiplier = dragonMultiplier.weightedDraw.reduce(
+    (maxMultiplier) => {
+      const maxInDragonMultiplier = weightedDraw.reduce(
         (maxItemMultiplier, item) => {
           const itemMultiplier = item.item.multiplier;
           if (
@@ -174,9 +239,7 @@ export function getMaxMultiplier(): number | undefined {
 }
 
 export function getAllMultipliers(isFreespins: boolean): number[] {
-  const multipliers = isFreespins
-    ? GameConfig.gameConfig.dragonMultipliers.freespin
-    : GameConfig.gameConfig.dragonMultipliers.basegame;
+  const multipliers = isFreespins ? tempData : tempData;
   return [
     ...new Set(
       multipliers
