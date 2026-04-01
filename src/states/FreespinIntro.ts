@@ -1,4 +1,4 @@
-import {GameConfig} from '../config/config';
+// import {GameConfig} from '../config/config';
 import {GameLayer} from '../config/schemas';
 import {CORE, GAME} from '../game';
 import {CLIENT_STATE, StateMachineRoundData} from '../main';
@@ -14,7 +14,7 @@ import {GAMEFW} from '../framework';
 import {nextInput} from '../util/forward-input';
 import {replayRoundData} from '../client-state';
 import {cardToIndex} from '../util/utils-game';
-
+const tempNumber = 5;
 export class FreespinIntro extends State<StateMachineRoundData> {
   public async run(_data: StateMachineRoundData): Promise<AnyState> {
     setButtonState('return_to_selection', false, true);
@@ -34,10 +34,7 @@ export class FreespinIntro extends State<StateMachineRoundData> {
       await GAME.dragonPanel.freespinsStart();
       await GAME.topElementsMover.move(TopElementsLocation.CardSelection, true);
 
-      GAME.paytable.updateContent(
-        GameConfig.gameConfig.freespin.minSelections,
-        true,
-      );
+      GAME.paytable.updateContent(tempNumber, true);
 
       GAME.paytable.show();
       GAME.paytableButton.isPaytableVisible = true;
@@ -84,10 +81,7 @@ export class FreespinIntro extends State<StateMachineRoundData> {
     await GAME.dragonPanel.freespinsStart();
     await GAME.topElementsMover.move(TopElementsLocation.CardSelection, true);
 
-    GAME.paytable.updateContent(
-      GameConfig.gameConfig.freespin.minSelections,
-      true,
-    );
+    GAME.paytable.updateContent(tempNumber, true);
 
     GAME.paytable.show();
     GAME.paytableButton.isPaytableVisible = true;

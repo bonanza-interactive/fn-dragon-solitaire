@@ -1,5 +1,5 @@
 import {Round} from '../config/backend-types';
-import {CARD_DRAGON, GameConfig} from '../config/config';
+import {CARD_DRAGON} from '../config/config';
 import {CORE, GAME} from '../game';
 import {CLIENT_STATE, StateMachineRoundData} from '../main';
 import {AnyState, State} from '../state-machine';
@@ -15,7 +15,7 @@ import {Spinning} from './Spinning';
 import {computeWinAmount} from '../util/win-amount';
 import {RecoveryStepState} from '../config/recovery-step';
 import {GAMEFW, LOCALIZER} from '../framework';
-
+const tempNumber = 5;
 export class ReadyRecovery extends State<StateMachineRoundData> {
   public async run(data: StateMachineRoundData): Promise<AnyState> {
     GAME.nodeStorage.baseGame.nodes.root.visible = true;
@@ -212,10 +212,7 @@ export class ReadyRecovery extends State<StateMachineRoundData> {
 
     const round = data.roundState.rounds[CLIENT_STATE.roundStep];
     this.resetHand(data.roundState.rounds[0], round);
-    GAME.paytable.updateContent(
-      GameConfig.gameConfig.freespin.minSelections,
-      true,
-    );
+    GAME.paytable.updateContent(tempNumber, true);
 
     await GAME.freespinTransition.enter();
     await GAME.dragonPanel.freespinsStart();

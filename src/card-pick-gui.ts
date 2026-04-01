@@ -1,7 +1,7 @@
 import {gfx} from '@apila/engine';
 import {anim} from '@apila/game-libraries';
 
-import {GameConfig} from './config/config';
+// import {GameConfig} from './config/config';
 import {AUTO_TICK} from './main';
 import {wait} from './util/utils';
 import {getBitmapText, getSprite} from './util/utils-node';
@@ -17,6 +17,7 @@ export class CardPickGui {
   private blinkTimeline = new anim.Timeline();
   private isVisible = false;
   private shouldBlink = true;
+  private tempNumber = 5;
 
   public constructor(parent: gfx.NodeProperties) {
     this.infoText = getBitmapText(parent, 'selection_info_text');
@@ -31,13 +32,9 @@ export class CardPickGui {
     this.infoText.visible = true;
     this.dimmerBg.visible = true;
 
-    const minAmount = isFreespin
-      ? GameConfig.gameConfig.freespin.minSelections
-      : GameConfig.gameConfig.basegame.minSelections;
+    const minAmount = isFreespin ? this.tempNumber : this.tempNumber;
 
-    const maxAmount = isFreespin
-      ? GameConfig.gameConfig.freespin.maxSelections
-      : GameConfig.gameConfig.basegame.maxSelections;
+    const maxAmount = isFreespin ? this.tempNumber : this.tempNumber;
 
     this.infoText.text = LOCALIZER.get(
       'selection_info',

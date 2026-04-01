@@ -1,7 +1,7 @@
 import {input} from '@apila/engine';
 
 import {Card} from './card';
-import {GameConfig} from './config/config';
+// import {GameConfig} from './config/config';
 import {CORE, GAME} from './game';
 import {wait} from './util/utils';
 import {GAMEFW} from './framework';
@@ -19,19 +19,15 @@ export class CardsInput {
 
   private pressCard = -1;
   private isFreespins = false;
-
+  private tempNumber = 5;
   public startSelection(cards: Card[], isFreespins: boolean) {
     this.selectedCards = [];
     this.pressCard = -1;
     this.isFreespins = isFreespins;
 
-    this.minSelection = isFreespins
-      ? GameConfig.gameConfig.freespin.minSelections
-      : GameConfig.gameConfig.basegame.minSelections;
+    this.minSelection = isFreespins ? this.tempNumber : this.tempNumber;
 
-    this.maxSelection = isFreespins
-      ? GameConfig.gameConfig.freespin.maxSelections
-      : GameConfig.gameConfig.basegame.maxSelections;
+    this.maxSelection = isFreespins ? this.tempNumber : this.tempNumber;
 
     this.enableInput(cards, isFreespins);
   }

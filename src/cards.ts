@@ -8,7 +8,7 @@ import {
   CARD_DRAGON,
   CardLocation,
   CardName,
-  GameConfig,
+  // GameConfig,
   layoutConfig,
 } from './config/config';
 import {GameLayer} from './config/schemas';
@@ -99,19 +99,14 @@ export class Cards {
 
   private timeline = new anim.Timeline();
   private cardsInput = new CardsInput();
+  private tempNumber = 5;
 
   constructor(root: gfx.Empty) {
     this.root = root;
     this.tableRoot = getNode(root, 'table_root');
 
-    this.maxSelection = Math.max(
-      GameConfig.gameConfig.basegame.maxSelections,
-      GameConfig.gameConfig.freespin.maxSelections,
-    );
-    this.maxDrawCount = Math.max(
-      GameConfig.gameConfig.basegame.drawCount,
-      GameConfig.gameConfig.freespin.drawCount,
-    );
+    this.maxSelection = Math.max(this.tempNumber, this.tempNumber);
+    this.maxDrawCount = Math.max(this.tempNumber, this.tempNumber);
 
     const cardCount = SUIT_COUNT * RANK_COUNT + EXTRA_CARDS + this.maxSelection;
     for (let i = 0; i < cardCount; i++) {
@@ -272,10 +267,10 @@ export class Cards {
   ): Promise<void> {
     this.cardsInput.disableInput();
     const selectedCount = selectedCards.length;
-    if (selectedCount < GameConfig.gameConfig.basegame.minSelections) {
+    if (selectedCount < this.tempNumber) {
       return;
     }
-    const minSelection = GameConfig.gameConfig.basegame.minSelections;
+    const minSelection = this.tempNumber;
     const include: number[] = selectedCount < minSelection ? selectedCards : [];
     const selected = isFreeSpin
       ? selectedCards
@@ -286,23 +281,19 @@ export class Cards {
 
   public async selectRandom(isFreespins = false): Promise<void> {
     this.cardsInput.disableInput();
-    let randomizeCount = isFreespins
-      ? GameConfig.gameConfig.freespin.maxSelections
-      : GameConfig.gameConfig.basegame.maxSelections;
+    let randomizeCount = isFreespins ? this.tempNumber : this.tempNumber;
 
     if (!isFreespins) {
       const selectedCount = this.cardsInput.getSelectedCount();
       if (
-        selectedCount >= GameConfig.gameConfig.basegame.minSelections &&
-        selectedCount <= GameConfig.gameConfig.basegame.maxSelections
+        selectedCount >= this.tempNumber &&
+        selectedCount <= this.tempNumber
       ) {
         randomizeCount = selectedCount;
       }
     }
 
-    const minSelection = isFreespins
-      ? GameConfig.gameConfig.freespin.minSelections
-      : GameConfig.gameConfig.basegame.minSelections;
+    const minSelection = isFreespins ? this.tempNumber : this.tempNumber;
     const include: number[] =
       this.cardsInput.getSelected().length < minSelection
         ? this.cardsInput.getSelected()
@@ -495,9 +486,7 @@ export class Cards {
   }
 
   public async prepareRound(isFreespins: boolean): Promise<void> {
-    const drawCount = isFreespins
-      ? GameConfig.gameConfig.freespin.drawCount
-      : GameConfig.gameConfig.basegame.drawCount;
+    const drawCount = isFreespins ? this.tempNumber : this.tempNumber;
     this.updateCardTablePositions(drawCount);
 
     if (this.deck.parent) {

@@ -1,5 +1,5 @@
 import {gfx} from '@apila/engine';
-import {GameConfig} from './config/config';
+// import {GameConfig} from './config/config';
 import {GameLayer} from './config/schemas';
 import {CORE, GAME} from './game';
 import {HiliteAnimation} from './hilite-animation';
@@ -47,6 +47,7 @@ export class Paytable {
 
   private readonly textColorDefault = hexColor(0, 0, 0.75);
   private readonly textColorHilite = hexColor(57, 1, 0.7);
+  private tempNumber = 5;
 
   constructor(
     root: gfx.NodeProperties,
@@ -60,10 +61,7 @@ export class Paytable {
 
     const contentRoot = getNode(root, 'paytable_content');
 
-    const maxSelection = Math.max(
-      GameConfig.gameConfig.basegame.maxSelections,
-      GameConfig.gameConfig.freespin.maxSelections,
-    );
+    const maxSelection = Math.max(this.tempNumber, this.tempNumber);
 
     for (let i = 0; i < maxSelection; ++i) {
       const countText = CORE.gfx.createBitmapText('basic_text');
