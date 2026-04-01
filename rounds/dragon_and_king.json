@@ -1,0 +1,49 @@
+{
+  "round": {
+    "rounds": [
+      {
+        "roundType": "basegame",
+        "drawnNumbers": [
+          {"rank": "Rank_5", "suit": "Diamonds", "isJoker": false},
+          {"rank": "Rank_2", "suit": "Diamonds", "isJoker": false},
+          {"rank": "Rank_10", "suit": "Diamonds", "isJoker": false},
+          {"rank": "Rank_7", "suit": "Spades", "isJoker": false},
+          {"rank": "Rank_6", "suit": "Hearts", "isJoker": false},
+          {"rank": "Rank_4", "suit": "Clubs", "isJoker": false},
+          {"rank": "Rank_Q", "suit": "Spades", "isJoker": false},
+          {"rank": "Rank_6", "suit": "Diamonds", "isJoker": false},
+          {"rank": "Rank_Q", "suit": "Diamonds", "isJoker": false},
+          {"rank": "Rank_8", "suit": "Diamonds", "isJoker": false},
+          {"rank": "Joker", "suit": "Jokers", "isJoker": false},
+          {"rank": "Rank_K", "suit": "Clubs", "isJoker": false}
+        ],
+        "selectedNumbers": [
+          {"rank": "Rank_K", "suit": "Clubs", "isJoker": false},
+          {"rank": "Rank_K", "suit": "Spades", "isJoker": false},
+          {"rank": "Rank_K", "suit": "Diamonds", "isJoker": false},
+          {"rank": "Rank_K", "suit": "Hearts", "isJoker": false}
+        ],
+        "win": {
+          "matchingNumbers": [
+            {"rank": "Rank_K", "suit": "Clubs", "isJoker": false}
+          ],
+          "multiplier": 3,
+          "containsDragon": true,
+          "winAmount": 0
+        },
+        "multiplier": 3,
+        "winAmount": 0
+      }
+    ],
+    "canGamble": false,
+    "freespinWon": false,
+    "state": "result",
+    "winAmount": 0,
+    "bet": 100,
+    "v": 1
+  },
+  "game": {"storedStake": 100, "v": 1},
+  "roundId": 77,
+  "step": 0,
+  "balance": 10005000
+}

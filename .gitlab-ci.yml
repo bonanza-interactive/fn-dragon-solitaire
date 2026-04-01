@@ -1,0 +1,13 @@
+# Centralized pipeline definitions
+include:
+  - project: games/ci/gaas-pipeline-templates
+    ref: master
+    file: basic_game.yml
+
+# Required variables on a per-game basis.
+variables:
+  WEB_NAME: dragonscrownkeno
+  SLOT_NAME: dragonscrownkeno
+  SLOT_VERSION: pipeline
+  BACKEND_VERSION: 1.1.0
+

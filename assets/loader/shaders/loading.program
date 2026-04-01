@@ -1,0 +1,6 @@
+{
+  "id": "loading",
+  "type": "Program",
+  "vs": "Default.Sprite",
+  "fs": "loading.frag"
+}

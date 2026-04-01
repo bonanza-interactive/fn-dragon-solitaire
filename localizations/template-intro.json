@@ -1,0 +1,25 @@
+{
+  "variants": [
+    {
+      "variant": ["default", "rtp-94G97"],
+      "pages": [
+        {
+          "image": "slot-ui/intro/{_intro_hero_image}",
+          "background": "slot-ui/intro/intro_bg.png"
+        },
+        {
+          "background": "slot-ui/intro/intro_bg.png",
+          "image": "slot-ui/intro/{_intro_feature_1_image}",
+          "header": "{intro_dragon_card_header}",
+          "text": "{intro_dragon_card_text}"
+        },
+        {
+          "background": "slot-ui/intro/intro_bg.png",
+          "image": "slot-ui/intro/{_intro_feature_2_image}",
+          "header": "{intro_freespin_header}",
+          "text": "{intro_freespin_text}"
+        }
+      ]
+    }
+  ]
+}

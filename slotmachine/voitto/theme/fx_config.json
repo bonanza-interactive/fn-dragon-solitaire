@@ -1,0 +1,7 @@
+{
+  "config": {
+    "base_dir": "/psi/res/games/lohikaarmekeno/theme/",
+    "strict_init": true,
+    "strict_run": true
+  }
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<type name="GameGfxDll.lohikaarmekeno">
+    <moduleVersion>542</moduleVersion>
+    <parameter name="nemo_jar"><![CDATA[/psi/res/games/lohikaarmekeno/backend/nemo.jar]]></parameter>
+    <parameter name="maya_jar"><![CDATA[/psi/res/games/lohikaarmekeno/backend/maya.jar]]></parameter>
+    <parameter name="backend_jar"><![CDATA[/psi/res/games/lohikaarmekeno/backend/backendPS.jar]]></parameter>
+    <parameter name="nemo_params"><![CDATA[]]></parameter>
+    <parameter name="window_settings"><![CDATA[/psi/res/games/lohikaarmekeno/window_settings.json]]></parameter>
+    <parameter name="game_name"><![CDATA[lohikaarmekeno]]></parameter>
+    <parameter name="languages"><![CDATA[[suomi svenska english]]]></parameter>
+    <parameter name="binary_path"><![CDATA[/psi/bin/conwayserver.bin]]></parameter>
+    <parameter name="rng_provider"><![CDATA[1103]]></parameter>
+    <parameter name="game_dir"><![CDATA[/psi/res/games/lohikaarmekeno/]]></parameter>
+</type>

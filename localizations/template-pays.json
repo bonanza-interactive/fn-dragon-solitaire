@@ -1,0 +1,38 @@
+{
+  "variants": [
+    {
+      "variant": ["default", "rtp-94G97"],
+      "format": "table",
+      "payGroups": [
+        {
+          "description": "{help_paytable_description}",
+          "rows": 5,
+          "columns": 6,
+          "rowHeader": "{help_paytable_selected}",
+          "columnHeader": "{help_paytable_hits}",
+          "rowLabels": ["2", "3", "4", "5", "6"],
+          "columnLabels": ["1", "2", "3", "4", "5", "6"],
+          "pays": [
+            [0.5, 6.5, "—", "—", "—", "—"],
+            ["—", 3, 13.5, "—", "—", "—"],
+            ["—", 1.5, 5, 35, "—", "—"],
+            ["—", 0.5, 4, 9, 55, "—"],
+            ["—", 0.5, 1.5, 7, 30, 200]
+          ]
+        },
+        {
+          "description": "{help_paytable_freespins_description}",
+          "rows": 4,
+          "columns": 2,
+          "columnLabels": ["{help_paytable_hits}", "{paytable_win}"],
+          "pays": [
+            ["1", 0.5],
+            ["2", 1],
+            ["3", 5],
+            ["4", 20]
+          ]
+        }
+      ]
+    }
+  ]
+}
