@@ -178,13 +178,6 @@ export const GameStateSchema = type({
   v: integer(),
 });
 
-const Game = type({
-  jokers: integer(),
-  drawCount: integer(),
-  minSelections: integer(),
-  maxSelections: integer(),
-});
-
 const Payout = type({
   count: integer(),
   winFactor: integer(),
@@ -200,45 +193,51 @@ const PaytablesSchema = type({
   freespin: array(PaytableCombinationSchema),
 });
 
-const OpenCardGambleWinSchema = type({
-  type: string(),
-  multiplier: integer(),
-  canContinue: optional(boolean()),
+const WeightedItem = type({
+  item: any(),
+  weight: integer(),
 });
 
-const Gamble = type({
-  selectables: integer(),
-  aceAsHigh: boolean(),
-  winConfigs: array(OpenCardGambleWinSchema),
+const BonusResultItem = type({
+  suit: string(),
+  count: integer(),
+  winFactor: integer(),
 });
 
-const Items = type({
-  multiplier: optional(integer()),
-  freespinAmount: optional(integer()),
+const Features = type({
+  bonusDraw: array(WeightedItem),
+  bonusResultDraw: array(
+    type({
+      item: BonusResultItem,
+      weight: integer(),
+    }),
+  ),
+  multiplierHitDraw: array(WeightedItem),
+  multiplierDraw: array(WeightedItem),
 });
 
-const Item = type({
-  item: Items,
+const SolitairePayout = type({
+  range: array(integer()),
+  winFactor: integer(),
 });
 
-const DragonMultiplier = type({
-  selections: integer(),
-  weightedDraw: array(Item),
+const DeckWeight = type({
+  item: integer(),
+  weight: integer(),
 });
 
-const DragonMultipliers = type({
-  basegame: array(DragonMultiplier),
-  freespin: array(DragonMultiplier),
+const Solitaire = type({
+  maxMoves: integer(),
+  maxIterations: integer(),
+  features: Features,
+  solitairePayouts: array(SolitairePayout),
+  deckIdWeights: array(DeckWeight),
+  decks: any(),
 });
 
 export const GameConfigSchema = type({
   mathver: string(),
-  paytables: PaytablesSchema,
-  basegame: Game,
-  freespin: Game,
-  dragonMultipliers: DragonMultipliers,
-  gamble: Gamble,
-  balance: optional(integer()),
+  solitaire: Solitaire,
 });
 
 export type Win = Infer<typeof Win>;
@@ -269,7 +268,7 @@ export const ReplayRoundSchema = type({
   action: optional(string()),
   method: ReplayMethodSchema,
   params: any(),
-  roundState: optional(RoundStateSchema),
+  roundState: optional(any()),
 });
 
 export const ReplaySchema = type({
