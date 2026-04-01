@@ -1,0 +1,34 @@
+{
+  "handlers": {
+    "led": {
+      "type": "LedHandler",
+      "base_dir": "led/",
+      "led_targets": {
+        "hertta_door": {
+          "assets": {
+            "led_normal": "led_door.png"
+          }
+        },
+        "hertta_tray": {
+          "assets": {
+            "led_normal": "led_tray.png"
+          }
+        },
+        "hertta_hat": {
+          "assets": {
+            "led_normal": "led_hat.png"
+          }
+        }
+      }
+    }
+  },
+  "events": {
+    "enter_menu_normal": {
+      "target": "led",
+      "action": "play",
+      "asset": "led_normal",
+      "loop": true
+    },
+    "leave_menu": []
+  }
+}

@@ -1,0 +1,50 @@
+<p>Pelin tarkoituksena on valita 2-6 korttia, joiden uskot sisältyvän pelin arpomiin 12 korttiin.</p>
+<br><br>
+<p>Pelissä käytetään kahta korttipakkaa, joissa ei ole mukana jokereita.<br><br>
+Ensimmäisessä pakassa on 52 korttia, joista valitset 2-6 onnenkorttia.<br><br>
+Toisessa pakassa on 53 korttia, mukaan lukien lohikäärmekortti. Tätä pakkaa käytetään arvonnassa siten että peruspelissä lohikäärmekortti on mukana ja vapaapeleissä ja tuplauksessa lohikäärmekorttia ei ole mukana.</p><br><br>
+
+<h2>Näin pelaat</h2><br><br>
+<p>• Valitse haluamasi kierrospanos painamalla PANOS-painiketta.</p><br><br>
+<p>• Valitse 2-6 onnenkorttiasi koskettamalla niitä ruudulla. Valitun kortin voit peruuttaa koskettamalla samaa korttia uudelleen. PERUUTUS-painike poistaa kaikki korttivalinnat.</p><br><br>
+<p>• PIKAPELI-painikkeella valitaan puolestasi satunnaisia kortteja. Jos olet valinnut 0-1 korttia, painamalla PIKAPELI-painiketta, peli täydentää valinnat kuuteen korttiin. Jos olet valinnut 2-6 korttia, painamalla PIKAPELI-painiketta peli arpoo sinulle saman määrän uusia satunnaisia kortteja kuin olet valinnut.</p><br><br>
+<p>• Käynnistä arvonta painamalla PELAA-painiketta.</p><br><br>
+
+<h2>Voitot</h2><br><br>
+<p>Voittotaulussa näytetään voittavien osumien määrä ja voittosummat. Siirrä voitto saldoosi painamalla VOITOT TALTEEN tai yritä voiton kasvattamista tuplauspelissä painamalla TUPLAA.</p><br><br>
+
+<h2>Korttipakka</h2><br><br>
+<p>Pelissä käytetään 52 kortin pakkaa.<br>
+Korttien arvot ovat:</p><br>
+<p>• Kuningas (K): 13</p><br>
+<p>• Kuningatar (Q): 12</p><br>
+<p>• Jätkä (J): 11</p><br>
+<p>• 2-10: Numeroarvon mukainen</p><br>
+<p>• Ässä (A): 1</p><br><br>
+
+<h2>Lohikäärmekortti</h2><br><br>
+<p>Jokaisen kierroksen alussa lohikäärmepaneeliin ilmestyy joko satunnainen voittokerroin tai vapaapelisymboli.<br><br>
+Jos lohikäärmekortti on arvottujen korttien joukossa, voittokerroin aktivoituu kierroksen voitoille, tai pelaaja voittaa kolme vapaapeliä.<br><br>
+Peruspelissä voittokerroin voi olla:</p><br>
+<p>• 2x, 3x, 5x, 7x, 10x.</p><br><br>
+
+<h2>Vapaapelit</h2><br><br>
+<p>Jos peruspelissä lohikäärmepaneeliin ilmestyy vapaapelisymboli ja lohikäärmekortti on arvottujen korttien joukossa, voittaa pelaaja 3 vapaapeliä.<br><br>
+Vapaapelit pelataan samalla panoksella kuin kierros, josta ne voitettiin.<br><br>
+Vapaapeleissä valitaan 4 korttia.<br><br>
+Ennen jokaista vapaapeliä, arvotaan kierrokselle satunnainen voittokerroin. Vapaapeleissä voittokerroin voi olla:</p><br>
+<p>• 2x, 3x, 5x, 10x, 15x, 25x, 50x.</p><br><br>
+<p>Voittokerroin on aktiivinen jokaisella vapaapelikierroksella.<br><br>
+Vapaapeleistä ei voi voittaa lisää vapaapelejä.<br><br>
+Vapaapeleissä ei ole mukana lohikäärmekorttia.</p><br><br>
+
+<h2>Tuplaus</h2><br><br>
+<p>Tuplauksessa sinulle jaetaan viisi korttia, joista ensimmäisenä vasemmalla oleva kortti on oikein päin (näytetty kortti).<br><br>
+Sinun tulee valita yksi neljästä muusta kortista (valittu kortti).</p><br><br>
+<p>• Mikäli valittu kortti on pistearvoltaan suurempi kuin näytetty kortti, kaksinkertaistat voittosi. Voit jatkaa tuplausta painamalla TUPLAA tai lopeta painamalla VOITOT TALTEEN.</p><br><br>
+<p>• Mikäli valittu kortti on pistearvoltaan pienempi kuin näytetty kortti, häviät tuplaamasi summan ja tuplaus päättyy.</p><br><br>
+<p>• Jos kortti on arvoltaan samanarvoinen, riippuu tuplauksen tulos näytetyn kortin väristä:</p><br>
+<p>  - Jos näytetty kortti on punainen, tuplauksen panos maksetaan takaisin. Voit jatkaa tuplausta painamalla TUPLAA tai lopettaa painamalla VOITOT TALTEEN.</p><br>
+<p>  - Jos näytetty kortti on musta, häviät panostamasi summan ja tuplaus päättyy.</p><br><br>
+<p>Tuplauksessa ei ole mukana lohikäärmekorttia ja ässä on arvoltaan yksi.<br><br>
+Tuplauksen laskennallinen palautusprosentti on 97,1 %. Tuplauksesta voi voittaa enintään 500 €.</p>

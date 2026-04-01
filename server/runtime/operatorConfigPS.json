@@ -1,0 +1,51 @@
+{
+  "currency": "EUR",
+  "clientSettings": {
+    "autoplay": {
+      "enabled": false,
+      "rounds": [],
+      "mandatoryRounds": true,
+      "lossLimit": [],
+      "mandatoryLossLimit": false,
+      "singleWinLimit": [],
+      "mandatorySingleWinLimit": false
+    },
+    "realityCheck": {
+      "enabled": false,
+      "intervalSeconds": 3600
+    },
+    "netPosition": {
+      "enabled": false
+    },
+    "quickSpin": {
+      "enabled": false
+    },
+    "slamStop": {
+      "enabled": false
+    },
+    "clock": {
+      "enabled": false
+    },
+    "minRoundTimeMs": 0
+  },
+  "gameSettings": {
+    "gamble": {
+      "enabled": true
+    },
+    "theme": "",
+    "defaultBet": 20,
+    "betLevels": [
+      20,
+      40,
+      60,
+      80,
+      100,
+      120,
+      140,
+      160,
+      180,
+      200
+    ]
+  },
+  "assetDomain": ""
+}

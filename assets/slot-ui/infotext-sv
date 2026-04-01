@@ -1,0 +1,55 @@
+<p>Målet med spelet är att välja 2–6 kort som du tror finns med bland de 12 kort som dras i spelet.</p><br><br>
+<p>Spelet använder två kortlekar utan jokrar.<br><br>
+  Den första leken innehåller 52 kort, från vilken du väljer 2–6 lyckokort.<br><br>
+  Den andra leken innehåller 53 kort, inklusive Drakkortet. Denna lek används i dragningen där drakkortet ingår i
+  grundspelet men är uteslutet från frispel och gamble-funktionen.</p><br><br>
+
+<h2>Så här spelar du</h2><br><br>
+<p>• Välj önskad insats genom att trycka på INSATS-knappen.</p><br><br>
+<p>• Välj 2–6 lyckokort genom att trycka på dem på skärmen. För att avmarkera ett kort, tryck på det igen. Knappen
+  AVBRYT tar bort alla kortval.</p><br><br>
+<p>• Med SNABBSPEL-knappen väljs slumpmässiga kort åt dig. Om du har valt 0–1 kort fyller SNABBSPEL-knappen på valen
+  till sex kort. Om du har valt 2–6 kort ersätter SNABBSPEL de valda korten med ett lika stort antal slumpmässiga kort.
+</p><br><br>
+<p>• Starta dragningen genom att trycka på SPELA-knappen.</p><br><br>
+
+<h2>Vinster</h2><br><br>
+<p>Vinnande kortkombinationer och vinstsummor presenteras i vinstplanen. Flytta vinsten till saldot genom att trycka på
+  TA VINSTEN eller tryck på DUBBLA för att försöka öka vinsten i dubblingsspelet.</p><br><br>
+
+<h2>Kortleken</h2><br><br>
+<p>I spelet används en kortlek med 52 kort.<br>
+  Korten har följande värden:</p><br>
+<p>• Kung (K): 13</p><br>
+<p>• Dam (Q): 12</p><br>
+<p>• Knekt (J): 11</p><br>
+<p>• 2-10: Numeriskt värde</p><br>
+<p>• Ess (A): 1</p><br><br>
+
+<h2>Drakkort</h2><br><br>
+<p>I början av varje omgång visas antingen en slumpmässig multiplikator eller en frispelssymbol i drakpanelen.<br><br>
+  Om drakkortet är bland de dragna korten, aktiveras multiplikatorn på vinsterna för omgången, eller så vinner spelaren
+  tre frispel.<br><br>
+  I grundspelet kan multiplikatorn vara:</p><br>
+<p>• 2x, 3x, 5x, 7x, 10x.</p><br><br>
+
+<h2>Frispel</h2><br><br>
+<p>Om en frispelssymbol visas i drakpanelen och drakkortet är bland de dragna korten, vinner spelaren 3 frispel.<br><br>
+  Frispel spelas med samma insats som omgången då de vanns.<br><br>
+  I frispel väljs 4 kort.<br><br>
+  Före varje frispel dras en slumpmässig multiplikator för den rundan. I frispel kan multiplikatorn vara:</p><br>
+<p>• 2x, 3x, 5x, 10x, 15x, 25x, 50x.</p><br><br>
+<p>Multiplikatorn är aktiv vid varje frispelsrunda.<br><br>
+  Frispel kan inte ge fler frispel.<br><br>
+  Drakkortet är inte med i frispel.</p><br><br>
+
+<h2>Fördubbling</h2><br><br>
+<p>I fördubblingen får du fem kort där det första kortet till vänster är vänt uppåt (visat kort).<br><br>
+  Du ska välja ett av de fyra återstående korten (valt kort).</p><br><br>
+<p>• Om det valda kortet har ett högre värde än det visade kortet, dubblar du din vinst. Du kan fortsätta att dubbla genom att trycka på DUBBLA eller avsluta genom att trycka på TA VINSTEN.</p><br><br>
+<p>• Om det valda kortet har ett lägre värde än det visade kortet, förlorar du den satsade summan och fördubblingen avslutas.</p><br><br>
+<p>• Om det valda kortet har samma värde som det visade kortet beror resultatet på färgen på det visade kortet:</p><br>
+<p> - Om det visade kortet är rött, återbetalas fördubblingens insats. Du kan fortsätta att dubbla genom att trycka på DUBBLA eller avsluta genom att trycka på TA VINSTEN.</p><br>
+<p> - Om det visade kortet är svart, förlorar du det satsade beloppet och dubblingsfunktionen avslutas.</p><br><br>
+<p>I dubblingen finns inga drakkortet och ess har värdet ett.<br><br>
+  Fördubblingens kalkylerade återbetalningsprocent är 97,1 %. Med fördubbling kan spelaren vinna högst 500 €.</p>

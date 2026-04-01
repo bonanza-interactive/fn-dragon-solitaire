@@ -1,0 +1,6 @@
+{
+  "id": "shiny_halo",
+  "type": "Program",
+  "vs": "Default.Sprite",
+  "fs": "shiny_halo.frag"
+}
