@@ -5,7 +5,7 @@ import {CLIENT_STATE, StateMachineRoundData} from '../main';
 import {AnyState, State} from '../state-machine';
 import {assert, wait} from '../util/utils';
 import {cardToIndex} from '../util/utils-game';
-import {FreespinIntro} from './FreespinIntro';
+// import {FreespinIntro} from './FreespinIntro';
 import {FreespinSpinning} from './FreespinSpinning';
 import {GamblePick} from './GamblePick';
 import {GambleRound} from './GambleRound';
@@ -71,7 +71,7 @@ export class ReadyRecovery extends State<StateMachineRoundData> {
           CLIENT_STATE.recoveryState === RecoveryStepState.FREESPINS_ENTER &&
           !isFreepinRoundsStarted
         ) {
-          return this.recoverFreespinStart(data);
+          // return this.recoverFreespinStart(data);
         } else if (
           CLIENT_STATE.recoveryState === RecoveryStepState.FREESPINS_EXIT
         ) {
@@ -160,21 +160,21 @@ export class ReadyRecovery extends State<StateMachineRoundData> {
     GAME.cards.resetHandCards(currentHand);
   }
 
-  private recoverFreespinStart(data: StateMachineRoundData): AnyState {
-    assert(data.roundState.rounds !== undefined);
+  // private recoverFreespinStart(data: StateMachineRoundData): AnyState {
+  //   assert(data.roundState.rounds !== undefined);
 
-    const round = data.roundState.rounds[CLIENT_STATE.roundStep];
-    const winAmount = computeWinAmount(round.winFactor, data.bet);
-    CLIENT_STATE.winsum += winAmount;
-    GAMEFW.updateWins(CLIENT_STATE.winsum);
-    CLIENT_STATE.freespinsLeft += round.freespinsAmount ?? 0;
+  //   const round = data.roundState.rounds[CLIENT_STATE.roundStep];
+  //   const winAmount = computeWinAmount(round.winFactor, data.bet);
+  //   CLIENT_STATE.winsum += winAmount;
+  //   GAMEFW.updateWins(CLIENT_STATE.winsum);
+  //   CLIENT_STATE.freespinsLeft += round.freespinsAmount ?? 0;
 
-    this.resetHand(data.roundState.rounds[0], undefined);
-    GAME.dragonPanel.randomize(round, false, true);
-    GAME.dragonPanel.activateBonus(true);
+  //   this.resetHand(data.roundState.rounds[0], undefined);
+  //   GAME.dragonPanel.randomize(round, false, true);
+  //   GAME.dragonPanel.activateBonus(true);
 
-    return new FreespinIntro(data);
-  }
+  //   return new FreespinIntro(data);
+  // }
 
   private async recoverFreespinGame(
     data: StateMachineRoundData,

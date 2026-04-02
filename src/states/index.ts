@@ -1,6 +1,6 @@
 export * from './BasegameRound';
 export * from './EndRound';
-export * from './FreespinIntro';
+// export * from './FreespinIntro';
 export * from './FreespinOutro';
 export * from './FreespinRound';
 export * from './Gamble';
@@ -19,7 +19,7 @@ export * from './ReadyRecovery';
 export * from './ResultFreespins';
 export * from './ResultNoWin';
 export * from './ResultWinBasegame';
-export * from './ResultWinFreespins';
+// export * from './ResultWinFreespins';
 export * from './Settlebet';
 export * from './Spinning';
 export * from './FreespinSpinning';

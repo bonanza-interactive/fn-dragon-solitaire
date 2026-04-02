@@ -4,7 +4,7 @@ import {CLIENT_STATE, StateMachineRoundData} from '../main';
 import {AnyState, State} from '../state-machine';
 import {trace} from '../util/trace';
 import {assert, maxWinReached, wait} from '../util/utils';
-import {showWinWithMultiplier} from '../util/utils-game';
+// import {showWinWithMultiplier} from '../util/utils-game';
 import {computeWinAmount} from '../util/win-amount';
 import {FreespinMaxWin} from './FreespinMaxWin';
 import {FreespinOutro} from './FreespinOutro';
@@ -33,7 +33,7 @@ export class FreespinSpinning extends State<StateMachineRoundData> {
     trace('Freespin round:', round);
 
     GAME.dragonPanel.randomize(round, true);
-    await GAME.cards.doRound(round, true);
+    // await GAME.cards.doRound(round, true);
 
     // make sure we're on the last round, because the backend will send up to and including
     // the round where the max win was reached
@@ -45,9 +45,9 @@ export class FreespinSpinning extends State<StateMachineRoundData> {
 
     if (winAmount > 0) {
       const anims: Promise<void>[] = [];
-      anims.push(
-        showWinWithMultiplier(winAmount, round.multiplier, true, false, false),
-      );
+      // anims.push(
+      //   showWinWithMultiplier(winAmount, round.multiplier, true, false, false),
+      // );
       anims.push(wait(4000));
       await Promise.all(anims);
     } else {

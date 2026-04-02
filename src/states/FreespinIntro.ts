@@ -13,7 +13,7 @@ import {setButtonState} from '../button-state-handler';
 import {GAMEFW} from '../framework';
 import {nextInput} from '../util/forward-input';
 import {replayRoundData} from '../client-state';
-import {cardToIndex} from '../util/utils-game';
+// import {cardToIndex} from '../util/utils-game';
 const tempNumber = 5;
 export class FreespinIntro extends State<StateMachineRoundData> {
   public async run(_data: StateMachineRoundData): Promise<AnyState> {
@@ -45,14 +45,14 @@ export class FreespinIntro extends State<StateMachineRoundData> {
         CLIENT_STATE.roundStep + 1,
       );
 
-      const selectedNumbers: number[] = roundData.round.rounds[
-        CLIENT_STATE.roundStep + 1
-      ].selectedNumbers.map((card) => cardToIndex(card.rank, card.suit));
+      // const selectedNumbers: number[] = roundData.round.rounds[
+      //   CLIENT_STATE.roundStep + 1
+      // ].selectedNumbers.map((card) => cardToIndex(card.rank, card.suit));
       await GAME.cards.startCardSelection(true);
       GAME.cardPickGui.hide();
       GAME.cardChangeButtons.disable();
       await GAME.cards.stopEffects();
-      await BackendUtil.chooseHandCards(selectedNumbers, true);
+      // await BackendUtil.chooseHandCards(selectedNumbers, true);
       await GAME.cards.cardSelectionExitTransition();
       GAME.topElementsMover.move(TopElementsLocation.Default, true);
       CORE.fx.trigger('music_freespin_game');
