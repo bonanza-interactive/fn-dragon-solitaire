@@ -19,9 +19,11 @@ export class BasegameRound extends State {
 
     if (CLIENT_STATE.replay) {
       const roundData = replayRoundData(CLIENT_STATE);
-      const selectedNumbers: number[] = roundData.round.rounds[
-        CLIENT_STATE.roundStep
-      ].selectedNumbers.map((card) => cardToIndex(card.rank, card.suit));
+      const selectedNumbers: number[] = [];
+      const cards = roundData.round.openCards[CLIENT_STATE.roundStep] || [];
+      for (const card of cards) {
+        selectedNumbers.push(cardToIndex(card.rank, card.suit));
+      }
       await BackendUtil.chooseHandCards(selectedNumbers);
       if (GAME.cards.isCardSelectionMode()) {
         await GAME.cards.cardSelectionExitTransition();
