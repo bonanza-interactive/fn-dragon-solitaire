@@ -15,13 +15,13 @@ export class MaxWin extends State<StateMachineRoundData> {
     const winAmount = computeWinAmount(roundState.winFactor, data.bet);
     if (winAmount !== undefined && data.bet > 0) {
       if (winAmount > 0) {
-        if (data.roundState.freespinWon) {
-          return new SettleBet();
-        }
-        if (roundState.rounds && roundState.rounds[0].multiplier > 1) {
+        // if (data.roundState.freespinWon) {
+        //   return new SettleBet();
+        // }
+        if (roundState.rounds) {
           await showWinWithMultiplier(
             winAmount,
-            roundState.rounds[0].multiplier,
+            roundState.rounds[0].winFactor,
             true,
             isExceedMaxWin(roundState),
             true,

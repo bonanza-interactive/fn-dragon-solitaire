@@ -8,7 +8,7 @@ import {
   showWinWithMultiplier,
 } from '../util/utils-game';
 import {computeWinAmount} from '../util/win-amount';
-import {GambleQuery} from './GambleQuery';
+// import {GambleQuery} from './GambleQuery';
 import {MaxWin} from './MaxWin';
 import {SettleBet} from './Settlebet';
 
@@ -32,10 +32,10 @@ export class ResultWinBasegame extends State<StateMachineRoundData> {
         const onWinScrollComplete = () => {
           resolveWinScroll();
         };
-        if (roundState.rounds && roundState.rounds[0].multiplier > 1) {
+        if (roundState.rounds && roundState.rounds[0].winFactor > 1) {
           void showWinWithMultiplier(
             winAmount,
-            roundState.rounds[0].multiplier,
+            roundState.rounds[0].winFactor,
             false,
             isExceedMaxWin(roundState),
             true,
@@ -56,10 +56,6 @@ export class ResultWinBasegame extends State<StateMachineRoundData> {
       GAMEFW.updateWins(winAmount);
     }
 
-    if (GAMEFW.settings().game.gamble) {
-      return new GambleQuery(data);
-    } else {
-      return new SettleBet();
-    }
+    return new SettleBet();
   }
 }

@@ -43,21 +43,18 @@ export class Main {
       States.ReplayFinished,
     ];
 
-    const gambleStates = [
-      States.Gamble,
-      States.GamblePick,
-      States.GambleContinue,
-      States.GambleQuery,
-      States.GambleRound,
-      States.GambleEnter,
-      States.GambleExit,
-      States.GambleMaxWin,
-    ];
+    // const gambleStates = [
+    //   States.Gamble,
+    //   States.GamblePick,
+    //   States.GambleContinue,
+    //   States.GambleQuery,
+    //   States.GambleRound,
+    //   States.GambleEnter,
+    //   States.GambleExit,
+    //   States.GambleMaxWin,
+    // ];
 
-    this.stateMachine = new StateMachine(
-      [...states, ...(GAMEFW.settings().game.gamble ? gambleStates : [])],
-      new States.Preload(),
-    );
+    this.stateMachine = new StateMachine([...states], new States.Preload());
   }
 
   public async initialize(): Promise<void> {

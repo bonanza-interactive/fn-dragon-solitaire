@@ -9,7 +9,7 @@ export class Spinning extends State<StateMachineRoundData> {
     CORE.fx.trigger('music_game_spinning');
 
     CLIENT_STATE.bet = data.bet;
-    CLIENT_STATE.freespinWon = data.roundState.freespinWon;
+    // CLIENT_STATE.freespinWon = data.roundState.freespinWon;
 
     assert(data.roundState.rounds !== undefined);
 

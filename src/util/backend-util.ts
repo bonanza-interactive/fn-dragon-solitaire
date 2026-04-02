@@ -93,7 +93,7 @@ export class BackendUtil {
   public static async gamble(): Promise<RoundState> {
     const data = await GAMEFW.action('gamble', {});
     const r = data.round as RoundState;
-    if (r !== null && r.gambleResult) {
+    if (r !== null) {
       return r;
     } else {
       throw new Error(`gamble action failed`);

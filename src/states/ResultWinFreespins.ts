@@ -10,8 +10,8 @@ export class ResultWinFreespins extends State<StateMachineRoundData> {
   public async run(data: StateMachineRoundData): Promise<AnyState> {
     const roundState = data.roundState;
     assert(roundState.rounds !== undefined);
-    const round = roundState.rounds[CLIENT_STATE.roundStep];
-    CLIENT_STATE.freespinsLeft = round.freespinsAmount ?? 0;
+    // const round = roundState.rounds[CLIENT_STATE.roundStep];
+    // CLIENT_STATE.freespinsLeft = round.freespinsAmount ?? 0;
 
     const winAmount = computeWinAmount(roundState.winFactor, data.bet);
     if (winAmount !== undefined && data.bet > 0) {

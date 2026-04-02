@@ -3,7 +3,7 @@ import {StateMachineRoundData} from '../main';
 import {AnyState, State} from '../state-machine';
 import {isExceedMaxWin, showWin} from '../util/utils-game';
 import {computeWinAmount} from '../util/win-amount';
-import {GambleQuery} from './GambleQuery';
+// import {GambleQuery} from './GambleQuery';
 import {SettleBet} from './Settlebet';
 
 export class ResultFreespins extends State<StateMachineRoundData> {
@@ -19,10 +19,6 @@ export class ResultFreespins extends State<StateMachineRoundData> {
       showWin(winAmount, true, false, isExceedMaxWin(roundState), true);
     }
 
-    if (GAMEFW.settings().game.gamble) {
-      return new GambleQuery(data);
-    } else {
-      return new SettleBet();
-    }
+    return new SettleBet();
   }
 }
