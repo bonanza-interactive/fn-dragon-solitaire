@@ -2,7 +2,7 @@ import {gfx} from '@apila/engine';
 import {anim} from '@apila/game-libraries';
 import {Card} from './card';
 import {CardsInput} from './cards-input';
-import {Round} from './config/backend-types';
+// import {Round} from './config/backend-types';
 import {
   CARD_BACK,
   CARD_DRAGON,
@@ -20,6 +20,7 @@ import {getNode} from './util/utils-node';
 import {GAMEFW, IS_MOBILE_DEVICE} from './framework';
 import {setButtonState} from './button-state-handler';
 import {getDealingTiming, getGambleTiming} from './config/timing';
+import {RoundState} from './config/backend-types';
 
 const SUIT_COUNT = 4;
 const RANK_COUNT = 13;
@@ -506,28 +507,25 @@ export class Cards {
     this.startShuffle(ShuffleLocation.FirstCard);
   }
 
-  public async doRound(round: Round, isFreespins: boolean): Promise<void> {
+  public async doRound(roundState: RoundState, isFreespins: boolean) {
     await wait(isFreespins ? 1000 : 200);
     await this.endShuffle();
-    const drawnCards: number[] = round.drawnNumbers.map((card) =>
-      cardToIndex(card.rank, card.suit),
-    );
+    const drawnCards: number[] = [];
+    for (const card of roundState.wastePile) {
+      drawnCards.push(cardToIndex(card.rank, card.suit));
+    }
     if (drawnCards.length === 0) {
       return;
     }
 
-    const matchingCards = round.win.matchingNumbers.map((card) =>
-      cardToIndex(card.rank, card.suit),
-    );
-
-    const isWonFreespins = round.win.freespinsAmount
-      ? round.win.freespinsAmount > 0
-      : false;
+    const matchingCards: number[] = []; // temp
+    const multiplier = roundState.winFactor || 1;
+    const isWonFreespins = roundState.bonusWon || false;
 
     await this.dealCardsToTable(
       drawnCards,
       matchingCards,
-      isWonFreespins ? 1 : round.multiplier,
+      multiplier,
       isFreespins,
       isWonFreespins,
     );

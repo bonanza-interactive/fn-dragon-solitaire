@@ -17,9 +17,9 @@ export class Spinning extends State<StateMachineRoundData> {
       CLIENT_STATE.freespinsLeft = data.roundState.rounds.length;
     }
 
-    const round = data.roundState.rounds[CLIENT_STATE.roundStep];
+    // const round = data.roundState.rounds[CLIENT_STATE.roundStep];
 
-    await GAME.cards.doRound(round, false);
+    await GAME.cards.doRound(data.roundState, false);
 
     return new EndRound(data);
   }
