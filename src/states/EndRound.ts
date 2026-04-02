@@ -16,7 +16,7 @@ export class EndRound extends State<StateMachineRoundData> {
       GAMEFW.updateWins(CLIENT_STATE.winsum);
     }
 
-    if (data.roundState.freespinWon) {
+    if (data.roundState.bonusWon) {
       if (data.roundState.maxWinFactorReached) {
         return new MaxWin(data);
       }
