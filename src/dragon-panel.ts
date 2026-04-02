@@ -156,9 +156,10 @@ export class DragonPanel {
     isFreespins: boolean,
     skipAnimation = false,
   ): Promise<void> {
-    const isWonFreepins = round.freespinsAmount
-      ? round.freespinsAmount > 0
-      : false;
+    // const isWonFreepins = round.freespinsAmount
+    //   ? round.freespinsAmount > 0
+    //   : false;
+    const isWonFreepins = CLIENT_STATE.freespinWon;
     this.freespinRound = isFreespins ? ++this.freespinRound : 0;
 
     if (isFreespins) {
@@ -178,9 +179,10 @@ export class DragonPanel {
         if (isWonFreepins) {
           this.spine.skin = `freespin`;
         } else {
-          const multiplier = isFreespins
-            ? round.multiplier
-            : round.win.multiplier;
+          // const multiplier = isFreespins
+          //   ? round.multiplier
+          //   : round.win.multiplier;
+          const multiplier = round.winFactor;
           if (multiplier !== undefined) {
             this.spine.skin = `${multiplier}x`;
           } else {
