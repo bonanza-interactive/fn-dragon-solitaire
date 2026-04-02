@@ -61,8 +61,8 @@ export class BackendUtil {
   ): Promise<
     {accepted: false} | {accepted: true; round: RoundState; bet: number}
   > {
-    const selections: string[] = GAME.cards.getHandCards();
-    const gameData = await GAMEFW.play(requestedBet, 'spin', {selections});
+    // const selections: string[] = GAME.cards.getHandCards();
+    const gameData = await GAMEFW.play(requestedBet, 'deal', {});
     if (gameData.accepted) {
       superstruct.assert(gameData.round, RoundStateSchema);
       return {accepted: true, round: gameData.round, bet: gameData.bet};
