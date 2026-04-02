@@ -32,16 +32,20 @@ export class ClientState {
       this.recoveryState = recoveryData.state;
       this.roundStep = recoveryData.index;
     }
-    this.freespinWon = round.freespinWon;
+    this.freespinWon = round.bonusWon;
     this.roundStep = Math.min(Math.max(this.roundStep, 0), maxRoundSteps ?? 0);
-    if (round.gambleResult) {
-      this.gambleStake = round.gambleResult.stake;
-      this.gamblePick = round.gambleResult.result?.pick;
-    }
+    // if (round.gambleResult) {
+    //   this.gambleStake = round.gambleResult.stake;
+    //   this.gamblePick = round.gambleResult.result?.pick;
+    // }
     const roundsRestored = round.rounds.slice(0, this.roundStep);
-    const winsRestored = roundsRestored.flatMap((i) => i.win);
-    this.winsum += winsRestored.reduce(
-      (winsum, win) => winsum + (computeWinAmount(win.winFactor, bet) ?? 0),
+    // const winsRestored = roundsRestored.flatMap((i) => i.winFactor);
+    // this.winsum += winsRestored.reduce(
+    //   (winsum, r) => winsum + (computeWinAmount(r.winFactor, bet) ?? 0),
+    //   0,
+    // );
+    this.winsum += roundsRestored.reduce(
+      (winsum, r) => winsum + (computeWinAmount(r.winFactor, bet) ?? 0),
       0,
     );
   }
