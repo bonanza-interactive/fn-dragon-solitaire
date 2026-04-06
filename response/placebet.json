@@ -1,0 +1,126 @@
+{
+    "roundState": {
+        "rounds": [
+            {
+                "winFactor": 0,
+                "roundType": "deal",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            }
+        ],
+        "hash": "{\"deck\":{\"group\":14,\"index\":1,\"position\":23},\"wastePile\":[{\"rank\":\"Rank_7\",\"suit\":\"Spades\",\"isJoker\":false}],\"faceDownCards\":[[],[{\"rank\":\"Rank_2\",\"suit\":\"Clubs\",\"isJoker\":false}],[{\"rank\":\"Rank_Q\",\"suit\":\"Hearts\",\"isJoker\":false},{\"rank\":\"Rank_J\",\"suit\":\"Spades\",\"isJoker\":false}],[{\"rank\":\"Rank_5\",\"suit\":\"Hearts\",\"isJoker\":false},{\"rank\":\"Rank_10\",\"suit\":\"Spades\",\"isJoker\":false},{\"rank\":\"Rank_J\",\"suit\":\"Diamonds\",\"isJoker\":false}],[{\"rank\":\"Rank_K\",\"suit\":\"Hearts\",\"isJoker\":false},{\"rank\":\"Rank_3\",\"suit\":\"Clubs\",\"isJoker\":false},{\"rank\":\"Rank_3\",\"suit\":\"Diamonds\",\"isJoker\":false},{\"rank\":\"Rank_10\",\"suit\":\"Hearts\",\"isJoker\":false}],[{\"rank\":\"Rank_A\",\"suit\":\"Hearts\",\"isJoker\":false},{\"rank\":\"Rank_8\",\"suit\":\"Clubs\",\"isJoker\":false},{\"rank\":\"Rank_Q\",\"suit\":\"Spades\",\"isJoker\":false},{\"rank\":\"Rank_A\",\"suit\":\"Diamonds\",\"isJoker\":false},{\"rank\":\"Rank_A\",\"suit\":\"Clubs\",\"isJoker\":false}],[{\"rank\":\"Rank_7\",\"suit\":\"Diamonds\",\"isJoker\":false},{\"rank\":\"Rank_6\",\"suit\":\"Hearts\",\"isJoker\":false},{\"rank\":\"Rank_9\",\"suit\":\"Diamonds\",\"isJoker\":false},{\"rank\":\"Rank_Q\",\"suit\":\"Clubs\",\"isJoker\":false},{\"rank\":\"Rank_9\",\"suit\":\"Spades\",\"isJoker\":false},{\"rank\":\"Rank_4\",\"suit\":\"Hearts\",\"isJoker\":false}]],\"featurePositions\":{}}",
+        "picks": [
+            {
+                "from": "STOCK",
+                "to": "WASTE_PILE",
+                "count": 1
+            },
+            {
+                "from": "STACK_5",
+                "to": "FOUNDATION",
+                "count": 1
+            },
+            {
+                "from": "STACK_2",
+                "to": "STACK_3",
+                "count": 1
+            },
+            {
+                "from": "STACK_6",
+                "to": "STACK_4",
+                "count": 1
+            }
+        ],
+        "wastePile": [
+            {
+                "rank": "Rank_7",
+                "suit": "Spades",
+                "isJoker": false
+            }
+        ],
+        "openCards": [
+            [
+                {
+                    "rank": "Rank_J",
+                    "suit": "Hearts",
+                    "isJoker": false
+                }
+            ],
+            [
+                {
+                    "rank": "Rank_J",
+                    "suit": "Clubs",
+                    "isJoker": false
+                }
+            ],
+            [
+                {
+                    "rank": "Rank_Q",
+                    "suit": "Diamonds",
+                    "isJoker": false
+                }
+            ],
+            [
+                {
+                    "rank": "Rank_9",
+                    "suit": "Hearts",
+                    "isJoker": false
+                }
+            ],
+            [
+                {
+                    "rank": "Rank_A",
+                    "suit": "Spades",
+                    "isJoker": false
+                }
+            ],
+            [
+                {
+                    "rank": "Rank_8",
+                    "suit": "Spades",
+                    "isJoker": false
+                }
+            ],
+            [
+                {
+                    "rank": "Rank_4",
+                    "suit": "Spades",
+                    "isJoker": false
+                }
+            ]
+        ],
+        "foundationTops": [],
+        "faceDownCounts": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+        ],
+        "featureStatus": {},
+        "v": 1,
+        "state": "pick",
+        "bonusWon": false,
+        "winFactor": 0,
+        "maxWinFactorReached": false,
+        "canGamble": false,
+        "winLimitExceeded": false
+    },
+    "roundId": "0fab9f40-03a9-44e6-8210-40a084a32cbd",
+    "step": 0,
+    "bet": 20,
+    "gameSessionId": "db8c2ed9-3140-49f7-b2cf-a5acbf1561b1",
+    "balance": 9999960
+}
