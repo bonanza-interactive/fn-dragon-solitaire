@@ -11,8 +11,9 @@ import {FreespinSpinning} from './FreespinSpinning';
 // import {GambleRound} from './GambleRound';
 import {ResultFreespins} from './ResultFreespins';
 import {ResultWinBasegame} from './ResultWinBasegame';
-import {Spinning} from './Spinning';
+import {EndRound} from './EndRound';
 import {computeWinAmount} from '../util/win-amount';
+import {BackendUtil} from '../util/backend-util';
 import {RecoveryStepState} from '../config/recovery-step';
 import {GAMEFW} from '../framework';
 import {RoundState} from '../config/backend-types';
@@ -29,13 +30,13 @@ export class ReadyRecovery extends State<StateMachineRoundData> {
         CLIENT_STATE.recoveryState === undefined ||
         CLIENT_STATE.recoveryState === RecoveryStepState.BASEGAME
       ) {
-        return this.recoverBaseGame(data);
+        return await this.recoverBaseGame(data);
       } else if (CLIENT_STATE.recoveryState === RecoveryStepState.END_ROUND) {
         if (data.roundState.canGamble) {
           await this.recoverEndRound(data);
           return new ResultWinBasegame(data);
         } else {
-          return this.recoverBaseGame(data);
+          return await this.recoverBaseGame(data);
         }
       } else if (
         CLIENT_STATE.recoveryState === RecoveryStepState.FREESPINS_ENTER ||
@@ -111,16 +112,37 @@ export class ReadyRecovery extends State<StateMachineRoundData> {
   //   return Promise.resolve();
   // }
 
-  private recoverBaseGame(data: StateMachineRoundData): AnyState {
+  private async recoverBaseGame(
+    data: StateMachineRoundData,
+  ): Promise<AnyState> {
     assert(data.roundState.rounds !== undefined);
 
-    this.resetHand(data.roundState, undefined);
     GAME.paytable.refreshWintable();
 
     const round = data.roundState.rounds[CLIENT_STATE.roundStep];
     GAME.dragonPanel.randomize(round, false, false);
 
-    return new Spinning(data);
+    CLIENT_STATE.bet = data.bet;
+    let currentRound = data.roundState;
+
+    GAME.cards.renderSolitaireBoard(currentRound);
+
+    while (
+      currentRound.state === 'pick' &&
+      (currentRound.picks?.length ?? 0) > 0
+    ) {
+      const move = await GAME.cards.waitForSolitaireMove();
+      const newRound = await BackendUtil.solitairePick(move);
+      GAME.cards.renderSolitaireBoard(newRound);
+      currentRound = newRound;
+    }
+
+    CLIENT_STATE.roundInProgress = false;
+
+    return new EndRound({
+      roundState: currentRound,
+      bet: data.bet,
+    });
   }
 
   // private resetHand(

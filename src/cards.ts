@@ -1,6 +1,13 @@
-import {gfx} from '@apila/engine';
+import {gfx, input} from '@apila/engine';
 import {anim} from '@apila/game-libraries';
 import {Card} from './card';
+import {
+  SOLITAIRE_DRAG_DEPTH_GROUP,
+  type SolitaireDragLayoutSnapshot,
+  type SolitairePickMove,
+  filterKlondikeDragMoves,
+  hitTestKlondikeDropTarget,
+} from './cards-solitaire';
 import {CardsInput} from './cards-input';
 // import {Round} from './config/backend-types';
 import {
@@ -8,14 +15,16 @@ import {
   CARD_DRAGON,
   CardLocation,
   CardName,
-  // GameConfig,
+  SOLITAIRE_CARD_OVERLAP_FACEDOWN,
+  SOLITAIRE_CARD_OVERLAP_FACEUP,
+  SOLITAIRE_SNAP_BACK_SECONDS,
   layoutConfig,
 } from './config/config';
 import {GameLayer} from './config/schemas';
 import {CORE, GAME} from './game';
 import {AUTO_TICK} from './main';
 import {assert, getCardNodeName, voidPromise, wait} from './util/utils';
-import {cardToIndex, indexToCard} from './util/utils-game';
+import {cardToIndex, indexToCard, suitToIndex} from './util/utils-game';
 import {getNode} from './util/utils-node';
 import {GAMEFW, IS_MOBILE_DEVICE} from './framework';
 import {setButtonState} from './button-state-handler';
@@ -98,6 +107,26 @@ export class Cards {
   private shuffleAnim = 0;
   private gambleJiggleTimer = 0;
 
+  private solitaireCardMap: Map<string, Card> = new Map();
+  private currentPicks: SolitairePickMove[] = [];
+  private solitaireRoundState: RoundState | null = null;
+  private moveResolver?: (move: SolitairePickMove) => void;
+  private solitaireListenerIds: number[] = [];
+  private solitaireCanvasListenerId: number | undefined;
+
+  private solitaireDrag?: {
+    cards: Card[];
+    grabOffsetWorld: [number, number];
+    offsetFromPrimary: [number, number][];
+    startParents: (gfx.Empty | null)[];
+    startLocalPos: [number, number][];
+    startWorldPos: [number, number][];
+    startDepth: number[];
+    from: string;
+    count: number;
+  };
+  private solitaireSnapInProgress = false;
+
   private timeline = new anim.Timeline();
   private cardsInput = new CardsInput();
   private tempNumber = 5;
@@ -109,7 +138,10 @@ export class Cards {
     this.maxSelection = Math.max(this.tempNumber, this.tempNumber);
     this.maxDrawCount = Math.max(this.tempNumber, this.tempNumber);
 
-    const cardCount = SUIT_COUNT * RANK_COUNT + EXTRA_CARDS + this.maxSelection;
+    const cardCount = Math.max(
+      SUIT_COUNT * RANK_COUNT + EXTRA_CARDS + this.maxSelection,
+      80,
+    );
     for (let i = 0; i < cardCount; i++) {
       this.cards.push(
         new Card(this.root, this.timeline, (i + 1) % RANK_COUNT === 0),
@@ -258,8 +290,8 @@ export class Cards {
     }
     await this.dealCardsToChooseFrom();
 
-    const selectionCards = this.cards.slice(0, HAND_INDEX - EXTRA_CARDS);
-    this.cardsInput.startSelection(selectionCards, isFreespins);
+    // const selectionCards = this.cards.slice(0, HAND_INDEX - EXTRA_CARDS);
+    // this.cardsInput.startSelection(selectionCards, isFreespins);
   }
 
   public async selectCards(
@@ -1351,5 +1383,443 @@ export class Cards {
       ];
     });
     await wait(300);
+  }
+
+  public renderSolitaireBoard(roundState: RoundState): void {
+    this.solitaireRoundState = roundState;
+    this.currentPicks = roundState.picks ?? [];
+    this.cancelSolitaireDragImmediate();
+    this.solitaireCardMap.clear();
+    this.resetCards();
+    let cardSlot = 0;
+
+    for (let col = 0; col < 7; col++) {
+      const faceDownCount = roundState.faceDownCounts[col];
+      const faceUpCards = roundState.openCards[col];
+
+      for (let j = 0; j < faceDownCount; j++) {
+        const card = this.cards[cardSlot];
+        card.cardIndex = CARD_BACK;
+        card.parent = this.getCardNode(CardName.SolTableau, col);
+        card.node.position = [0, j * SOLITAIRE_CARD_OVERLAP_FACEDOWN];
+        card.visible = true;
+        card.depthGroup = GameLayer.Cards + cardSlot;
+        cardSlot++;
+      }
+
+      for (let j = 0; j < faceUpCards.length; j++) {
+        const c = faceUpCards[j];
+        const card = this.cards[cardSlot];
+        card.cardIndex = cardToIndex(c.rank, c.suit);
+        card.parent = this.getCardNode(CardName.SolTableau, col);
+        card.node.position = [
+          0,
+          faceDownCount * SOLITAIRE_CARD_OVERLAP_FACEDOWN +
+            j * SOLITAIRE_CARD_OVERLAP_FACEUP,
+        ];
+        card.visible = true;
+        card.depthGroup = GameLayer.Cards + cardSlot;
+        this.solitaireCardMap.set(`STACK_${col + 1}_${j}`, card);
+        cardSlot++;
+      }
+    }
+
+    if (roundState.wastePile.length > 0) {
+      const topWaste = roundState.wastePile[roundState.wastePile.length - 1];
+      const card = this.cards[cardSlot];
+      card.cardIndex = cardToIndex(topWaste.rank, topWaste.suit);
+      card.parent = this.getCardNode(CardName.SolWaste);
+      card.node.position = [0, 0];
+      card.visible = true;
+      card.depthGroup = GameLayer.Cards + cardSlot;
+      this.solitaireCardMap.set('WASTE_PILE', card);
+      cardSlot++;
+    }
+
+    const foundationBySuit = new Map<number, {rank: string; suit: string}>();
+    for (const f of roundState.foundationTops) {
+      const si = suitToIndex(f.suit);
+      if (si >= 0 && si < 4) {
+        foundationBySuit.set(si, {rank: f.rank, suit: f.suit});
+      }
+    }
+    for (let slot = 0; slot < 4; slot++) {
+      const top = foundationBySuit.get(slot);
+      const card = this.cards[cardSlot];
+      if (top) {
+        card.cardIndex = cardToIndex(top.rank, top.suit);
+      } else {
+        card.cardIndex = CARD_BACK;
+      }
+      card.parent = this.getCardNode(CardName.SolFoundation, slot);
+      card.node.position = [0, 0];
+      card.visible = true;
+      card.depthGroup = GameLayer.Cards + cardSlot;
+      this.solitaireCardMap.set(`FOUNDATION_${slot}`, card);
+      cardSlot++;
+    }
+
+    // Render stock indicator (card back if stock moves exist)
+    const hasStockMove = this.currentPicks.some((p) => p.from === 'STOCK');
+    if (hasStockMove) {
+      const card = this.cards[cardSlot];
+      card.cardIndex = CARD_BACK;
+      card.parent = this.getCardNode(CardName.SolStock);
+      card.node.position = [0, 0];
+      card.visible = true;
+      card.depthGroup = GameLayer.Cards + cardSlot;
+      this.solitaireCardMap.set('STOCK', card);
+      cardSlot++;
+    }
+
+    for (const card of this.cards) {
+      if (card.visible) {
+        card.glow = false;
+      }
+    }
+  }
+
+  public waitForSolitaireMove(): Promise<SolitairePickMove> {
+    return new Promise((resolve) => {
+      this.moveResolver = resolve;
+      this.enableSolitaireInput();
+    });
+  }
+
+  private enableSolitaireInput(): void {
+    this.disableSolitaireInput();
+
+    const stockCard = this.solitaireCardMap.get('STOCK');
+    if (stockCard) {
+      const id = CORE.input.listenNode(
+        stockCard.inputNode,
+        (e: input.InputEvent) => {
+          if (
+            e.type !== input.EventType.PRESS ||
+            this.solitaireSnapInProgress ||
+            this.solitaireDrag
+          ) {
+            return;
+          }
+          this.onSolitaireStockClick();
+        },
+        'pointer',
+      );
+      this.solitaireListenerIds.push(id);
+    }
+
+    for (const [mapKey, card] of this.solitaireCardMap) {
+      if (mapKey.startsWith('FOUNDATION_') || mapKey === 'STOCK') {
+        continue;
+      }
+      const id = CORE.input.listenNode(
+        card.inputNode,
+        (e: input.InputEvent) => {
+          if (
+            e.type !== input.EventType.PRESS ||
+            this.solitaireSnapInProgress ||
+            this.solitaireDrag
+          ) {
+            return;
+          }
+          this.onSolitaireDragPress(mapKey, e);
+        },
+        'pointer',
+      );
+      this.solitaireListenerIds.push(id);
+    }
+  }
+
+  private onSolitaireStockClick(): void {
+    const resolve = this.moveResolver;
+    if (!this.solitaireRoundState || !resolve) {
+      return;
+    }
+    const move = this.currentPicks.find(
+      (p) => p.from === 'STOCK' && p.to === 'WASTE_PILE',
+    );
+    if (!move) {
+      return;
+    }
+    this.disableSolitaireInput();
+    this.moveResolver = undefined;
+    resolve(move);
+  }
+
+  private onSolitaireDragPress(mapKey: string, e: input.InputEvent): void {
+    const rs = this.solitaireRoundState;
+    if (!rs || !this.moveResolver) {
+      return;
+    }
+
+    if (mapKey === 'WASTE_PILE') {
+      const wasteCard = this.solitaireCardMap.get('WASTE_PILE');
+      if (!wasteCard) {
+        return;
+      }
+      const wastePicks = this.currentPicks.filter(
+        (p) => p.from === 'WASTE_PILE',
+      );
+      const count = wastePicks.length > 0 ? wastePicks[0].count : 1;
+      this.beginSolitaireDrag(
+        [wasteCard],
+        'WASTE_PILE',
+        count,
+        e.canvasX,
+        e.canvasY,
+      );
+      return;
+    }
+
+    const stackMatch = /^STACK_(\d+)_(\d+)$/.exec(mapKey);
+    if (!stackMatch) {
+      return;
+    }
+    const col = parseInt(stackMatch[1], 10);
+    const j = parseInt(stackMatch[2], 10);
+    const from = `STACK_${col}`;
+    const faceUp = rs.openCards[col - 1];
+    if (!faceUp || j < 0 || j >= faceUp.length) {
+      return;
+    }
+    const count = faceUp.length - j;
+    const dragCards: Card[] = [];
+    for (let k = j; k < faceUp.length; k++) {
+      const c = this.solitaireCardMap.get(`${from}_${k}`);
+      if (c) {
+        dragCards.push(c);
+      }
+    }
+    if (dragCards.length === 0 || dragCards.length !== count) {
+      return;
+    }
+    this.beginSolitaireDrag(dragCards, from, count, e.canvasX, e.canvasY);
+  }
+
+  private beginSolitaireDrag(
+    cards: Card[],
+    from: string,
+    count: number,
+    pressCanvasX: number,
+    pressCanvasY: number,
+  ): void {
+    const primary = cards[0];
+    const pw = CORE.gfx.canvasToWorld(pressCanvasX, pressCanvasY) as [
+      number,
+      number,
+    ];
+    const primaryWorld = primary.node.worldPosition as [number, number];
+    const grabOffsetWorld: [number, number] = [
+      pw[0] - primaryWorld[0],
+      pw[1] - primaryWorld[1],
+    ];
+    const offsetFromPrimary: [number, number][] = cards.map((c) => {
+      const w = c.node.worldPosition as [number, number];
+      return [w[0] - primaryWorld[0], w[1] - primaryWorld[1]];
+    });
+    const startParents = cards.map((c) => c.parent);
+    const startLocalPos = cards.map(
+      (c) => [c.node.position[0], c.node.position[1]] as [number, number],
+    );
+    const startDepth = cards.map((c) => c.depthGroup);
+    const startWorldPos = cards.map(
+      (c) =>
+        [c.node.worldPosition[0], c.node.worldPosition[1]] as [number, number],
+    );
+
+    for (const c of cards) {
+      c.depthGroup = SOLITAIRE_DRAG_DEPTH_GROUP;
+    }
+
+    this.solitaireDrag = {
+      cards,
+      grabOffsetWorld,
+      offsetFromPrimary,
+      startParents,
+      startLocalPos,
+      startWorldPos,
+      startDepth,
+      from,
+      count,
+    };
+
+    for (const c of this.cards) {
+      if (c.visible) {
+        c.glow = false;
+      }
+    }
+    for (const c of cards) {
+      c.glow = true;
+    }
+
+    this.removeSolitaireCanvasDragListener();
+    this.solitaireCanvasListenerId = CORE.input.listenCanvas(
+      (ev: input.InputEvent) => {
+        if (!this.solitaireDrag || this.solitaireSnapInProgress) {
+          return;
+        }
+        if (ev.type === input.EventType.POINTER_MOVE) {
+          this.applySolitaireDragAtCanvas(ev.canvasX, ev.canvasY);
+        } else if (ev.type === input.EventType.RELEASE) {
+          this.tryResolveSolitaireDropAt(ev.canvasX, ev.canvasY);
+        }
+      },
+    );
+
+    this.applySolitaireDragAtCanvas(pressCanvasX, pressCanvasY);
+  }
+
+  private removeSolitaireCanvasDragListener(): void {
+    if (this.solitaireCanvasListenerId !== undefined) {
+      CORE.input.removeListener(this.solitaireCanvasListenerId);
+      this.solitaireCanvasListenerId = undefined;
+    }
+  }
+
+  private applySolitaireDragAtCanvas(canvasX: number, canvasY: number): void {
+    const drag = this.solitaireDrag;
+    if (!drag) {
+      return;
+    }
+    const world = CORE.gfx.canvasToWorld(canvasX, canvasY) as [number, number];
+    const anchor: [number, number] = [
+      world[0] - drag.grabOffsetWorld[0],
+      world[1] - drag.grabOffsetWorld[1],
+    ];
+    for (let i = 0; i < drag.cards.length; i++) {
+      const off = drag.offsetFromPrimary[i];
+      drag.cards[i].node.worldPosition = [
+        anchor[0] + off[0],
+        anchor[1] + off[1],
+      ];
+    }
+  }
+
+  private tryResolveSolitaireDropAt(canvasX: number, canvasY: number): void {
+    const drag = this.solitaireDrag;
+    const resolve = this.moveResolver;
+    if (!drag || !resolve) {
+      return;
+    }
+
+    this.applySolitaireDragAtCanvas(canvasX, canvasY);
+    const pointerWorld = CORE.gfx.canvasToWorld(canvasX, canvasY) as [
+      number,
+      number,
+    ];
+    const primary = drag.cards[0];
+    const cardWorldX = primary.node.worldPosition[0];
+    const cardWorldY = primary.node.worldPosition[1];
+    const targetTo = hitTestKlondikeDropTarget(
+      (name, index) => this.getCardNode(name, index),
+      cardWorldX,
+      cardWorldY,
+      pointerWorld[0],
+      pointerWorld[1],
+    );
+    const move = targetTo
+      ? filterKlondikeDragMoves(
+          this.currentPicks.filter(
+            (p) => p.from === drag.from && p.count === drag.count,
+          ),
+        ).find((m) => m.to === targetTo)
+      : undefined;
+
+    this.removeSolitaireCanvasDragListener();
+
+    if (move) {
+      for (const c of drag.cards) {
+        c.glow = false;
+      }
+      this.solitaireDrag = undefined;
+      this.restoreSolitaireDragCardsLayout(
+        drag.cards,
+        drag.startParents,
+        drag.startLocalPos,
+        drag.startDepth,
+      );
+      this.disableSolitaireInput();
+      this.moveResolver = undefined;
+      resolve(move);
+      return;
+    }
+
+    this.solitaireDrag = undefined;
+    this.snapBackSolitaireDrag(drag);
+  }
+
+  private restoreSolitaireDragCardsLayout(
+    cards: Card[],
+    startParents: (gfx.Empty | null)[],
+    startLocalPos: [number, number][],
+    startDepth: number[],
+  ): void {
+    for (let i = 0; i < cards.length; i++) {
+      const c = cards[i];
+      const par = startParents[i];
+      if (par) {
+        c.parent = par;
+      }
+      c.node.position = [...startLocalPos[i]] as [number, number];
+      c.depthGroup = startDepth[i];
+    }
+  }
+
+  private cancelSolitaireDragImmediate(): void {
+    const drag = this.solitaireDrag;
+    if (!drag) {
+      return;
+    }
+    this.removeSolitaireCanvasDragListener();
+    for (const c of drag.cards) {
+      c.glow = false;
+    }
+    this.restoreSolitaireDragCardsLayout(
+      drag.cards,
+      drag.startParents,
+      drag.startLocalPos,
+      drag.startDepth,
+    );
+    this.solitaireDrag = undefined;
+  }
+
+  private snapBackSolitaireDrag(drag: SolitaireDragLayoutSnapshot): void {
+    this.solitaireSnapInProgress = true;
+    const cards = drag.cards;
+    for (const c of cards) {
+      c.glow = false;
+    }
+    const fromWorld = cards.map(
+      (c) =>
+        [c.node.worldPosition[0], c.node.worldPosition[1]] as [number, number],
+    );
+    const endWorld = drag.startWorldPos;
+
+    this.timeline
+      .animate(anim.InOutQuad(0.0, 1.0), SOLITAIRE_SNAP_BACK_SECONDS, (t) => {
+        for (let i = 0; i < cards.length; i++) {
+          cards[i].node.worldPosition = [
+            anim.easeLinear(fromWorld[i][0], endWorld[i][0], t),
+            anim.easeLinear(fromWorld[i][1], endWorld[i][1], t),
+          ];
+        }
+      })
+      .after(() => {
+        this.restoreSolitaireDragCardsLayout(
+          cards,
+          drag.startParents,
+          drag.startLocalPos,
+          drag.startDepth,
+        );
+        this.solitaireSnapInProgress = false;
+      });
+  }
+
+  private disableSolitaireInput(): void {
+    this.removeSolitaireCanvasDragListener();
+    for (const id of this.solitaireListenerIds) {
+      CORE.input.removeListener(id);
+    }
+    this.solitaireListenerIds = [];
   }
 }

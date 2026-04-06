@@ -142,4 +142,19 @@ export class BackendUtil {
   public static async cheatState(state: unknown): Promise<void> {
     await GAMEFW.cheatState(state);
   }
+
+  public static async solitairePick(move: {
+    from: string;
+    to: string;
+    count: number;
+  }): Promise<RoundState> {
+    const gameData = await GAMEFW.action('pick', move);
+    const r = gameData.round as RoundState;
+    if (r !== null) {
+      superstruct.assert(r, RoundStateSchema);
+      return r;
+    } else {
+      throw new Error('solitaire pick action failed');
+    }
+  }
 }

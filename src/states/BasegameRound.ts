@@ -1,73 +1,49 @@
-import {replayRoundData} from '../client-state';
 import {GAMEFW} from '../framework';
 import {GAME} from '../game';
 import {CLIENT_STATE} from '../main';
 import {AnyState, State} from '../state-machine';
 import {BackendUtil} from '../util/backend-util';
-import {cardToIndex} from '../util/utils-game';
+import {EndRound} from './EndRound';
 import {Ready} from './Ready';
-import {Spinning} from './Spinning';
 
 export type StateMachineEnterData = {
   restored: boolean;
 };
 
 export class BasegameRound extends State {
-  public async run(_data: StateMachineEnterData): Promise<AnyState> {
+  public async run(): Promise<AnyState> {
     GAME.paytable.refreshWintable();
     GAME.dragonPanel.deactivateBonus();
 
-    if (CLIENT_STATE.replay) {
-      const roundData = replayRoundData(CLIENT_STATE);
-      const selectedNumbers: number[] = [];
-      const cards = roundData.round.openCards[CLIENT_STATE.roundStep] || [];
-      for (const card of cards) {
-        selectedNumbers.push(cardToIndex(card.rank, card.suit));
-      }
-      await BackendUtil.chooseHandCards(selectedNumbers);
-      if (GAME.cards.isCardSelectionMode()) {
-        await GAME.cards.cardSelectionExitTransition();
-      }
-      GAME.dragonPanel.randomize(
-        roundData.round.rounds[CLIENT_STATE.roundStep],
-        false,
-      );
-      await GAME.cards.prepareRound(false);
-      return new Spinning({
-        roundState: roundData.round,
-        bet: roundData.bet,
-      });
-    }
-
     CLIENT_STATE.reset();
 
-    const placeBetPromise = await BackendUtil.play(GAMEFW.state().bet);
+    const placeBetResult = await BackendUtil.play(GAMEFW.state().bet);
     CLIENT_STATE.roundInProgress = true;
 
-    if (GAME.cards.isCardSelectionMode()) {
-      await GAME.cards.cardSelectionExitTransition();
-    }
-
-    if (placeBetPromise.accepted) {
-      const round = placeBetPromise.round.rounds[CLIENT_STATE.roundStep];
-      GAME.dragonPanel.randomize(round, false);
-    }
-
-    const prepareRoundPromise = GAME.cards.prepareRound(false);
-
-    const [roundResult] = await Promise.all([
-      placeBetPromise,
-      prepareRoundPromise,
-    ]);
-
-    if (!roundResult.accepted) {
-      await GAME.cards.resetRound();
+    if (!placeBetResult.accepted) {
+      CLIENT_STATE.waitForPlayBeforeNextRound = true;
       return new Ready();
     }
 
-    return new Spinning({
-      roundState: roundResult.round,
-      bet: roundResult.bet,
+    CLIENT_STATE.bet = placeBetResult.bet;
+    let currentRound = placeBetResult.round;
+    GAME.cards.renderSolitaireBoard(currentRound);
+
+    while (
+      currentRound.state === 'pick' &&
+      (currentRound.picks?.length ?? 0) > 0
+    ) {
+      const move = await GAME.cards.waitForSolitaireMove();
+      const newRound = await BackendUtil.solitairePick(move);
+      GAME.cards.renderSolitaireBoard(newRound);
+      currentRound = newRound;
+    }
+
+    CLIENT_STATE.roundInProgress = false;
+
+    return new EndRound({
+      roundState: currentRound,
+      bet: placeBetResult.bet,
     });
   }
 }

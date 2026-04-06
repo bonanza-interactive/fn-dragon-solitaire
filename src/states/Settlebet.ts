@@ -30,6 +30,7 @@ export class SettleBet extends State {
     if (CLIENT_STATE.attemptAutoPlay) {
       return new BasegameRound();
     } else {
+      CLIENT_STATE.waitForPlayBeforeNextRound = true;
       return new Ready();
     }
   }

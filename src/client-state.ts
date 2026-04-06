@@ -20,6 +20,7 @@ export class ClientState {
   public replay?: Replay;
   public winScrollCompletePromise: Promise<void> = Promise.resolve();
   public roundInProgress = false;
+  public waitForPlayBeforeNextRound = false;
 
   public restore(
     round: RoundState,

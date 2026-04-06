@@ -138,6 +138,10 @@ export enum CardName {
   Table = 'table',
   TableDeck = 'table_deck',
   Gamble = 'gamble',
+  SolStock = 'sol_stock',
+  SolWaste = 'sol_waste',
+  SolFoundation = 'sol_foundation',
+  SolTableau = 'sol_tableau',
 }
 
 export const CARD_LOCATION_PREFIX = 'card_location';
@@ -168,3 +172,8 @@ export const suitSkinNames = ['spade', 'club', 'diamond', 'heart'];
 
 export const CARD_BACK = 52; // ID of the card backside
 export const CARD_DRAGON = 53; // ID of the dragon card
+export const SOLITAIRE_CARD_OVERLAP_FACEDOWN = 26;
+export const SOLITAIRE_CARD_OVERLAP_FACEUP = 38;
+export const SOLITAIRE_COLUMN_SPACING = 90;
+export const SOLITAIRE_FOUNDATION_SPACING = 88;
+export const SOLITAIRE_SNAP_BACK_SECONDS = 0.2;
