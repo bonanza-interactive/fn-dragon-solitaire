@@ -6,7 +6,7 @@ import {anchorRelativeToParent} from '../../util/utils-schema';
 import {CARD_LOCATION_PREFIX} from '../config';
 import {GameLayer} from './common-schema';
 
-const tableauX = (i: number): number => -390 + i * 150;
+const tableauX = (i: number): number => -420 + i * 140;
 
 const kenoCardLocations: Partial<schema.NodeSchema>[] = [
   {
@@ -25,6 +25,7 @@ const kenoCardLocations: Partial<schema.NodeSchema>[] = [
   },
   {
     name: 'deck',
+
     if: {
       portrait: {position: [0, 0], layout: [schema.canvasAnchorLeft(-240)]},
       landscape: {position: [-3500, 0]},
@@ -36,17 +37,17 @@ const solitaireLeafAnchors: Partial<schema.NodeSchema>[] = [
   {
     name: 'sol_stock',
     scale: [0.55, 0.55],
-    position: [-395, -460],
+    position: [-420, -460],
   },
   {
     name: 'sol_waste',
     scale: [0.55, 0.55],
-    position: [-220, -460],
+    position: [-280, -460],
   },
   ...Array.from({length: 4}, (_, i) => ({
     name: `sol_foundation_${i}`,
     scale: [0.55, 0.55],
-    position: [30 + i * 150, -460] as [number, number],
+    position: [0 + i * 140, -460] as [number, number],
   })),
   ...Array.from({length: 7}, (_, i) => ({
     name: `sol_tableau_${i}`,
@@ -73,6 +74,29 @@ export const SOLITAIRE_ROOT: schema.NodeSchema = {
   pivot: [0.5, 0.5],
   size: [1000, 720],
   depthGroup: GameLayer.Cards,
+  children: [
+    {
+      name: 'solitaire_bg',
+      type: gfx.DrawableType.Sprite,
+      pivot: [0.5, 0.5],
+
+      if: {
+        portrait: {
+          image: 'basegame_card_base',
+          size: [900, 1400],
+          position: [0, 0],
+        },
+
+        landscape: {
+          image: 'basegame_card_base',
+          size: [1060, 1240],
+          position: [0, 50],
+        },
+      },
+    },
+
+    ...solitaireLeafAnchors,
+  ],
   if: {
     portrait: {
       scale: [0.9, 0.9],
@@ -124,7 +148,7 @@ export const SOLITAIRE_ROOT: schema.NodeSchema = {
       scale: [0.7, 0.7],
     },
   },
-  children: solitaireLeafAnchors,
+  // children: solitaireLeafAnchors,
 };
 
 export const CARD_NODES: schema.NodeSchema[] = [

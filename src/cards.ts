@@ -134,7 +134,7 @@ export class Cards {
   constructor(root: gfx.Empty) {
     this.root = root;
     this.tableRoot = getNode(root, 'table_root');
-
+    this.tableRoot.visible = false;
     this.maxSelection = Math.max(this.tempNumber, this.tempNumber);
     this.maxDrawCount = Math.max(this.tempNumber, this.tempNumber);
 
