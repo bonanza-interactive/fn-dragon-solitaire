@@ -131,8 +131,11 @@ export class ReadyRecovery extends State<StateMachineRoundData> {
       currentRound.state === 'pick' &&
       (currentRound.picks?.length ?? 0) > 0
     ) {
+      const picks = currentRound.picks;
+      if (!picks) break;
       const move = await GAME.cards.waitForSolitaireMove();
-      const newRound = await BackendUtil.solitairePick(move);
+      const pickIndex = BackendUtil.resolvePickIndex(move, picks);
+      const newRound = await BackendUtil.solitairePick(pickIndex);
       GAME.cards.renderSolitaireBoard(newRound);
       currentRound = newRound;
     }

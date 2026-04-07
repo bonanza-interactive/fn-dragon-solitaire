@@ -143,18 +143,31 @@ export class BackendUtil {
     await GAMEFW.cheatState(state);
   }
 
-  public static async solitairePick(move: {
-    from: string;
-    to: string;
-    count: number;
-  }): Promise<RoundState> {
-    const gameData = await GAMEFW.action('pick', move);
+  public static async solitairePick(pickIndex: number): Promise<RoundState> {
+    const gameData = await GAMEFW.action('pick', {pick: pickIndex});
+
     const r = gameData.round as RoundState;
+
     if (r !== null) {
       superstruct.assert(r, RoundStateSchema);
       return r;
     } else {
       throw new Error('solitaire pick action failed');
     }
+  }
+  public static resolvePickIndex(
+    move: {from: string; to: string; count: number},
+    picks: {from: string; to: string; count: number}[],
+  ): number {
+    const index = picks.findIndex(
+      (p) => p.from === move.from && p.to === move.to && p.count === move.count,
+    );
+
+    if (index === -1) {
+      console.error('Move not found in picks', {move, picks});
+      throw new Error('Invalid move selected');
+    }
+
+    return index;
   }
 }
