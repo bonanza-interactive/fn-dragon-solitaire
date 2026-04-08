@@ -80,7 +80,7 @@ app
       gameId: GAME,
       engineId: ENGINE,
       tenantId: 'templatetenant',
-      localization: 'fi-FI',
+      localization: 'en-US',
     } satisfies LauncherParams & Partial<LauncherParams>),
   )
   .get(
