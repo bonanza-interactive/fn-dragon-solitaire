@@ -184,7 +184,7 @@ export class DragonPanel {
           //   : round.win.multiplier;
           const multiplier = round.winFactor;
           if (multiplier !== undefined) {
-            this.spine.skin = `${multiplier}x`;
+            // this.spine.skin = `${multiplier}x`;
           } else {
             this.spine.skin = `freespin`;
           }
