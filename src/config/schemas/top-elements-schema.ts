@@ -1,7 +1,7 @@
 import {gfx} from '@apila/engine';
 import {DrawableType} from '@apila/engine/dist/apila-gfx';
 import {schema} from '@apila/game-libraries';
-import {byAspectRatio} from '@apila/game-libraries/dist/node-schema';
+// import {byAspectRatio} from '@apila/game-libraries/dist/node-schema';
 
 import {
   WINTABLE_COUNT_X,
@@ -19,75 +19,78 @@ const DRAGON_PANEL: schema.NodeSchema = {
   pivot: [0.5, 0.5],
   if: {
     landscape: {
-      layout: byAspectRatio([
-        {
-          aspectRatio: 5 / 4,
-          position: [-740, 200],
-          scale: [0.47, 0.47],
-        },
-        {
-          aspectRatio: 16 / 9,
-          position: [-770, 280],
-          scale: [0.47, 0.47],
-        },
-        {
-          aspectRatio: 16 / 7,
-          position: [-900, 300],
-          scale: [0.6, 0.6],
-        },
-      ]),
+      position: [-1040, 400],
+      // layout: byAspectRatio([
+      //   {
+      //     aspectRatio: 5 / 4,
+      //     position: [-740, 200],
+      //     scale: [0.47, 0.47],
+      //   },
+      //   {
+      //     aspectRatio: 16 / 9,
+      //     position: [-770, 280],
+      //     scale: [0.47, 0.47],
+      //   },
+      //   {
+      //     aspectRatio: 16 / 7,
+      //     position: [-900, 300],
+      //     scale: [0.6, 0.6],
+      //   },
+      // ]),
     },
     portrait: {
-      layout: byAspectRatio([
-        {
-          aspectRatio: 1 / 1,
-          position: [-290, 60],
-          scale: [0.5, 0.5],
-        },
-        {
-          aspectRatio: 920 / 500,
-          position: [-250, 60],
-          scale: [0.65, 0.65],
-        },
-      ]),
+      position: [-400, 200],
+      size: [0.5, 0.5],
+      // layout: byAspectRatio([
+      //   {
+      //     aspectRatio: 1 / 1,
+      //     position: [-290, -500],
+      //     scale: [0.5, 0.5],
+      //   },
+      //   {
+      //     aspectRatio: 920 / 500,
+      //     position: [-250, -00],
+      //     scale: [0.65, 0.65],
+      //   },
+      // ]),
     },
-    landscapeMobile: {
-      layout: byAspectRatio([
-        {
-          aspectRatio: 5 / 4,
-          position: [-820, 240],
-          scale: [0.5, 0.5],
-        },
-        {
-          aspectRatio: 1332 / 839,
-          position: [-780, 70],
-          scale: [0.5, 0.5],
-        },
-        {
-          aspectRatio: 1612 / 839,
-          position: [-910, 20],
-          scale: [0.6, 0.6],
-        },
-        {
-          aspectRatio: 1864 / 798,
-          position: [-1075, 90],
-          scale: [0.6, 0.6],
-        },
-        {
-          aspectRatio: 1864 / 723,
-          position: [-1100, 100],
-          scale: [0.65, 0.65],
-        },
-      ]),
-    },
-    portraitMobile: {
-      position: [-260, 40],
-      scale: [0.6, 0.6],
-    },
-    squareMobile: {
-      position: [-320, 40],
-      scale: [0.6, 0.6],
-    },
+    // landscapeMobile: {
+    //   layout: byAspectRatio([
+    //     {
+    //       aspectRatio: 5 / 4,
+    //       position: [-820, 240],
+    //       scale: [0.5, 0.5],
+    //     },
+    //     {
+    //       aspectRatio: 1332 / 839,
+    //       position: [-780, 70],
+    //       scale: [0.5, 0.5],
+    //     },
+    //     {
+    //       aspectRatio: 1612 / 839,
+    //       position: [-910, 20],
+    //       scale: [0.6, 0.6],
+    //     },
+    //     {
+    //       aspectRatio: 1864 / 798,
+    //       position: [-1075, 90],
+    //       scale: [0.6, 0.6],
+    //     },
+    //     {
+    //       aspectRatio: 1864 / 723,
+    //       position: [-1100, 100],
+    //       scale: [0.65, 0.65],
+    //     },
+    //   ]),
+    // },
+    // portraitMobile: {
+    //   position: [-260, 40],
+    //   scale: [0.6, 0.6],
+    // },
+    // squareMobile: {
+    //   position: [-320, 40],
+    //   scale: [0.6, 0.6],
+    // },
   },
   children: [
     {
@@ -110,70 +113,72 @@ const PAYTABLE: schema.NodeSchema = {
   depthGroup: GameLayer.BehindCards,
   if: {
     landscape: {
-      layout: byAspectRatio([
-        {
-          aspectRatio: 1030 / 790,
-          position: [650, -170],
-          scale: [0.7, 0.7],
-        },
-        {
-          aspectRatio: 1270 / 790,
-          position: [621, -80],
-          scale: [0.7, 0.7],
-        },
-        {
-          aspectRatio: 1800 / 797,
-          position: [621, -56],
-          scale: [0.7, 0.7],
-        },
-      ]),
+      position: [900, -270],
+      scale: [1, 1],
+      // layout: byAspectRatio([
+      //   {
+      //     aspectRatio: 1030 / 790,
+      //     position: [650, -170],
+      //     scale: [0.7, 0.7],
+      //   },
+      //   {
+      //     aspectRatio: 1270 / 790,
+      //     position: [621, -80],
+      //     scale: [0.7, 0.7],
+      //   },
+      //   {
+      //     aspectRatio: 1800 / 797,
+      //     position: [621, -56],
+      //     scale: [0.7, 0.7],
+      //   },
+      // ]),
     },
     portrait: {
       position: [130, -84],
       scale: [1.0, 1.0],
     },
-    portraitMobile: {
-      layout: byAspectRatio([
-        {
-          aspectRatio: 1 / 1,
-          position: [120, -80],
-          scale: [1.05, 1.05],
-        },
-        {
-          aspectRatio: 1205 / 760,
-          position: [105, -80],
-          scale: [1.05, 1.05],
-        },
-        {
-          aspectRatio: 920 / 500,
-          position: [115, -80],
-          scale: [1.05, 1.05],
-        },
-      ]),
-    },
-    landscapeMobile: {
-      layout: byAspectRatio([
-        {
-          aspectRatio: 1030 / 790,
-          position: [670, -190],
-          scale: [0.8, 0.8],
-        },
-        {
-          aspectRatio: 1270 / 790,
-          position: [725, -180],
-          scale: [0.8, 0.8],
-        },
-        {
-          aspectRatio: 1800 / 797,
-          position: [1130, -250],
-          scale: [0.8, 0.8],
-        },
-      ]),
-    },
-    square: {
-      position: [170, -80],
-      scale: [1.1, 1.1],
-    },
+    // portraitMobile: {
+    //   layout: byAspectRatio([
+    //     {
+    //       aspectRatio: 1 / 1,
+    //       position: [120, -80],
+    //       scale: [1.05, 1.05],
+    //     },
+    //     {
+    //       aspectRatio: 1205 / 760,
+    //       position: [105, -80],
+    //       scale: [1.05, 1.05],
+    //     },
+    //     {
+    //       aspectRatio: 920 / 500,
+    //       position: [115, -80],
+    //       scale: [1.05, 1.05],
+    //     },
+    //   ]),
+    // },
+    // landscapeMobile: {
+    //   layout: byAspectRatio([
+    //     {
+    //       aspectRatio: 1030 / 790,
+    //       position: [670, -190],
+    //       scale: [0.8, 0.8],
+    //     },
+    //     {
+    //       aspectRatio: 1270 / 790,
+    //       position: [725, -180],
+    //       scale: [0.8, 0.8],
+    //     },
+    //     {
+    //       aspectRatio: 1800 / 797,
+    //       position: [1130, -250],
+    //       scale: [0.8, 0.8],
+    //     },
+    //   ]),
+    // },
+    // square: {
+    //   position: [170, -80],
+    //   scale: [1.1, 1.1],
+    // },
   },
   children: [
     {
@@ -244,49 +249,49 @@ export const TOP_ELEMENTS: schema.NodeSchema = {
       position: [0, -540],
       scale: [1, 1],
     },
-    squareMobile: {
-      position: [0, -630],
-      scale: [1.5, 1.5],
-    },
-    landscapeMobile: {
-      layout: byAspectRatio([
-        {
-          aspectRatio: 5 / 4,
-          position: [0, -380],
-          scale: [1, 1],
-        },
-        {
-          aspectRatio: 16 / 9,
-          position: [0, -270],
-          scale: [1, 1],
-        },
-        {
-          aspectRatio: 16 / 7,
-          position: [0, -200],
-          scale: [1, 1],
-        },
-      ]),
-    },
-    portraitMobile: {
-      scale: [1.2, 1.2],
-      layout: byAspectRatio([
-        {
-          aspectRatio: 1.0,
-          position: [0, -610],
-          scale: [1.3, 1.3],
-        },
-        {
-          aspectRatio: 1.78,
-          position: [0, -700],
-          scale: [1.2, 1.2],
-        },
-        {
-          aspectRatio: 2.5,
-          position: [0, -900],
-          scale: [1.2, 1.2],
-        },
-      ]),
-    },
+    // squareMobile: {
+    //   position: [0, -630],
+    //   scale: [1.5, 1.5],
+    // },
+    // landscapeMobile: {
+    //   layout: byAspectRatio([
+    //     {
+    //       aspectRatio: 5 / 4,
+    //       position: [0, -380],
+    //       scale: [1, 1],
+    //     },
+    //     {
+    //       aspectRatio: 16 / 9,
+    //       position: [0, -270],
+    //       scale: [1, 1],
+    //     },
+    //     {
+    //       aspectRatio: 16 / 7,
+    //       position: [0, -200],
+    //       scale: [1, 1],
+    //     },
+    //   ]),
+    // },
+    // portraitMobile: {
+    //   scale: [1.2, 1.2],
+    //   layout: byAspectRatio([
+    //     {
+    //       aspectRatio: 1.0,
+    //       position: [0, -610],
+    //       scale: [1.3, 1.3],
+    //     },
+    //     {
+    //       aspectRatio: 1.78,
+    //       position: [0, -700],
+    //       scale: [1.2, 1.2],
+    //     },
+    //     {
+    //       aspectRatio: 2.5,
+    //       position: [0, -900],
+    //       scale: [1.2, 1.2],
+    //     },
+    //   ]),
+    // },
   },
   children: [
     {

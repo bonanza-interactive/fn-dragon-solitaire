@@ -1,12 +1,12 @@
 import {gfx} from '@apila/engine';
 import {schema} from '@apila/game-libraries';
-import {byAspectRatio} from '@apila/game-libraries/dist/node-schema';
+// import {byAspectRatio} from '@apila/game-libraries/dist/node-schema';
 
 import {anchorRelativeToParent} from '../../util/utils-schema';
 import {CARD_LOCATION_PREFIX} from '../config';
 import {GameLayer} from './common-schema';
 
-const tableauX = (i: number): number => -420 + i * 140;
+const tableauX = (i: number): number => -590 + i * 195;
 
 const kenoCardLocations: Partial<schema.NodeSchema>[] = [
   {
@@ -36,23 +36,23 @@ const kenoCardLocations: Partial<schema.NodeSchema>[] = [
 const solitaireLeafAnchors: Partial<schema.NodeSchema>[] = [
   {
     name: 'sol_stock',
-    scale: [0.55, 0.55],
-    position: [-420, -460],
+    scale: [0.75, 0.75],
+    position: [-590, -580],
   },
   {
     name: 'sol_waste',
-    scale: [0.55, 0.55],
-    position: [-280, -460],
+    scale: [0.75, 0.75],
+    position: [-400, -580],
   },
   ...Array.from({length: 4}, (_, i) => ({
     name: `sol_foundation_${i}`,
-    scale: [0.55, 0.55],
-    position: [0 + i * 140, -460] as [number, number],
+    scale: [0.75, 0.75],
+    position: [0 + i * 195, -580] as [number, number],
   })),
   ...Array.from({length: 7}, (_, i) => ({
     name: `sol_tableau_${i}`,
-    scale: [0.55, 0.55],
-    position: [tableauX(i), -260] as [number, number],
+    scale: [0.75, 0.75],
+    position: [tableauX(i), -280] as [number, number],
   })),
 ];
 
@@ -72,25 +72,29 @@ export const SOLITAIRE_ROOT: schema.NodeSchema = {
   type: gfx.DrawableType.Empty,
   name: 'solitaire_root',
   pivot: [0.5, 0.5],
-  size: [1000, 720],
+  size: [1450, 1200],
   depthGroup: GameLayer.Cards,
+  visible: true,
   children: [
     {
       name: 'solitaire_bg',
       type: gfx.DrawableType.Sprite,
       pivot: [0.5, 0.5],
+      visible: true,
 
       if: {
         portrait: {
           image: 'basegame_card_base',
-          size: [900, 1400],
+          // size: [900, 1400],
+          scale: [1, 1],
           position: [0, 0],
         },
 
         landscape: {
           image: 'basegame_card_base',
-          size: [1060, 1240],
-          position: [0, 50],
+          // size: [1600, 1100],
+          scale: [1.74, 1.57],
+          position: [0, -170],
         },
       },
     },
@@ -110,43 +114,43 @@ export const SOLITAIRE_ROOT: schema.NodeSchema = {
         anchorRelativeToParent(g, 10 / 8, 16 / 8, 0.58, 0.62)(n, g);
       },
     },
-    portraitMobile: {
-      layout: byAspectRatio([
-        {
-          aspectRatio: 1.0,
-          position: [0, 200],
-          scale: [0.72, 0.72],
-        },
-        {
-          aspectRatio: 1.78,
-          position: [0, 170],
-          scale: [0.68, 0.68],
-        },
-        {
-          aspectRatio: 2.5,
-          position: [0, 230],
-          scale: [0.64, 0.64],
-        },
-      ]),
-    },
-    landscapeMobile: {
-      layout: byAspectRatio([
-        {
-          aspectRatio: 5 / 4,
-          position: [0, 120],
-          scale: [0.82, 0.82],
-        },
-        {
-          aspectRatio: 16 / 9,
-          position: [0, 145],
-          scale: [0.88, 0.88],
-        },
-      ]),
-    },
-    squareMobile: {
-      position: [0, 160],
-      scale: [0.7, 0.7],
-    },
+    // portraitMobile: {
+    //   layout: byAspectRatio([
+    //     {
+    //       aspectRatio: 1.0,
+    //       position: [0, 200],
+    //       scale: [0.72, 0.72],
+    //     },
+    //     {
+    //       aspectRatio: 1.78,
+    //       position: [0, 170],
+    //       scale: [0.68, 0.68],
+    //     },
+    //     {
+    //       aspectRatio: 2.5,
+    //       position: [0, 230],
+    //       scale: [0.64, 0.64],
+    //     },
+    //   ]),
+    // },
+    // landscapeMobile: {
+    //   layout: byAspectRatio([
+    //     {
+    //       aspectRatio: 5 / 4,
+    //       position: [0, 120],
+    //       scale: [0.82, 0.82],
+    //     },
+    //     {
+    //       aspectRatio: 16 / 9,
+    //       position: [0, 145],
+    //       scale: [0.88, 0.88],
+    //     },
+    //   ]),
+    // },
+    // squareMobile: {
+    //   position: [0, 160],
+    //   scale: [0.7, 0.7],
+    // },
   },
   // children: solitaireLeafAnchors,
 };

@@ -207,6 +207,7 @@ export class Card {
     const spine = CORE.gfx.createSpine(skeletonName);
     spine.depthGroup = this.cardSpine.depthGroup;
     spine.scale = this.cardSpine.scale;
+    console.log('this.cardSpine.position: ', this.cardSpine.position);
     spine.position = this.cardSpine.position;
     spine.parent = this.moveNode;
     spine.visible = this.cardSpine.visible;

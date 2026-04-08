@@ -193,9 +193,9 @@ export const BACKGROUND: schema.NodeSchema = {
           depthGroup: GameLayer.UiBar,
           if: {
             portrait: {
-              image: 'UI_bar_mobile',
+              image: 'UI_bar_desktop',
               scale: [-1.25, 1.25],
-              position: [0, -20],
+              position: [0, 0],
             },
             landscape: {
               image: 'UI_bar_desktop',
@@ -211,9 +211,9 @@ export const BACKGROUND: schema.NodeSchema = {
           depthGroup: GameLayer.UiBar,
           if: {
             portrait: {
-              image: 'UI_bar_mobile',
+              image: 'UI_bar_desktop',
               scale: [1.25, 1.25],
-              position: [0, -20],
+              position: [0, 0],
             },
             landscape: {
               image: 'UI_bar_desktop',
@@ -227,7 +227,7 @@ export const BACKGROUND: schema.NodeSchema = {
           name: 'logo',
           skeleton: 'logo',
           depthGroup: GameLayer.Logo,
-          pivot: [0.5, 0.0],
+          pivot: [0.5, 0.5],
           visible: true,
 
           if: {
@@ -237,17 +237,17 @@ export const BACKGROUND: schema.NodeSchema = {
               },
             },
             portrait: {
-              scale: [1, 1],
-              position: [0, 288],
+              scale: [1.4, 1.4],
+              position: [0, 320],
             },
             landscape: {
-              scale: [1, 1],
+              scale: [1.3, 1.3],
               position: [0, 190],
             },
-            landscapeMobile: {
-              scale: [0.53, 0.53],
-              position: [0, 75],
-            },
+            // landscapeMobile: {
+            //   scale: [0.53, 0.53],
+            //   position: [0, 75],
+            // },
           },
         },
         {
@@ -267,16 +267,16 @@ export const BACKGROUND: schema.NodeSchema = {
               position: [0, 65],
               image: 'logo_en',
             },
-            landscapeMobile: {
-              scale: [0.53, 0.53],
-              position: [0, 60],
-              image: 'logo_en',
-            },
-            square: {
-              scale: [0.47, 0.47],
-              position: [0, 210],
-              image: 'logo_en2',
-            },
+            // landscapeMobile: {
+            //   scale: [0.53, 0.53],
+            //   position: [0, 60],
+            //   image: 'logo_en',
+            // },
+            // square: {
+            //   scale: [0.47, 0.47],
+            //   position: [0, 210],
+            //   image: 'logo_en2',
+            // },
           },
         },
       ],
@@ -312,9 +312,9 @@ export const BACKGROUND: schema.NodeSchema = {
             square: {
               position: [0, -150],
             },
-            landscapeMobile: {
-              position: [0, 10],
-            },
+            // landscapeMobile: {
+            //   position: [0, 10],
+            // },
           },
         },
         {
@@ -332,9 +332,9 @@ export const BACKGROUND: schema.NodeSchema = {
             square: {
               position: [0, -250],
             },
-            landscapeMobile: {
-              position: [0, -100],
-            },
+            // landscapeMobile: {
+            //   position: [0, -100],
+            // },
           },
         },
         {
@@ -345,17 +345,17 @@ export const BACKGROUND: schema.NodeSchema = {
           position: [0, 0],
           if: {
             portrait: {
-              image: 'UI_bar_mobile',
+              image: 'UI_bar_desktop',
               scale: [-1.25, -1.25],
             },
             landscape: {
               image: 'UI_bar_desktop',
               scale: [-0.7, -0.7],
             },
-            square: {
-              image: 'UI_bar_mobile',
-              scale: [-1.25, -1.25],
-            },
+            // square: {
+            //   image: 'UI_bar_mobile',
+            //   scale: [-1.25, -1.25],
+            // },
           },
         },
         {
@@ -366,7 +366,7 @@ export const BACKGROUND: schema.NodeSchema = {
           position: [0, 0],
           if: {
             portrait: {
-              image: 'UI_bar_mobile',
+              image: 'UI_bar_desktop',
               scale: [1.25, -1.25],
             },
             landscape: {

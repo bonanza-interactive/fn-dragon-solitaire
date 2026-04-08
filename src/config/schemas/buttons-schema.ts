@@ -47,59 +47,59 @@ export const BUTTONS: schema.NodeSchema = {
         },
       ]),
     },
-    landscapeMobile: {
-      layout: byAspectRatio([
-        {
-          aspectRatio: 1024 / 744,
-          position: [-800, 225],
-          scale: [0.9, 0.9],
-        },
-        {
-          aspectRatio: 1372 / 854,
-          position: [-830, 240],
-          scale: [0.9, 0.9],
-        },
-        {
-          aspectRatio: 1862 / 786,
-          position: [-1075, 248],
-          scale: [0.9, 0.9],
-        },
-        {
-          aspectRatio: 1864 / 858,
-          position: [-1005, 248],
-          scale: [0.9, 0.9],
-        },
-        {
-          aspectRatio: 1880 / 735,
-          position: [-1097, 255],
-          scale: [1, 1],
-        },
-      ]),
-    },
-    portraitMobile: {
-      layout: byAspectRatio([
-        {
-          aspectRatio: 1.0,
-          position: [0, 520],
-          scale: [1.1, 1.1],
-        },
-        {
-          aspectRatio: 1.78,
-          position: [0, 500],
-          scale: [1.15, 1.15],
-        },
-        {
-          aspectRatio: 2.2,
-          position: [0, 640],
-          scale: [1.2, 1.2],
-        },
-        {
-          aspectRatio: 3.0,
-          position: [0, 1000],
-          scale: [1.3, 1.3],
-        },
-      ]),
-    },
+    // landscapeMobile: {
+    //   layout: byAspectRatio([
+    //     {
+    //       aspectRatio: 1024 / 744,
+    //       position: [-800, 225],
+    //       scale: [0.9, 0.9],
+    //     },
+    //     {
+    //       aspectRatio: 1372 / 854,
+    //       position: [-830, 240],
+    //       scale: [0.9, 0.9],
+    //     },
+    //     {
+    //       aspectRatio: 1862 / 786,
+    //       position: [-1075, 248],
+    //       scale: [0.9, 0.9],
+    //     },
+    //     {
+    //       aspectRatio: 1864 / 858,
+    //       position: [-1005, 248],
+    //       scale: [0.9, 0.9],
+    //     },
+    //     {
+    //       aspectRatio: 1880 / 735,
+    //       position: [-1097, 255],
+    //       scale: [1, 1],
+    //     },
+    //   ]),
+    // },
+    // portraitMobile: {
+    //   layout: byAspectRatio([
+    //     {
+    //       aspectRatio: 1.0,
+    //       position: [0, 520],
+    //       scale: [1.1, 1.1],
+    //     },
+    //     {
+    //       aspectRatio: 1.78,
+    //       position: [0, 500],
+    //       scale: [1.15, 1.15],
+    //     },
+    //     {
+    //       aspectRatio: 2.2,
+    //       position: [0, 640],
+    //       scale: [1.2, 1.2],
+    //     },
+    //     {
+    //       aspectRatio: 3.0,
+    //       position: [0, 1000],
+    //       scale: [1.3, 1.3],
+    //     },
+    //   ]),
+    // },
   },
   children: [
     {
@@ -121,12 +121,12 @@ export const BUTTONS: schema.NodeSchema = {
         portrait: {
           position: [-440, 20],
         },
-        landscapeMobile: {
-          position: [-80, 0],
-        },
-        portraitMobile: {
-          position: [-370, 0],
-        },
+        // landscapeMobile: {
+        //   position: [-80, 0],
+        // },
+        // portraitMobile: {
+        //   position: [-370, 0],
+        // },
       },
     },
     {
@@ -148,12 +148,12 @@ export const BUTTONS: schema.NodeSchema = {
         portrait: {
           position: [-300, 20],
         },
-        landscapeMobile: {
-          position: [80, 0],
-        },
-        portraitMobile: {
-          position: [370, 0],
-        },
+        // landscapeMobile: {
+        //   position: [80, 0],
+        // },
+        // portraitMobile: {
+        //   position: [370, 0],
+        // },
       },
     },
   ],
