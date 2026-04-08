@@ -1,0 +1,64 @@
+{
+  "gameClientConfig": {
+    "mathver": "ABCD (resources)"
+  },
+  "currency": "EUR",
+  "clientSettings": {
+    "autoplay": {
+      "enabled": true,
+      "rounds": [2, 5, 20, 100, 2000],
+      "mandatoryRounds": true,
+      "lossLimit": [1, 2, 10, 100],
+      "mandatoryLossLimit": false,
+      "singleWinLimit": [1, 2, 10, 100],
+      "mandatorySingleWinLimit": false
+    },
+    "realityCheck": {
+      "enabled": true,
+      "intervalSeconds": 3600
+    },
+    "netPosition": {
+      "enabled": true
+    },
+    "quickSpin": {
+      "enabled": true
+    },
+    "clock": {
+      "enabled": true
+    },
+    "minRoundTimeMs": 0,
+    "slamStop": {
+      "enabled": true
+    }
+  },
+  "gameSettings": {
+    "gamble": {
+      "enabled": true
+    },
+    "theme": "",
+    "defaultBet": 20,
+    "betLevels": [20, 40, 60, 80, 100]
+  },
+  "gameVersions": {
+    "variantId": "example",
+    "variantVersion": "1.0.0",
+    "gameClientVersion": "1.0.0",
+    "localizationVersion": "1.0.0"
+  },
+  "componentVersions": {
+    "gameFrame": "1.0.0",
+    "gameLoader": "1.0.0",
+    "lotteryMods": "1.0.0",
+    "localizations": {
+      "gameFrame": "1.0.0"
+    }
+  },
+  "variantInfo": {
+    "rtp": "91.96",
+    "gambleRtp": "95.55",
+    "volatility": "2",
+    "maxWinFactor": "100000",
+    "maxWinProbabilityReciprocal": "10000"
+  },
+  "assetDomain": ""
+}
