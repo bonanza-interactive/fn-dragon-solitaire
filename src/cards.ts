@@ -1425,15 +1425,21 @@ export class Cards {
     }
 
     if (roundState.wastePile.length > 0) {
-      const topWaste = roundState.wastePile[roundState.wastePile.length - 1];
-      const card = this.cards[cardSlot];
-      card.cardIndex = cardToIndex(topWaste.rank, topWaste.suit);
-      card.parent = this.getCardNode(CardName.SolWaste);
-      card.node.position = [0, 0];
-      card.visible = true;
-      card.depthGroup = GameLayer.Cards + cardSlot;
-      this.solitaireCardMap.set('WASTE_PILE', card);
-      cardSlot++;
+      const waste = roundState.wastePile;
+
+      for (let i = 0; i < waste.length; i++) {
+        const w = waste[i];
+        const card = this.cards[cardSlot];
+        card.cardIndex = cardToIndex(w.rank, w.suit);
+        card.parent = this.getCardNode(CardName.SolWaste);
+        card.visible = true;
+        card.depthGroup = GameLayer.Cards + cardSlot;
+        if (i === waste.length - 1) {
+          this.solitaireCardMap.set('WASTE_PILE', card);
+        }
+
+        cardSlot++;
+      }
     }
 
     const foundationBySuit = new Map<number, {rank: string; suit: string}>();
