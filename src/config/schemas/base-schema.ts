@@ -133,8 +133,15 @@ export const BASE_GAME: schema.NodeSchema = {
               visible: true,
               opacity: 0,
               pivot: [0.5, 0.5],
-              position: [0, 70],
               size: [1450, 1200],
+              if: {
+                portrait: {
+                  position: [0, 400],
+                },
+                landscape: {
+                  position: [0, 70],
+                },
+              },
               children: [
                 {
                   type: gfx.DrawableType.Empty,
@@ -144,7 +151,7 @@ export const BASE_GAME: schema.NodeSchema = {
                   pivot: [0.5, 0.5],
                   if: {
                     landscape: {position: [0, 0], scale: [1, 1]},
-                    portrait: {position: [0, 200], scale: [1, 1]},
+                    portrait: {position: [0, 330], scale: [1, 1]},
                     // landscapeMobile: {position: [0, 0], scale: [1.4, 1.4]},
                     // portraitMobile: {position: [0, 200], scale: [1.0, 1.0]},
                   },

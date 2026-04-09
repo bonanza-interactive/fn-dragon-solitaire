@@ -36,23 +36,55 @@ const kenoCardLocations: Partial<schema.NodeSchema>[] = [
 const solitaireLeafAnchors: Partial<schema.NodeSchema>[] = [
   {
     name: 'sol_stock',
-    scale: [0.75, 0.75],
-    position: [-590, -580],
+    if: {
+      portrait: {
+        scale: [0.75, 0.75],
+        position: [-580, -840],
+      },
+      landscape: {
+        scale: [0.75, 0.75],
+        position: [-590, -580],
+      },
+    },
   },
   {
     name: 'sol_waste',
-    scale: [0.75, 0.75],
-    position: [-400, -580],
+    if: {
+      portrait: {
+        scale: [0.75, 0.75],
+        position: [-400, -840],
+      },
+      landscape: {
+        scale: [0.75, 0.75],
+        position: [-400, -580],
+      },
+    },
   },
   ...Array.from({length: 4}, (_, i) => ({
     name: `sol_foundation_${i}`,
-    scale: [0.75, 0.75],
-    position: [0 + i * 195, -580] as [number, number],
+    if: {
+      portrait: {
+        scale: [0.75, 0.75],
+        position: [0 + i * 195, -840] as [number, number],
+      },
+      landscape: {
+        scale: [0.75, 0.75],
+        position: [0 + i * 195, -580] as [number, number],
+      },
+    },
   })),
   ...Array.from({length: 7}, (_, i) => ({
     name: `sol_tableau_${i}`,
-    scale: [0.75, 0.75],
-    position: [tableauX(i), -280] as [number, number],
+    if: {
+      portrait: {
+        scale: [0.75, 0.75],
+        position: [tableauX(i), -540] as [number, number],
+      },
+      landscape: {
+        scale: [0.75, 0.75],
+        position: [tableauX(i), -280] as [number, number],
+      },
+    },
   })),
 ];
 
@@ -86,8 +118,8 @@ export const SOLITAIRE_ROOT: schema.NodeSchema = {
         portrait: {
           image: 'basegame_card_base',
           // size: [900, 1400],
-          scale: [1, 1],
-          position: [0, 0],
+          scale: [1.68, 1.68],
+          position: [0, -600],
         },
 
         landscape: {

@@ -19,7 +19,8 @@ const DRAGON_PANEL: schema.NodeSchema = {
   pivot: [0.5, 0.5],
   if: {
     landscape: {
-      position: [-1040, 400],
+      size: [0.5, 0.5],
+      position: [-1040, 540],
       // layout: byAspectRatio([
       //   {
       //     aspectRatio: 5 / 4,
@@ -39,8 +40,8 @@ const DRAGON_PANEL: schema.NodeSchema = {
       // ]),
     },
     portrait: {
-      position: [-400, 200],
-      size: [0.5, 0.5],
+      position: [-400, -580],
+      size: [0.4, 0.4],
       // layout: byAspectRatio([
       //   {
       //     aspectRatio: 1 / 1,
@@ -134,8 +135,8 @@ const PAYTABLE: schema.NodeSchema = {
       // ]),
     },
     portrait: {
-      position: [130, -84],
-      scale: [1.0, 1.0],
+      position: [280, -660],
+      scale: [0.9, 0.9],
     },
     // portraitMobile: {
     //   layout: byAspectRatio([

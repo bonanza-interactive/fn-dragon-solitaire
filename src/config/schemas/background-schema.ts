@@ -237,7 +237,7 @@ export const BACKGROUND: schema.NodeSchema = {
               },
             },
             portrait: {
-              scale: [1.4, 1.4],
+              scale: [1.5, 1.5],
               position: [0, 320],
             },
             landscape: {
