@@ -1,6 +1,5 @@
 import {
   Infer,
-  Struct,
   any,
   array,
   boolean,
@@ -10,6 +9,7 @@ import {
   size,
   string,
   type,
+  Struct,
 } from 'superstruct';
 
 // superstruct definitions for backend types
@@ -33,7 +33,7 @@ export enum CardRank {
   RANK_Q = 'Rank_Q',
   RANK_K = 'Rank_K',
   RANK_A = 'Rank_A',
-}
+};
 
 export const CardRankSchema: Struct<CardRank> = enums([
   CardRank.JOKER,
@@ -58,7 +58,7 @@ export enum CardSuit {
   CLUBS = 'Clubs',
   HEARTS = 'Hearts',
   DIAMONDS = 'Diamonds',
-}
+};
 
 export const CardSuitSchema: Struct<CardSuit> = enums([
   CardSuit.JOKERS,
@@ -90,7 +90,7 @@ export enum Location {
   STACK_6 = 'STACK_6',
   STACK_7 = 'STACK_7',
   FOUNDATION = 'FOUNDATION',
-}
+};
 
 export const LocationSchema: Struct<Location> = enums([
   Location.STOCK,
@@ -108,7 +108,7 @@ export const LocationSchema: Struct<Location> = enums([
 export const MoveSchema = type({
   from: LocationSchema,
   to: LocationSchema,
-  count: number(),
+  count : number(),
 });
 
 export const BonusResultSchema = type({
