@@ -119,7 +119,7 @@ export const SOLITAIRE_ROOT: schema.NodeSchema = {
           image: 'basegame_card_base',
           // size: [900, 1400],
           scale: [1.68, 1.68],
-          position: [0, -600],
+          position: [0, -560],
         },
 
         landscape: {
