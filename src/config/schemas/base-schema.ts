@@ -13,6 +13,7 @@ import {GameLayer} from './common-schema';
 import {FREESPIN_POPUP} from './freespin-popup-schema';
 import {FREESPIN_TRANSITION} from './freespin-transition-schema';
 import {TOP_ELEMENTS} from './top-elements-schema';
+import {BONUS_CARD} from './top-elements-schema';
 import {WIN_SCROLLER} from './win-scroller-schema';
 
 export const BASE_GAME: schema.NodeSchema = {
@@ -97,6 +98,7 @@ export const BASE_GAME: schema.NodeSchema = {
               },
               children: [
                 TOP_ELEMENTS,
+                BONUS_CARD,
                 BUTTONS,
                 {
                   type: gfx.DrawableType.Empty,

@@ -108,6 +108,41 @@ const DRAGON_PANEL: schema.NodeSchema = {
   ],
 };
 
+export const BONUS_CARD: schema.NodeSchema = {
+  type: gfx.DrawableType.Empty,
+  name: 'bonus_root',
+  depthGroup: GameLayer.Cards,
+  if: {
+    landscape: {
+      position: [-1040, -400],
+      scale: [1.7, 1.7],
+    },
+    portrait: {
+      position: [0, -1110],
+      scale: [1.5, 1.5],
+    },
+  },
+  children: [
+    {
+      type: gfx.DrawableType.Empty,
+      name: 'bonus_card_content',
+      position: [0, 0],
+      depthGroup: GameLayer.Cards,
+      children: [
+        {
+          type: gfx.DrawableType.Sprite,
+          name: 'bonus_card_holder',
+          image: 'bonus_card_holder',
+          scale: [1, 1],
+          pivot: [0.5, 0.5],
+          position: [0, 0],
+          depthGroup: GameLayer.Dragon,
+        },
+      ],
+    },
+  ],
+};
+
 const PAYTABLE: schema.NodeSchema = {
   type: gfx.DrawableType.Empty,
   name: 'paytable_root',
