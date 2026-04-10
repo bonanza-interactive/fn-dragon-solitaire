@@ -24,7 +24,7 @@ export class Localization {
   constructor(
     translations: TranslationsMap,
     options: loc.CherryOptions = {
-      locale: 'fi-FI',
+      locale: 'en-US',
       resources: {
         'fi-FI': ns(translations.fi_FI),
         'en-GB': ns(translations.en_GB),
