@@ -12,5 +12,5 @@ variables:
   # - Start with a letter.
   # - End with either a letter or digit.
   # - Be at most 32 characters long.
-  WEB_NAME:
-  BACKEND_VERSION: 1.0.0-1774264207-SNAPSHOT
+  WEB_NAME: dragonsolitaire
+  BACKEND_VERSION: 1.0.0-1775652608-SNAPSHOT
