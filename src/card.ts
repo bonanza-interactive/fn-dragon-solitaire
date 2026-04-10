@@ -571,7 +571,6 @@ export class Card {
     const entry = this.cardSpine.state.setAnimation(1, 'swap');
     entry.delay = delay;
     waitEvent(this.cardSpine, {event: 'new_card', entry}).then(() => {
-      // don't use this.cardIndex = cardIndex; since it would turn off spine animation
       this._cardIndex = cardIndex;
       this.useSpine = true;
     });
