@@ -30,7 +30,12 @@ export class EndRound extends State<StateMachineRoundData> {
       return new FreespinRound(data);
     }
 
-    if (winningRound(data)) {
+    const picksResolved =
+      data.roundState.state === 'pick' &&
+      Array.isArray(data.roundState.picks) &&
+      data.roundState.picks.length === 0;
+
+    if (winningRound(data) || picksResolved) {
       if (isRecovery()) {
         await BackendUtil.step(RecoveryStepState.END_ROUND);
       }

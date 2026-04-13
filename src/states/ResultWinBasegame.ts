@@ -51,6 +51,7 @@ export class ResultWinBasegame extends State<StateMachineRoundData> {
             onWinScrollComplete,
           );
         }
+        await CLIENT_STATE.winScrollCompletePromise;
       }
       CLIENT_STATE.winsum += winAmount;
       GAMEFW.updateWins(winAmount);
