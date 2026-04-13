@@ -1,0 +1,2117 @@
+{
+    "roundState": {
+        "rounds": [
+            {
+                "winFactor": 0,
+                "roundType": "deal",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_K",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_1",
+                    "to": "STACK_7",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_J",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_1",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_K",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_3",
+                    "to": "STACK_7",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_10",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_6",
+                    "to": "STACK_1",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_Q",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_6",
+                    "to": "STACK_5",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_7",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_5",
+                    "to": "STACK_7",
+                    "count": 2
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_8",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_5",
+                    "to": "STACK_6",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_J",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_5",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "STACK_5",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_3",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_4",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_A",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_A",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_2",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_2",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_Q",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_3",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_4",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_3",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_3",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_5",
+                    "to": "STACK_3",
+                    "count": 3
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Spades",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_3",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_5",
+                    "to": "STACK_6",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_10",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_5",
+                    "to": "STACK_1",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_J",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_2",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_K",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_5",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_K",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_6",
+                    "to": "STACK_5",
+                    "count": 3
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_Q",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_J",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_10",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_2",
+                    "to": "STACK_6",
+                    "count": 2
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_10",
+                        "suit": "Spades",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_7",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "STACK_7",
+                    "count": 3
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_3",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_A",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_7",
+                    "to": "STACK_4",
+                    "count": 10
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_Q",
+                        "suit": "Spades",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_J",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_10",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_8",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_3",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_7",
+                    "to": "STACK_1",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_10",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_3",
+                    "to": "STACK_7",
+                    "count": 5
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Spades",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_3",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_3",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_A",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_1",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_7",
+                    "to": "STACK_1",
+                    "count": 6
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_8",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Spades",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_3",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_2",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_2",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_1",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_3",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_3",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_3",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_2",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_2",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_7",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_3",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_1",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_7",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_7",
+                    "to": "STACK_6",
+                    "count": 2
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_8",
+                        "suit": "Spades",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_A",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_A",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_7",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_2",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_3",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_7",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_1",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_1",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_6",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_1",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_4",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "STACK_5",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_7",
+                    "to": "STACK_5",
+                    "count": 2
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_8",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_5",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_5",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_8",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_6",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_8",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_5",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "STACK_6",
+                    "count": 4
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_8",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_5",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_10",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_6",
+                    "to": "STACK_4",
+                    "count": 5
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_8",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_6",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_10",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "STACK_6",
+                    "count": 6
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_10",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_8",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_J",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_6",
+                    "to": "STACK_4",
+                    "count": 7
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_J",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_10",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_8",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    },
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_6",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_6",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_4",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_5",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_1",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_6",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_1",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_7",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_1",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_8",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_8",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_1",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_9",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_1",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_10",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_1",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_J",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_10",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_J",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_1",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_Q",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_Q",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_4",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_K",
+                        "suit": "Diamonds",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_5",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_J",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_Q",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_1",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_K",
+                        "suit": "Clubs",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_5",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_Q",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STACK_5",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_K",
+                        "suit": "Spades",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 0,
+                "roundType": "pick",
+                "move": {
+                    "from": "STOCK",
+                    "to": "WASTE_PILE",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_K",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ]
+            },
+            {
+                "winFactor": 300,
+                "roundType": "pick",
+                "move": {
+                    "from": "WASTE_PILE",
+                    "to": "FOUNDATION",
+                    "count": 1
+                },
+                "moved": [
+                    {
+                        "rank": "Rank_K",
+                        "suit": "Hearts",
+                        "isJoker": false
+                    }
+                ],
+                "featureStatus": {}
+            }
+        ],
+        "hash": "{\"deck\":{\"group\":52,\"index\":23,\"position\":0},\"wastePile\":[],\"faceDownCards\":[[],[],[],[],[],[],[]],\"featurePositions\":{}}",
+        "picks": [],
+        "wastePile": [],
+        "openCards": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ],
+        "foundationTops": [
+            {
+                "rank": "Rank_K",
+                "suit": "Diamonds",
+                "isJoker": false
+            },
+            {
+                "rank": "Rank_K",
+                "suit": "Clubs",
+                "isJoker": false
+            },
+            {
+                "rank": "Rank_K",
+                "suit": "Spades",
+                "isJoker": false
+            },
+            {
+                "rank": "Rank_K",
+                "suit": "Hearts",
+                "isJoker": false
+            }
+        ],
+        "faceDownCounts": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "featureStatus": {},
+        "v": 1,
+        "state": "result",
+        "bonusWon": false,
+        "winFactor": 300,
+        "maxWinFactorReached": false,
+        "canGamble": false,
+        "winLimitExceeded": false
+    },
+    "roundId": "d5226208-5e2d-4950-8af2-8224d57589f4",
+    "step": 1,
+    "bet": 20,
+    "gameSessionId": "65e729cb-19ef-4b2e-a1c2-e319e51dd135",
+    "balance": 9999980
+}
