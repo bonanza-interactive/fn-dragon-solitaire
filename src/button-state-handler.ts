@@ -206,3 +206,12 @@ export function unbindButtonListeners(buttonIds: string[]) {
     }
   });
 }
+
+export function setButtonReleasedCallback(
+  buttonId: string,
+  callback: ((name: string) => void) | undefined,
+): void {
+  const button = buttons.get(buttonId);
+  if (!button) return;
+  button.state.releasedCallback = callback;
+}

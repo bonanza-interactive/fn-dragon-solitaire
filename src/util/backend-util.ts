@@ -155,6 +155,29 @@ export class BackendUtil {
       throw new Error('solitaire pick action failed');
     }
   }
+  public static async solitairePickAuto(): Promise<RoundState> {
+    const gameData = await GAMEFW.action('pick', {});
+
+    const r = gameData.round as RoundState;
+
+    if (r !== null) {
+      superstruct.assert(r, RoundStateSchema);
+      return r;
+    } else {
+      throw new Error('solitaire pick action failed');
+    }
+  }
+
+  public static async autocomplete(): Promise<RoundState> {
+    const gameData = await GAMEFW.action('pick', {});
+    const r = gameData.round as RoundState;
+    if (r !== null) {
+      superstruct.assert(r, RoundStateSchema);
+      return r;
+    }
+    throw new Error('autocomplete action failed');
+  }
+
   public static resolvePickIndex(
     move: {from: string; to: string; count: number},
     picks: {from: string; to: string; count: number}[],

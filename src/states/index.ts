@@ -1,5 +1,6 @@
 export * from './BasegameRound';
 export * from './EndRound';
+export * from './Autocomplete';
 // export * from './FreespinIntro';
 export * from './FreespinOutro';
 export * from './FreespinRound';

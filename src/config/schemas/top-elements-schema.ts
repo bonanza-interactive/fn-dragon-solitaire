@@ -9,8 +9,9 @@ import {
   WINTABLE_WIN_X,
   WINTABLE_Y,
 } from '../../Paytable';
+import {createButtonMeta} from '../../types';
 import {GameLayer, INITIALLY_HIDDEN} from './common-schema';
-
+import {createSingleImageButtonStates} from './game-ui-button-states';
 const DRAGON_PANEL: schema.NodeSchema = {
   type: gfx.DrawableType.Spine,
   name: 'dragon_panel',
@@ -142,7 +143,40 @@ export const BONUS_CARD: schema.NodeSchema = {
     },
   ],
 };
-
+// export const AUTO_COMPLETE: schema.NodeSchema = {
+//   type: gfx.DrawableType.Empty,
+//   name: 'autocomplete_root',
+//   depthGroup: GameLayer.Cards,
+//   if: {
+//     landscape: {
+//       position: [1040, 40],
+//       scale: [1, 1],
+//     },
+//     portrait: {
+//       position: [750, -500],
+//       scale: [1, 1],
+//     },
+//   },
+//   children: [
+//     {
+//       type: gfx.DrawableType.Empty,
+//       name: 'autocomplete_content',
+//       position: [0, 0],
+//       depthGroup: GameLayer.Cards,
+//       children: [
+//         {
+//           type: gfx.DrawableType.Sprite,
+//           name: 'autocomplete',
+//           image: 'back_button',
+//           scale: [1, 1],
+//           pivot: [0.5, 0.5],
+//           position: [0, 0],
+//           depthGroup: GameLayer.Dragon,
+//         },
+//       ],
+//     },
+//   ],
+// };
 const PAYTABLE: schema.NodeSchema = {
   type: gfx.DrawableType.Empty,
   name: 'paytable_root',
@@ -267,6 +301,28 @@ const PAYTABLE: schema.NodeSchema = {
       if: {
         initial: {
           image: 'wintable_2_button',
+        },
+      },
+    },
+    {
+      type: gfx.DrawableType.Sprite,
+      name: 'autocomplete',
+      image: 'back_button_active',
+      pivot: [0.5, 0.5],
+      scale: [0.55, 0.55],
+      depthGroup: GameLayer.BehindCards + 1,
+      meta: createButtonMeta({
+        visualUpdateFunc: createSingleImageButtonStates('back_button_active'),
+      }),
+      if: {
+        initial: {
+          visible: true,
+        },
+        landscape: {
+          position: [347, 300],
+        },
+        portrait: {
+          position: [347, 360],
         },
       },
     },

@@ -3,8 +3,15 @@ import {GAME} from '../game';
 import {CLIENT_STATE} from '../main';
 import {AnyState, State} from '../state-machine';
 import {BackendUtil} from '../util/backend-util';
+import {Autocomplete} from './Autocomplete';
 import {EndRound} from './EndRound';
 import {Ready} from './Ready';
+// import testStaticRoundState from './test-static-round-state.json';
+
+// const USE_TEST_STATIC_ROUND_AFTER_PICK = false; // set true while testing
+// const TEST_STATIC_ROUND_AFTER_PICK = (
+//   testStaticRoundState as {roundState: RoundState}
+// ).roundState;
 
 export type StateMachineEnterData = {
   restored: boolean;
@@ -29,17 +36,43 @@ export class BasegameRound extends State {
     let currentRound = placeBetResult.round;
     GAME.cards.renderSolitaireBoard(currentRound);
 
-    while (
+    if (
       currentRound.state === 'pick' &&
       (currentRound.picks?.length ?? 0) > 0
     ) {
-      const picks = currentRound.picks;
-      if (!picks) break;
-      const move = await GAME.cards.waitForSolitaireMove();
-      const pickIndex = BackendUtil.resolvePickIndex(move, picks);
-      const newRound = await BackendUtil.solitairePick(pickIndex);
-      GAME.cards.renderSolitaireBoard(newRound);
-      currentRound = newRound;
+      GAME.autocompleteButton.prepareForSolitairePicking(true);
+      while (
+        currentRound.state === 'pick' &&
+        (currentRound.picks?.length ?? 0) > 0
+      ) {
+        const picks = currentRound.picks;
+        if (!picks) break;
+        const movePromise = GAME.cards.waitForSolitaireMove();
+        const autoPromise = GAME.autocompleteButton.waitForPress();
+        const raced = await Promise.race([
+          movePromise.then((move) => ({tag: 'move' as const, move})),
+          autoPromise.then(() => ({tag: 'auto' as const})),
+        ]);
+        if (raced.tag === 'auto') {
+          GAME.cards.cancelPendingSolitaireMove();
+          GAME.autocompleteButton.prepareForSolitairePicking(false);
+          return new Autocomplete({
+            roundState: currentRound,
+            bet: placeBetResult.bet,
+          });
+        }
+        const move = raced.move;
+        const pickIndex = BackendUtil.resolvePickIndex(move, picks);
+        const newRound = await BackendUtil.solitairePick(pickIndex);
+        // const roundToApply = USE_TEST_STATIC_ROUND_AFTER_PICK
+        //   ? TEST_STATIC_ROUND_AFTER_PICK
+        //   : newRound;
+        GAME.cards.renderSolitaireBoard(newRound);
+        // // TEST NOTE (disabled): To force win scroll on each move, temporarily add:
+        // // await showWin(placeBetResult.bet, true, false, false, true);
+        currentRound = newRound;
+      }
+      GAME.autocompleteButton.prepareForSolitairePicking(false);
     }
 
     CLIENT_STATE.roundInProgress = false;

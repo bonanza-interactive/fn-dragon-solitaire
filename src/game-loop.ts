@@ -22,6 +22,7 @@ export class Main {
       States.Spinning,
       States.FreespinSpinning,
       States.ResultNoWin,
+      States.Autocomplete,
       States.BasegameRound,
       States.Preload,
       States.PreloadDone,

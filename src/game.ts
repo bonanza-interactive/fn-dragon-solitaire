@@ -20,6 +20,7 @@ import {NodeStorage} from './node-storage';
 import {ParticlePlayer} from './particle-player';
 import {Paytable} from './Paytable';
 import {PaytableButton} from './paytable-button';
+import {AutocompleteButton} from './autocomplete-button';
 import {TopElementsMover} from './top-elements-mover';
 import {MessageQueue} from './util/message-queue';
 import {WinScroll} from './win-scroll';
@@ -41,6 +42,7 @@ type Game = {
   cardChangeButtons: CardChangeButtons;
   paytable: Paytable;
   paytableButton: PaytableButton;
+  autocompleteButton: AutocompleteButton;
   freespinPopup: FreespinPopup;
   baseGameFrameText: FrameText;
   freespinTransition: FreespinTransition;

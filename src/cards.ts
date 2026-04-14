@@ -1385,7 +1385,10 @@ export class Cards {
     await wait(300);
   }
 
-  public renderSolitaireBoard(roundState: RoundState): void {
+  public renderSolitaireBoard(
+    roundState: RoundState,
+    options?: {isAuto?: boolean},
+  ): void {
     this.solitaireRoundState = roundState;
     this.currentPicks = roundState.picks ?? [];
     this.cancelSolitaireDragImmediate();
@@ -1466,7 +1469,8 @@ export class Cards {
     }
 
     // Render stock indicator (card back if stock moves exist)
-    const hasStockMove = this.currentPicks.some((p) => p.from === 'STOCK');
+    const hasStockMove =
+      options?.isAuto || this.currentPicks.some((p) => p.from === 'STOCK');
     if (hasStockMove) {
       const card = this.cards[cardSlot];
       card.cardIndex = CARD_BACK;
@@ -1490,6 +1494,12 @@ export class Cards {
       this.moveResolver = resolve;
       this.enableSolitaireInput();
     });
+  }
+
+  public cancelPendingSolitaireMove(): void {
+    this.cancelSolitaireDragImmediate();
+    this.moveResolver = undefined;
+    this.disableSolitaireInput();
   }
 
   private enableSolitaireInput(): void {

@@ -27,6 +27,7 @@ import {onLayoutChanged} from '../node-storage';
 import {ParticlePlayer} from '../particle-player';
 import {Paytable} from '../Paytable';
 import {PaytableButton} from '../paytable-button';
+import {AutocompleteButton} from '../autocomplete-button';
 import {AnyState, State} from '../state-machine';
 import {TopElementsMover} from '../top-elements-mover';
 import {MetaType, isMeta} from '../types';
@@ -447,6 +448,7 @@ export class Preload extends State {
 
     const wintableButton = getSprite(baseGameRoot, 'wintable_button');
     GAME.paytableButton = new PaytableButton(wintableButton);
+    // GAME.autoComplete = new AutoCompleteButton(autoCompleteButton)
 
     GAME.particlePlayer = new ParticlePlayer();
     GAME.winScroll = new WinScroll(getNode(baseGameRoot, 'scroller-root'));
@@ -499,6 +501,7 @@ export class Preload extends State {
 
     GAME.cardChangeButtons.register('return_to_selection', true);
     GAME.cardChangeButtons.register('swap_selected', true);
+    GAME.autocompleteButton = new AutocompleteButton();
   }
 
   private addAutoTickComponents() {

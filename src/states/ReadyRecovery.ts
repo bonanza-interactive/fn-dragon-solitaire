@@ -11,6 +11,7 @@ import {FreespinSpinning} from './FreespinSpinning';
 // import {GambleRound} from './GambleRound';
 import {ResultFreespins} from './ResultFreespins';
 import {ResultWinBasegame} from './ResultWinBasegame';
+import {Autocomplete} from './Autocomplete';
 import {EndRound} from './EndRound';
 import {computeWinAmount} from '../util/win-amount';
 import {BackendUtil} from '../util/backend-util';
@@ -127,17 +128,38 @@ export class ReadyRecovery extends State<StateMachineRoundData> {
 
     GAME.cards.renderSolitaireBoard(currentRound);
 
-    while (
+    if (
       currentRound.state === 'pick' &&
       (currentRound.picks?.length ?? 0) > 0
     ) {
-      const picks = currentRound.picks;
-      if (!picks) break;
-      const move = await GAME.cards.waitForSolitaireMove();
-      const pickIndex = BackendUtil.resolvePickIndex(move, picks);
-      const newRound = await BackendUtil.solitairePick(pickIndex);
-      GAME.cards.renderSolitaireBoard(newRound);
-      currentRound = newRound;
+      GAME.autocompleteButton.prepareForSolitairePicking(true);
+      while (
+        currentRound.state === 'pick' &&
+        (currentRound.picks?.length ?? 0) > 0
+      ) {
+        const picks = currentRound.picks;
+        if (!picks) break;
+        const movePromise = GAME.cards.waitForSolitaireMove();
+        const autoPromise = GAME.autocompleteButton.waitForPress();
+        const raced = await Promise.race([
+          movePromise.then((move) => ({tag: 'move' as const, move})),
+          autoPromise.then(() => ({tag: 'auto' as const})),
+        ]);
+        if (raced.tag === 'auto') {
+          GAME.cards.cancelPendingSolitaireMove();
+          GAME.autocompleteButton.prepareForSolitairePicking(false);
+          return new Autocomplete({
+            roundState: currentRound,
+            bet: data.bet,
+          });
+        }
+        const move = raced.move;
+        const pickIndex = BackendUtil.resolvePickIndex(move, picks);
+        const newRound = await BackendUtil.solitairePick(pickIndex);
+        GAME.cards.renderSolitaireBoard(newRound);
+        currentRound = newRound;
+      }
+      GAME.autocompleteButton.prepareForSolitairePicking(false);
     }
 
     CLIENT_STATE.roundInProgress = false;
