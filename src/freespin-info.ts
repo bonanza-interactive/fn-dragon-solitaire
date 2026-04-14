@@ -8,7 +8,6 @@ import {getBitmapText, getNode} from './util/utils-node';
 import {LOCALIZER} from './framework';
 
 export class FreespinInfo {
-  // private freespinCounter: gfx.Empty;
   public readonly freespinCounterText: gfx.BitmapText;
   public readonly freespinWinsumRoot: gfx.Empty;
   public readonly freespinWinsumText: gfx.BitmapText;
