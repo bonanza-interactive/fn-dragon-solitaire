@@ -307,19 +307,19 @@ const PAYTABLE: schema.NodeSchema = {
     {
       type: gfx.DrawableType.Sprite,
       name: 'autocomplete',
-      image: 'back_button_active',
+      image: 'autoComplete',
       pivot: [0.5, 0.5],
-      scale: [0.55, 0.55],
+      scale: [1, 1],
       depthGroup: GameLayer.BehindCards + 1,
       meta: createButtonMeta({
-        visualUpdateFunc: createSingleImageButtonStates('back_button_active'),
+        visualUpdateFunc: createSingleImageButtonStates('autoComplete'),
       }),
       if: {
         initial: {
           visible: true,
         },
         landscape: {
-          position: [347, 300],
+          position: [300, 600],
         },
         portrait: {
           position: [347, 360],
