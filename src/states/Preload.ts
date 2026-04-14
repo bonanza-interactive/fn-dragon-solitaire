@@ -448,7 +448,6 @@ export class Preload extends State {
 
     const wintableButton = getSprite(baseGameRoot, 'wintable_button');
     GAME.paytableButton = new PaytableButton(wintableButton);
-    // GAME.autoComplete = new AutoCompleteButton(autoCompleteButton)
 
     GAME.particlePlayer = new ParticlePlayer();
     GAME.winScroll = new WinScroll(getNode(baseGameRoot, 'scroller-root'));

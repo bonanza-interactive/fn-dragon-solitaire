@@ -184,9 +184,9 @@ const COMPRESSION: CompressionConfigs = {
  ******************************************************************************/
 const BUNDLE_TYPES = [
   ['veikkaus', 'desktop'],
-  ['universal', 'desktop'],
+  ['international', 'desktop'],
   ['veikkaus', 'mobile'],
-  ['universal', 'mobile'],
+  ['international', 'mobile'],
 ] as const;
 
 /*****************************************************************************

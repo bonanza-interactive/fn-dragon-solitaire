@@ -6,12 +6,6 @@ import {BackendUtil} from '../util/backend-util';
 import {Autocomplete} from './Autocomplete';
 import {EndRound} from './EndRound';
 import {Ready} from './Ready';
-// import testStaticRoundState from './test-static-round-state.json';
-
-// const USE_TEST_STATIC_ROUND_AFTER_PICK = false; // set true while testing
-// const TEST_STATIC_ROUND_AFTER_PICK = (
-//   testStaticRoundState as {roundState: RoundState}
-// ).roundState;
 
 export type StateMachineEnterData = {
   restored: boolean;
@@ -64,12 +58,7 @@ export class BasegameRound extends State {
         const move = raced.move;
         const pickIndex = BackendUtil.resolvePickIndex(move, picks);
         const newRound = await BackendUtil.solitairePick(pickIndex);
-        // const roundToApply = USE_TEST_STATIC_ROUND_AFTER_PICK
-        //   ? TEST_STATIC_ROUND_AFTER_PICK
-        //   : newRound;
         GAME.cards.renderSolitaireBoard(newRound);
-        // // TEST NOTE (disabled): To force win scroll on each move, temporarily add:
-        // // await showWin(placeBetResult.bet, true, false, false, true);
         currentRound = newRound;
       }
       GAME.autocompleteButton.prepareForSolitairePicking(false);

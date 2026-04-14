@@ -1469,10 +1469,11 @@ export class Cards {
     }
 
     // Render stock indicator (card back if stock moves exist)
-    const hasStockMove =
-      options?.isAuto || this.currentPicks.some((p) => p.from === 'STOCK');
+    const hasStockMove: boolean =
+      options?.isAuto ||
+      this.currentPicks.some((pick) => pick.from === 'STOCK');
     if (hasStockMove) {
-      const card = this.cards[cardSlot];
+      const card: Card = this.cards[cardSlot];
       card.cardIndex = CARD_BACK;
       card.parent = this.getCardNode(CardName.SolStock);
       card.node.position = [0, 0];
@@ -1505,9 +1506,9 @@ export class Cards {
   private enableSolitaireInput(): void {
     this.disableSolitaireInput();
 
-    const stockCard = this.solitaireCardMap.get('STOCK');
+    const stockCard: Card | undefined = this.solitaireCardMap.get('STOCK');
     if (stockCard) {
-      const id = CORE.input.listenNode(
+      const id: number = CORE.input.listenNode(
         stockCard.inputNode,
         (e: input.InputEvent) => {
           if (

@@ -5,7 +5,7 @@ import {setButtonState} from '../button-state-handler';
 import {
   applyAutocompleteMoveStep,
   extractAutocompleteMoveRounds,
-} from './autocomplete-moves';
+} from './AutoCompleteMoves';
 import {BackendUtil} from '../util/backend-util';
 import {wait} from '../util/utils';
 import {EndRound} from './EndRound';

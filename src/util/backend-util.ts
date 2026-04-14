@@ -1,3 +1,4 @@
+import {ActionState} from '@apila/casino-frame/types';
 import * as superstruct from 'superstruct';
 
 import {
@@ -144,13 +145,15 @@ export class BackendUtil {
   }
 
   public static async solitairePick(pickIndex: number): Promise<RoundState> {
-    const gameData = await GAMEFW.action('pick', {pick: pickIndex});
+    const gameData: ActionState = await GAMEFW.action('pick', {
+      pick: pickIndex,
+    });
 
-    const r = gameData.round as RoundState;
+    const roundState = gameData.round as RoundState;
 
-    if (r !== null) {
-      superstruct.assert(r, RoundStateSchema);
-      return r;
+    if (roundState !== null) {
+      superstruct.assert(roundState, RoundStateSchema);
+      return roundState;
     } else {
       throw new Error('solitaire pick action failed');
     }
@@ -158,11 +161,11 @@ export class BackendUtil {
   public static async solitairePickAuto(): Promise<RoundState> {
     const gameData = await GAMEFW.action('pick', {});
 
-    const r = gameData.round as RoundState;
+    const roundState = gameData.round as RoundState;
 
-    if (r !== null) {
-      superstruct.assert(r, RoundStateSchema);
-      return r;
+    if (roundState !== null) {
+      superstruct.assert(roundState, RoundStateSchema);
+      return roundState;
     } else {
       throw new Error('solitaire pick action failed');
     }
@@ -170,10 +173,10 @@ export class BackendUtil {
 
   public static async autocomplete(): Promise<RoundState> {
     const gameData = await GAMEFW.action('pick', {});
-    const r = gameData.round as RoundState;
-    if (r !== null) {
-      superstruct.assert(r, RoundStateSchema);
-      return r;
+    const roundState = gameData.round as RoundState;
+    if (roundState !== null) {
+      superstruct.assert(roundState, RoundStateSchema);
+      return roundState;
     }
     throw new Error('autocomplete action failed');
   }

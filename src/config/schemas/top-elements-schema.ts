@@ -22,77 +22,11 @@ const DRAGON_PANEL: schema.NodeSchema = {
     landscape: {
       size: [0.5, 0.5],
       position: [-1040, 540],
-      // layout: byAspectRatio([
-      //   {
-      //     aspectRatio: 5 / 4,
-      //     position: [-740, 200],
-      //     scale: [0.47, 0.47],
-      //   },
-      //   {
-      //     aspectRatio: 16 / 9,
-      //     position: [-770, 280],
-      //     scale: [0.47, 0.47],
-      //   },
-      //   {
-      //     aspectRatio: 16 / 7,
-      //     position: [-900, 300],
-      //     scale: [0.6, 0.6],
-      //   },
-      // ]),
     },
     portrait: {
       position: [-400, -580],
       size: [0.4, 0.4],
-      // layout: byAspectRatio([
-      //   {
-      //     aspectRatio: 1 / 1,
-      //     position: [-290, -500],
-      //     scale: [0.5, 0.5],
-      //   },
-      //   {
-      //     aspectRatio: 920 / 500,
-      //     position: [-250, -00],
-      //     scale: [0.65, 0.65],
-      //   },
-      // ]),
     },
-    // landscapeMobile: {
-    //   layout: byAspectRatio([
-    //     {
-    //       aspectRatio: 5 / 4,
-    //       position: [-820, 240],
-    //       scale: [0.5, 0.5],
-    //     },
-    //     {
-    //       aspectRatio: 1332 / 839,
-    //       position: [-780, 70],
-    //       scale: [0.5, 0.5],
-    //     },
-    //     {
-    //       aspectRatio: 1612 / 839,
-    //       position: [-910, 20],
-    //       scale: [0.6, 0.6],
-    //     },
-    //     {
-    //       aspectRatio: 1864 / 798,
-    //       position: [-1075, 90],
-    //       scale: [0.6, 0.6],
-    //     },
-    //     {
-    //       aspectRatio: 1864 / 723,
-    //       position: [-1100, 100],
-    //       scale: [0.65, 0.65],
-    //     },
-    //   ]),
-    // },
-    // portraitMobile: {
-    //   position: [-260, 40],
-    //   scale: [0.6, 0.6],
-    // },
-    // squareMobile: {
-    //   position: [-320, 40],
-    //   scale: [0.6, 0.6],
-    // },
   },
   children: [
     {
@@ -143,40 +77,6 @@ export const BONUS_CARD: schema.NodeSchema = {
     },
   ],
 };
-// export const AUTO_COMPLETE: schema.NodeSchema = {
-//   type: gfx.DrawableType.Empty,
-//   name: 'autocomplete_root',
-//   depthGroup: GameLayer.Cards,
-//   if: {
-//     landscape: {
-//       position: [1040, 40],
-//       scale: [1, 1],
-//     },
-//     portrait: {
-//       position: [750, -500],
-//       scale: [1, 1],
-//     },
-//   },
-//   children: [
-//     {
-//       type: gfx.DrawableType.Empty,
-//       name: 'autocomplete_content',
-//       position: [0, 0],
-//       depthGroup: GameLayer.Cards,
-//       children: [
-//         {
-//           type: gfx.DrawableType.Sprite,
-//           name: 'autocomplete',
-//           image: 'back_button',
-//           scale: [1, 1],
-//           pivot: [0.5, 0.5],
-//           position: [0, 0],
-//           depthGroup: GameLayer.Dragon,
-//         },
-//       ],
-//     },
-//   ],
-// };
 const PAYTABLE: schema.NodeSchema = {
   type: gfx.DrawableType.Empty,
   name: 'paytable_root',
