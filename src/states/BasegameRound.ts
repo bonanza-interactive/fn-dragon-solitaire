@@ -56,9 +56,10 @@ export class BasegameRound extends State {
           });
         }
         const move = raced.move;
+        const previousRound = currentRound;
         const pickIndex = BackendUtil.resolvePickIndex(move, picks);
         const newRound = await BackendUtil.solitairePick(pickIndex);
-        GAME.cards.renderSolitaireBoard(newRound);
+        await GAME.cards.animateSolitaireMove(previousRound, newRound, move);
         currentRound = newRound;
       }
       GAME.autocompleteButton.prepareForSolitairePicking(false);

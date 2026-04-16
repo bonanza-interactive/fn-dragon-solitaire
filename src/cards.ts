@@ -24,7 +24,7 @@ import {GameLayer} from './config/schemas';
 import {CORE, GAME} from './game';
 import {AUTO_TICK} from './main';
 import {assert, getCardNodeName, voidPromise, wait} from './util/utils';
-import {cardToIndex, indexToCard, suitToIndex} from './util/utils-game';
+import {cardToIndex, indexToCard} from './util/utils-game';
 import {getNode} from './util/utils-node';
 import {GAMEFW, IS_MOBILE_DEVICE} from './framework';
 import {setButtonState} from './button-state-handler';
@@ -46,6 +46,14 @@ const HAND_OFFSET_MOBILE = 200;
 const GAMBLE_OFFSET = 200;
 const TABLE_OFFSET = 80;
 const TABLE_OFFSET_MOBILE = 105;
+
+const SOLITAIRE_STOCK_LAYER_COUNT = 4;
+const SOLITAIRE_STOCK_LAYER_OFFSET_X = -5;
+const SOLITAIRE_STOCK_LAYER_OFFSET_Y = 3;
+const SOLITAIRE_DROP_SECONDS = 0.16;
+const SOLITAIRE_AUTOPLAY_STEP_SECONDS = 0.2;
+const SOLITAIRE_STOCK_FLIP_SECONDS = 0.14;
+const SOLITAIRE_ANIM_DEPTH_GROUP = SOLITAIRE_DRAG_DEPTH_GROUP + 50;
 
 const rankDelay = 0.02;
 const suitDelay = rankDelay * RANK_COUNT * 0.2;
@@ -126,6 +134,8 @@ export class Cards {
     count: number;
   };
   private solitaireSnapInProgress = false;
+  private solitaireStockVisualCount = 0;
+  private solitairePreAnimatedMove?: SolitairePickMove;
 
   private timeline = new anim.Timeline();
   private cardsInput = new CardsInput();
@@ -1445,15 +1455,8 @@ export class Cards {
       }
     }
 
-    const foundationBySuit = new Map<number, {rank: string; suit: string}>();
-    for (const f of roundState.foundationTops) {
-      const si = suitToIndex(f.suit);
-      if (si >= 0 && si < 4) {
-        foundationBySuit.set(si, {rank: f.rank, suit: f.suit});
-      }
-    }
     for (let slot = 0; slot < 4; slot++) {
-      const top = foundationBySuit.get(slot);
+      const top = roundState.foundationTops[slot];
       const card = this.cards[cardSlot];
       if (top) {
         card.cardIndex = cardToIndex(top.rank, top.suit);
@@ -1468,19 +1471,33 @@ export class Cards {
       cardSlot++;
     }
 
-    // Render stock indicator (card back if stock moves exist)
-    const hasStockMove: boolean =
-      options?.isAuto ||
-      this.currentPicks.some((pick) => pick.from === 'STOCK');
-    if (hasStockMove) {
-      const card: Card = this.cards[cardSlot];
-      card.cardIndex = CARD_BACK;
-      card.parent = this.getCardNode(CardName.SolStock);
-      card.node.position = [0, 0];
-      card.visible = true;
-      card.depthGroup = GameLayer.Cards + cardSlot;
-      this.solitaireCardMap.set('STOCK', card);
-      cardSlot++;
+    const hasStockMove =
+      options?.isAuto || this.currentPicks.some((p) => p.from === 'STOCK');
+    this.solitaireStockVisualCount = hasStockMove
+      ? Math.max(
+          1,
+          Math.min(
+            SOLITAIRE_STOCK_LAYER_COUNT,
+            4 - (roundState.wastePile.length % 4),
+          ),
+        )
+      : 0;
+    if (this.solitaireStockVisualCount > 0) {
+      for (let i = 0; i < this.solitaireStockVisualCount; i++) {
+        const card = this.cards[cardSlot];
+        card.cardIndex = CARD_BACK;
+        card.parent = this.getCardNode(CardName.SolStock);
+        card.node.position = [
+          i * SOLITAIRE_STOCK_LAYER_OFFSET_X,
+          i * SOLITAIRE_STOCK_LAYER_OFFSET_Y,
+        ];
+        card.visible = true;
+        card.depthGroup = GameLayer.Cards + cardSlot;
+        if (i === this.solitaireStockVisualCount - 1) {
+          this.solitaireCardMap.set('STOCK', card);
+        }
+        cardSlot++;
+      }
     }
 
     for (const card of this.cards) {
@@ -1501,14 +1518,15 @@ export class Cards {
     this.cancelSolitaireDragImmediate();
     this.moveResolver = undefined;
     this.disableSolitaireInput();
+    this.solitairePreAnimatedMove = undefined;
   }
 
   private enableSolitaireInput(): void {
     this.disableSolitaireInput();
 
-    const stockCard: Card | undefined = this.solitaireCardMap.get('STOCK');
+    const stockCard = this.solitaireCardMap.get('STOCK');
     if (stockCard) {
-      const id: number = CORE.input.listenNode(
+      const id = CORE.input.listenNode(
         stockCard.inputNode,
         (e: input.InputEvent) => {
           if (
@@ -1559,8 +1577,16 @@ export class Cards {
       return;
     }
     this.disableSolitaireInput();
+    const stockCard = this.solitaireCardMap.get('STOCK');
     this.moveResolver = undefined;
-    resolve(move);
+    if (!stockCard) {
+      resolve(move);
+      return;
+    }
+    this.animateStockToWasteMove(stockCard).then(() => {
+      this.solitairePreAnimatedMove = move;
+      resolve(move);
+    });
   }
 
   private onSolitaireDragPress(mapKey: string, e: input.InputEvent): void {
@@ -1749,15 +1775,12 @@ export class Cards {
         c.glow = false;
       }
       this.solitaireDrag = undefined;
-      this.restoreSolitaireDragCardsLayout(
-        drag.cards,
-        drag.startParents,
-        drag.startLocalPos,
-        drag.startDepth,
-      );
       this.disableSolitaireInput();
       this.moveResolver = undefined;
-      resolve(move);
+      this.animateSolitaireDropToTarget(drag, move).then(() => {
+        this.solitairePreAnimatedMove = move;
+        resolve(move);
+      });
       return;
     }
 
@@ -1838,5 +1861,257 @@ export class Cards {
       CORE.input.removeListener(id);
     }
     this.solitaireListenerIds = [];
+  }
+
+  public async animateSolitaireMove(
+    previousRound: RoundState,
+    nextRound: RoundState,
+    move: SolitairePickMove,
+    movedCards?: RoundState['wastePile'],
+    skipTravelAnimation = false,
+  ): Promise<void> {
+    const movingCards = this.getCardsForMove(move, movedCards);
+    if (!skipTravelAnimation && movingCards.length > 0) {
+      const destination = this.getMoveTargetWorldPosition(
+        move,
+        nextRound,
+        movingCards.length,
+      );
+      const promises: Promise<void>[] = [];
+      for (let i = 0; i < movingCards.length; i++) {
+        promises.push(
+          this.animateCardWorldMove(
+            movingCards[i],
+            destination[0],
+            destination[1] + i * SOLITAIRE_CARD_OVERLAP_FACEUP,
+            SOLITAIRE_AUTOPLAY_STEP_SECONDS,
+          ),
+        );
+      }
+      await Promise.all(promises);
+    }
+    if (
+      move.from === 'STOCK' &&
+      move.to === 'WASTE_PILE' &&
+      movingCards.length > 0
+    ) {
+      const wasteTop = nextRound.wastePile[nextRound.wastePile.length - 1];
+      const flipTo =
+        movedCards && movedCards.length > 0
+          ? movedCards[movedCards.length - 1]
+          : wasteTop;
+      await movingCards[movingCards.length - 1].flip(
+        flipTo
+          ? cardToIndex(flipTo.rank, flipTo.suit)
+          : movingCards[movingCards.length - 1].cardIndex,
+        0,
+        SOLITAIRE_STOCK_FLIP_SECONDS,
+      );
+    }
+
+    this.solitairePreAnimatedMove = undefined;
+    this.renderSolitaireBoard(nextRound, {isAuto: true});
+    await this.animateTableauRevealIfNeeded(previousRound, nextRound, move);
+  }
+
+  public consumePreAnimatedMove(move: SolitairePickMove): boolean {
+    const pre = this.solitairePreAnimatedMove;
+    if (!pre) {
+      return false;
+    }
+    const matches =
+      pre.from === move.from && pre.to === move.to && pre.count === move.count;
+    if (matches) {
+      this.solitairePreAnimatedMove = undefined;
+      return true;
+    }
+    return false;
+  }
+
+  private getCardsForMove(
+    move: SolitairePickMove,
+    movedCards?: RoundState['wastePile'],
+  ): Card[] {
+    if (move.from === 'STOCK') {
+      const stockCard = this.solitaireCardMap.get('STOCK');
+      return stockCard ? [stockCard] : [];
+    }
+    if (move.from === 'WASTE_PILE') {
+      const waste = this.solitaireCardMap.get('WASTE_PILE');
+      return waste ? [waste] : [];
+    }
+    const stackMatch = /^STACK_(\d+)$/.exec(move.from);
+    if (!stackMatch) {
+      return [];
+    }
+    const col = parseInt(stackMatch[1], 10);
+    const result: Card[] = [];
+    const count = movedCards?.length ?? move.count;
+    for (let i = 0; i < count; i++) {
+      const key = `STACK_${col}_${Math.max(0, this.getStackFaceUpCount(col) - count + i)}`;
+      const c = this.solitaireCardMap.get(key);
+      if (c) {
+        result.push(c);
+      }
+    }
+    return result;
+  }
+
+  private getStackFaceUpCount(col1Based: number): number {
+    let count = 0;
+    while (this.solitaireCardMap.has(`STACK_${col1Based}_${count}`)) {
+      count++;
+    }
+    return count;
+  }
+
+  private getMoveTargetWorldPosition(
+    move: SolitairePickMove,
+    nextRound: RoundState,
+    movingCount: number,
+  ): [number, number] {
+    if (move.to === 'WASTE_PILE') {
+      return [
+        this.getCardNode(CardName.SolWaste).worldPosition[0],
+        this.getCardNode(CardName.SolWaste).worldPosition[1],
+      ];
+    }
+    if (move.to === 'FOUNDATION') {
+      const slot = this.findFoundationSlotForTop(nextRound);
+      return [
+        this.getCardNode(CardName.SolFoundation, slot).worldPosition[0],
+        this.getCardNode(CardName.SolFoundation, slot).worldPosition[1],
+      ];
+    }
+    const stackMatch = /^STACK_(\d+)$/.exec(move.to);
+    if (stackMatch) {
+      const col = parseInt(stackMatch[1], 10) - 1;
+      const faceDown = nextRound.faceDownCounts[col];
+      const faceUp = nextRound.openCards[col].length;
+      const targetIndex = Math.max(0, faceUp - movingCount);
+      const y =
+        this.getCardNode(CardName.SolTableau, col).worldPosition[1] +
+        faceDown * SOLITAIRE_CARD_OVERLAP_FACEDOWN +
+        targetIndex * SOLITAIRE_CARD_OVERLAP_FACEUP;
+      return [this.getCardNode(CardName.SolTableau, col).worldPosition[0], y];
+    }
+    const waste = this.getCardNode(CardName.SolWaste).worldPosition;
+    return [waste[0], waste[1]];
+  }
+
+  private findFoundationSlotForTop(nextRound: RoundState): number {
+    const top = nextRound.foundationTops[nextRound.foundationTops.length - 1];
+    if (!top) {
+      return 0;
+    }
+    for (let i = 0; i < nextRound.foundationTops.length; i++) {
+      const c = nextRound.foundationTops[i];
+      if (c.suit === top.suit && c.rank === top.rank) {
+        return i;
+      }
+    }
+    return 0;
+  }
+
+  private async animateCardWorldMove(
+    card: Card,
+    toX: number,
+    toY: number,
+    duration: number,
+  ): Promise<void> {
+    const startDepth = card.depthGroup;
+    card.depthGroup = SOLITAIRE_ANIM_DEPTH_GROUP;
+    const fromX = card.node.worldPosition[0];
+    const fromY = card.node.worldPosition[1];
+    const {promise, resolve} = voidPromise();
+    this.timeline
+      .animate(anim.InOutQuad(0.0, 1.0), duration, (t) => {
+        card.node.worldPosition = [
+          anim.easeLinear(fromX, toX, t),
+          anim.easeLinear(fromY, toY, t),
+        ];
+      })
+      .after(() => {
+        card.depthGroup = startDepth;
+        resolve();
+      });
+    await promise;
+  }
+
+  private async animateSolitaireDropToTarget(
+    drag: SolitaireDragLayoutSnapshot,
+    move: SolitairePickMove,
+  ): Promise<void> {
+    if (!this.solitaireRoundState) {
+      return;
+    }
+    const to = this.getMoveTargetWorldPosition(
+      move,
+      this.solitaireRoundState,
+      drag.cards.length,
+    );
+    const promises: Promise<void>[] = [];
+    for (let i = 0; i < drag.cards.length; i++) {
+      promises.push(
+        this.animateCardWorldMove(
+          drag.cards[i],
+          to[0],
+          to[1] + i * SOLITAIRE_CARD_OVERLAP_FACEUP,
+          SOLITAIRE_DROP_SECONDS,
+        ),
+      );
+    }
+    await Promise.all(promises);
+  }
+
+  private async animateStockToWasteMove(stockCard: Card): Promise<void> {
+    const wastePos = this.getCardNode(CardName.SolWaste).worldPosition;
+    await Promise.all([
+      this.animateCardWorldMove(
+        stockCard,
+        wastePos[0],
+        wastePos[1],
+        SOLITAIRE_STOCK_FLIP_SECONDS,
+      ),
+      stockCard.flip(CARD_BACK, 0, SOLITAIRE_STOCK_FLIP_SECONDS),
+    ]);
+    this.solitaireStockVisualCount = Math.max(
+      0,
+      this.solitaireStockVisualCount - 1,
+    );
+  }
+
+  private async animateTableauRevealIfNeeded(
+    previousRound: RoundState,
+    nextRound: RoundState,
+    move: SolitairePickMove,
+  ): Promise<void> {
+    const fromStack = /^STACK_(\d+)$/.exec(move.from);
+    if (!fromStack) {
+      return;
+    }
+    const col = parseInt(fromStack[1], 10) - 1;
+    if (
+      col < 0 ||
+      col >= 7 ||
+      previousRound.faceDownCounts[col] <= nextRound.faceDownCounts[col] ||
+      nextRound.openCards[col].length === 0
+    ) {
+      return;
+    }
+    const revealedIndex = nextRound.openCards[col].length - 1;
+    const revealed = this.solitaireCardMap.get(
+      `STACK_${col + 1}_${revealedIndex}`,
+    );
+    const topCard = nextRound.openCards[col][revealedIndex];
+    if (!revealed || !topCard) {
+      return;
+    }
+    revealed.cardIndex = CARD_BACK;
+    await revealed.flip(
+      cardToIndex(topCard.rank, topCard.suit),
+      0,
+      SOLITAIRE_STOCK_FLIP_SECONDS,
+    );
   }
 }

@@ -10,7 +10,7 @@ import {BackendUtil} from '../util/backend-util';
 import {wait} from '../util/utils';
 import {EndRound} from './EndRound';
 
-const STEP_DELAY_MS = 220;
+const STEP_DELAY_MS = 120;
 
 export class Autocomplete extends State<StateMachineRoundData> {
   public async run(data: StateMachineRoundData): Promise<AnyState> {
@@ -28,17 +28,24 @@ export class Autocomplete extends State<StateMachineRoundData> {
       GAME.cards.renderSolitaireBoard(currentRound);
     } else {
       try {
+        GAME.cards.renderSolitaireBoard(currentRound, {isAuto: true});
         for (const moveRound of moveRounds) {
           if (!moveRound.move) {
             continue;
           }
           await wait(STEP_DELAY_MS);
-          currentRound = applyAutocompleteMoveStep(
+          const nextRound = applyAutocompleteMoveStep(
             currentRound,
             moveRound.move,
             moveRound.moved,
           );
-          GAME.cards.renderSolitaireBoard(currentRound, {isAuto: true});
+          await GAME.cards.animateSolitaireMove(
+            currentRound,
+            nextRound,
+            moveRound.move,
+            moveRound.moved,
+          );
+          currentRound = nextRound;
         }
       } catch (e) {
         console.warn(

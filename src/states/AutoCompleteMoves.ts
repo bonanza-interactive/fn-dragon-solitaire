@@ -2,6 +2,9 @@ import type {Round, RoundState} from '../config/backend-types';
 import type {SolitairePickMove} from '../cards-solitaire';
 
 type Card = RoundState['wastePile'][number];
+type RoundStateWithFaceDown = RoundState & {
+  faceDownCards?: Card[][];
+};
 
 type RoundWithMove = Round & {
   move?: SolitairePickMove;
@@ -31,8 +34,29 @@ function cloneCard(card: Card): Card {
   };
 }
 
-function cloneRoundState(round: RoundState): RoundState {
-  return {
+function readFaceDownCards(round: RoundState): Card[][] | undefined {
+  const direct = (round as RoundStateWithFaceDown).faceDownCards;
+  if (direct && Array.isArray(direct)) {
+    return direct.map((col) => col.map(cloneCard));
+  }
+  if (!round.hash) {
+    return undefined;
+  }
+  try {
+    const parsed = JSON.parse(round.hash) as {
+      faceDownCards?: Card[][];
+    };
+    if (parsed.faceDownCards && Array.isArray(parsed.faceDownCards)) {
+      return parsed.faceDownCards.map((col) => col.map(cloneCard));
+    }
+  } catch (_e) {
+    // Ignore malformed hash payload and continue without explicit hidden cards.
+  }
+  return undefined;
+}
+
+function cloneRoundState(round: RoundState): RoundStateWithFaceDown {
+  const cloned: RoundStateWithFaceDown = {
     ...round,
     rounds: [...(round.rounds ?? [])],
     picks: [...(round.picks ?? [])],
@@ -41,6 +65,11 @@ function cloneRoundState(round: RoundState): RoundState {
     foundationTops: round.foundationTops.map(cloneCard),
     faceDownCounts: [...round.faceDownCounts],
   };
+  const hidden = readFaceDownCards(round);
+  if (hidden) {
+    cloned.faceDownCards = hidden;
+  }
+  return cloned;
 }
 
 function parseStackIndex(location: string): number {
@@ -55,7 +84,7 @@ function parseStackIndex(location: string): number {
 }
 
 function removeCardsFromSource(
-  state: RoundState,
+  state: RoundStateWithFaceDown,
   from: string,
   count: number,
 ): Card[] {
@@ -71,6 +100,13 @@ function removeCardsFromSource(
     const moved = source.splice(source.length - count, count);
     if (source.length === 0 && state.faceDownCounts[stack] > 0) {
       state.faceDownCounts[stack] -= 1;
+      const hidden = state.faceDownCards?.[stack];
+      if (hidden && hidden.length > 0) {
+        const revealed = hidden.pop();
+        if (revealed) {
+          state.openCards[stack].push(cloneCard(revealed));
+        }
+      }
     }
     return moved;
   }
@@ -79,7 +115,7 @@ function removeCardsFromSource(
 }
 
 function applyCardsToDestination(
-  state: RoundState,
+  state: RoundStateWithFaceDown,
   to: string,
   cards: Card[],
 ): void {
@@ -92,9 +128,18 @@ function applyCardsToDestination(
   }
   if (to === 'FOUNDATION') {
     const top = cards[cards.length - 1];
-    state.foundationTops = state.foundationTops
-      .filter((c) => c.suit !== top.suit)
-      .concat([cloneCard(top)]);
+    const existingSuitIndex = state.foundationTops.findIndex(
+      (c) => c.suit === top.suit,
+    );
+    if (existingSuitIndex >= 0) {
+      state.foundationTops[existingSuitIndex] = cloneCard(top);
+      return;
+    }
+    if (state.foundationTops.length < 4) {
+      state.foundationTops.push(cloneCard(top));
+      return;
+    }
+    state.foundationTops[0] = cloneCard(top);
     return;
   }
   const stack = parseStackIndex(to);
@@ -121,7 +166,7 @@ export function applyAutocompleteMoveStep(
 
   applyCardsToDestination(next, move.to, cards);
   next.picks = [];
-  return next;
+  return next as RoundState;
 }
 
 export function extractAutocompleteMoveRounds(
