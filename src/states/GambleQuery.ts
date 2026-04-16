@@ -3,7 +3,7 @@
 // import {AnyState, State} from '../state-machine';
 // import {getTargetLevel} from '../win-scroll';
 // import {GambleEnter} from './GambleEnter';
-// import {SettleBet} from './Settlebet';
+// import {SettleBet} from './settlebet';
 // import {computeWinAmount} from '../util/win-amount';
 // import {Input} from '@apila/casino-frame/types';
 // import {GAMEFW, LOCALIZER} from '../framework';

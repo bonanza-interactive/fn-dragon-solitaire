@@ -1,17 +1,18 @@
 import {gfx} from '@apila/engine';
 import {DrawableType} from '@apila/engine/dist/apila-gfx';
 import {schema} from '@apila/game-libraries';
-// import {byAspectRatio} from '@apila/game-libraries/dist/node-schema';
 
+// import {byAspectRatio} from '@apila/game-libraries/dist/node-schema';
 import {
   WINTABLE_COUNT_X,
   WINTABLE_DY,
   WINTABLE_WIN_X,
   WINTABLE_Y,
-} from '../../Paytable';
+} from '../../paytable';
 import {createButtonMeta} from '../../types';
 import {GameLayer, INITIALLY_HIDDEN} from './common-schema';
 import {createSingleImageButtonStates} from './game-ui-button-states';
+
 const DRAGON_PANEL: schema.NodeSchema = {
   type: gfx.DrawableType.Spine,
   name: 'dragon_panel',

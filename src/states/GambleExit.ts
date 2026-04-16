@@ -1,7 +1,7 @@
 import {CORE, GAME} from '../game';
 import {AnyState, State} from '../state-machine';
 import {wait} from '../util/utils';
-import {SettleBet} from './Settlebet';
+import {SettleBet} from './settlebet';
 
 export class GambleExit extends State {
   public async run(): Promise<AnyState> {

@@ -4,7 +4,7 @@ import {AnyState, State} from '../state-machine';
 import {isExceedMaxWin, showWin} from '../util/utils-game';
 import {computeWinAmount} from '../util/win-amount';
 // import {GambleQuery} from './GambleQuery';
-import {SettleBet} from './Settlebet';
+import {SettleBet} from './settlebet';
 
 export class ResultFreespins extends State<StateMachineRoundData> {
   public run(data: StateMachineRoundData): AnyState {

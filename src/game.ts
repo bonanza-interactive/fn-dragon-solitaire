@@ -3,7 +3,9 @@ import {Gfx} from '@apila/engine/dist/apila-gfx';
 import {Input} from '@apila/engine/dist/apila-input';
 import {SoundPlayer} from '@apila/engine/dist/apila-sound';
 import {fx} from '@apila/game-libraries';
+import * as particle from '@apila/particle-runtime';
 
+import {AutocompleteButton} from './autocomplete-button';
 import {Background} from './background';
 import {CardChangeButtons} from './card-change-buttons';
 import {CardPickGui} from './card-pick-gui';
@@ -18,13 +20,11 @@ import {GameTimer} from './game-timer';
 import {NodeSchemaLoader} from './node-schema-loader';
 import {NodeStorage} from './node-storage';
 import {ParticlePlayer} from './particle-player';
-import {Paytable} from './Paytable';
+import {Paytable} from './paytable';
 import {PaytableButton} from './paytable-button';
-import {AutocompleteButton} from './autocomplete-button';
 import {TopElementsMover} from './top-elements-mover';
 import {MessageQueue} from './util/message-queue';
 import {WinScroll} from './win-scroll';
-import * as particle from '@apila/particle-runtime';
 
 type Game = {
   nodeSchemaLoader: NodeSchemaLoader;

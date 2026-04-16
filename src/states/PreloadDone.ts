@@ -3,9 +3,9 @@ import {CLIENT_STATE, StateMachineRoundData} from '../main';
 import {onLayoutChanged} from '../node-storage';
 import {AnyState, State} from '../state-machine';
 import {getReelGameKitLayout} from '../util/utils-gfx';
-import {Ready} from './Ready';
+import {Ready} from './ready';
 import {ReadyRecovery} from './ReadyRecovery';
-import {Replay} from './Replay';
+import {Replay} from './replay';
 
 export class PreloadDone extends State<StateMachineRoundData | undefined> {
   public run(data?: StateMachineRoundData): AnyState {

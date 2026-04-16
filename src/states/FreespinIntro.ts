@@ -1,18 +1,19 @@
+import {setButtonState} from '../button-state-handler';
+import {replayRoundData} from '../client-state';
+import {RecoveryStepState} from '../config/recovery-step';
 // import {GameConfig} from '../config/config';
 import {GameLayer} from '../config/schemas';
+import {GAMEFW} from '../framework';
 import {CORE, GAME} from '../game';
 import {CLIENT_STATE, StateMachineRoundData} from '../main';
 import {AnyState, State} from '../state-machine';
 import {TopElementsLocation} from '../top-elements-mover';
+import {BackendUtil} from '../util/backend-util';
+import {nextInput} from '../util/forward-input';
 import {isRecovery, wait} from '../util/utils';
 import {FreespinRound} from './FreespinRound';
-import {Ready} from './Ready';
-import {BackendUtil} from '../util/backend-util';
-import {RecoveryStepState} from '../config/recovery-step';
-import {setButtonState} from '../button-state-handler';
-import {GAMEFW} from '../framework';
-import {nextInput} from '../util/forward-input';
-import {replayRoundData} from '../client-state';
+import {Ready} from './ready';
+
 // import {cardToIndex} from '../util/utils-game';
 const tempNumber = 5;
 export class FreespinIntro extends State<StateMachineRoundData> {

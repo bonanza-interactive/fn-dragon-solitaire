@@ -1,7 +1,7 @@
 import {core, gfx} from '@apila/engine';
 import {Color, Physics, Slot} from '@apila/spine';
-import {isMobileAndroidFirefox, isMobileiOSFirefox, wait} from '../util/utils';
 
+import {AutocompleteButton} from '../autocomplete-button';
 import {Background} from '../background';
 import {registerButton} from '../button-state-handler';
 import {CardChangeButtons} from '../card-change-buttons';
@@ -9,7 +9,6 @@ import {CardPickGui} from '../card-pick-gui';
 import {Cards} from '../cards';
 import {
   CARD_BACK,
-  // GameConfig,
   miscConfig,
   rankAnimationNames,
   suitSkinNames,
@@ -25,14 +24,14 @@ import {Loader} from '../loader';
 import {AUTO_TICK, CLIENT_STATE} from '../main';
 import {onLayoutChanged} from '../node-storage';
 import {ParticlePlayer} from '../particle-player';
-import {Paytable} from '../Paytable';
+import {Paytable} from '../paytable';
 import {PaytableButton} from '../paytable-button';
-import {AutocompleteButton} from '../autocomplete-button';
 import {AnyState, State} from '../state-machine';
 import {TopElementsMover} from '../top-elements-mover';
 import {MetaType, isMeta} from '../types';
 import {BackendUtil} from '../util/backend-util';
 import {showPopup} from '../util/popup';
+import {isMobileAndroidFirefox, isMobileiOSFirefox, wait} from '../util/utils';
 import {ReelGameKitLayout, getReelGameKitLayout} from '../util/utils-gfx';
 import {
   DFSChildIterator,

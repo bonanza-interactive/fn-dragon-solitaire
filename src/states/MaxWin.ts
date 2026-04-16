@@ -7,7 +7,7 @@ import {
   showWinWithMultiplier,
 } from '../util/utils-game';
 import {computeWinAmount} from '../util/win-amount';
-import {SettleBet} from './Settlebet';
+import {SettleBet} from './settlebet';
 
 export class MaxWin extends State<StateMachineRoundData> {
   public async run(data: StateMachineRoundData): Promise<AnyState> {

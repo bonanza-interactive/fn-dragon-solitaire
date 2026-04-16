@@ -10,7 +10,7 @@ import {
 import {computeWinAmount} from '../util/win-amount';
 // import {GambleQuery} from './GambleQuery';
 import {MaxWin} from './MaxWin';
-import {SettleBet} from './Settlebet';
+import {SettleBet} from './settlebet';
 
 export class ResultWinBasegame extends State<StateMachineRoundData> {
   public async run(data: StateMachineRoundData): Promise<AnyState> {

@@ -1,6 +1,6 @@
 import {AnyState, State} from '../state-machine';
 import {wait} from '../util/utils';
-import {Ready} from './Ready';
+import {Ready} from './ready';
 
 export class ExitRequested extends State {
   public async run(): Promise<AnyState> {

@@ -3,7 +3,7 @@ import {CLIENT_STATE} from '../main';
 import {AnyState, State} from '../state-machine';
 import {BackendUtil} from '../util/backend-util';
 import {BasegameRound} from './BasegameRound';
-import {Ready} from './Ready';
+import {Ready} from './ready';
 import {ReplayFinished} from './ReplayFinished';
 
 export class SettleBet extends State {

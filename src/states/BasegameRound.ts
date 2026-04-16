@@ -5,7 +5,7 @@ import {AnyState, State} from '../state-machine';
 import {BackendUtil} from '../util/backend-util';
 import {Autocomplete} from './Autocomplete';
 import {EndRound} from './EndRound';
-import {Ready} from './Ready';
+import {Ready} from './ready';
 
 export type StateMachineEnterData = {
   restored: boolean;
