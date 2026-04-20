@@ -44,6 +44,8 @@ export class Autocomplete extends State<StateMachineRoundData> {
             nextRound,
             moveRound.move,
             moveRound.moved,
+            false,
+            true,
           );
           currentRound = nextRound;
         }

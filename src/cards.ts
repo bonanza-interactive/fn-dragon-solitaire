@@ -121,6 +121,8 @@ export class Cards {
   private moveResolver?: (move: SolitairePickMove) => void;
   private solitaireListenerIds: number[] = [];
   private solitaireCanvasListenerId: number | undefined;
+  private lastClickTime = 0;
+  private lastClickedKey: string | null = null;
 
   private solitaireDrag?: {
     cards: Card[];
@@ -1557,7 +1559,21 @@ export class Cards {
           ) {
             return;
           }
+          const now = Date.now();
+
+          if (
+            !this.solitaireDrag &&
+            this.lastClickedKey === mapKey &&
+            now - this.lastClickTime < 1000
+          ) {
+            this.onSolitaireDoubleClick(mapKey);
+            this.lastClickTime = 0;
+            this.lastClickedKey = null;
+            return;
+          }
           this.onSolitaireDragPress(mapKey, e);
+          this.lastClickTime = now;
+          this.lastClickedKey = mapKey;
         },
         'pointer',
       );
@@ -1638,7 +1654,28 @@ export class Cards {
     }
     this.beginSolitaireDrag(dragCards, from, count, e.canvasX, e.canvasY);
   }
+  private onSolitaireDoubleClick(mapKey: string): void {
+    const resolve = this.moveResolver;
+    if (!resolve) return;
+    const move = this.currentPicks.find(
+      (p) => p.from === this.getFromKey(mapKey) && p.to === 'FOUNDATION',
+    );
+    if (!move) return;
+    this.disableSolitaireInput();
+    this.moveResolver = undefined;
+    resolve(move);
+  }
 
+  private getFromKey(mapKey: string): string {
+    if (mapKey === 'WASTE_PILE') return 'WASTE_PILE';
+
+    const match = /^STACK_(\d+)_/.exec(mapKey);
+    if (match) {
+      return `STACK_${match[1]}`;
+    }
+
+    return mapKey;
+  }
   private beginSolitaireDrag(
     cards: Card[],
     from: string,
@@ -1869,6 +1906,7 @@ export class Cards {
     move: SolitairePickMove,
     movedCards?: RoundState['wastePile'],
     skipTravelAnimation = false,
+    isAutoPlay = false,
   ): Promise<void> {
     const movingCards = this.getCardsForMove(move, movedCards);
     if (!skipTravelAnimation && movingCards.length > 0) {
@@ -1910,7 +1948,7 @@ export class Cards {
     }
 
     this.solitairePreAnimatedMove = undefined;
-    this.renderSolitaireBoard(nextRound, {isAuto: true});
+    this.renderSolitaireBoard(nextRound, {isAuto: isAutoPlay});
     await this.animateTableauRevealIfNeeded(previousRound, nextRound, move);
   }
 
