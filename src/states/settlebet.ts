@@ -6,7 +6,7 @@ import {BasegameRound} from './BasegameRound';
 import {Ready} from './ready';
 import {ReplayFinished} from './ReplayFinished';
 
-export class Settlebet extends State {
+export class SettleBet extends State {
   private autoPlayTimer = 0.5;
   private allowAutoPlayAttempt?: () => void;
 
