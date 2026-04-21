@@ -59,6 +59,7 @@ const SOLITAIRE_CLICK_MOVE_TOLERANCE_PX = 14;
 const SOLITAIRE_DRAG_START_THRESHOLD_PX = 8;
 const SOLITAIRE_CARD_HALF_HEIGHT = 160;
 const SOLITAIRE_MIN_DYNAMIC_OVERLAP = 16;
+const SOLITAIRE_DROP_STACK_RATIO = 0.1;
 
 const rankDelay = 0.02;
 const suitDelay = rankDelay * RANK_COUNT * 0.2;
@@ -2224,7 +2225,7 @@ export class Cards {
         this.animateCardWorldMove(
           drag.cards[i],
           to[0],
-          to[1] + i * overlap.faceUp,
+          to[1] + i * (overlap.faceUp * SOLITAIRE_DROP_STACK_RATIO),
           SOLITAIRE_DROP_SECONDS,
         ),
       );
