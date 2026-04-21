@@ -172,8 +172,8 @@ export const suitSkinNames = ['spade', 'club', 'diamond', 'heart'];
 
 export const CARD_BACK = 52; // ID of the card backside
 export const CARD_DRAGON = 53; // ID of the dragon card
-export const SOLITAIRE_CARD_OVERLAP_FACEDOWN = 50;
-export const SOLITAIRE_CARD_OVERLAP_FACEUP = 50;
+export const SOLITAIRE_CARD_OVERLAP_FACEDOWN = 80;
+export const SOLITAIRE_CARD_OVERLAP_FACEUP = 80;
 export const SOLITAIRE_COLUMN_SPACING = 90;
 export const SOLITAIRE_FOUNDATION_SPACING = 88;
 export const SOLITAIRE_SNAP_BACK_SECONDS = 0.2;

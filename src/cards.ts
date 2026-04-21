@@ -54,6 +54,11 @@ const SOLITAIRE_DROP_SECONDS = 0.16;
 const SOLITAIRE_AUTOPLAY_STEP_SECONDS = 0.2;
 const SOLITAIRE_STOCK_FLIP_SECONDS = 0.14;
 const SOLITAIRE_ANIM_DEPTH_GROUP = SOLITAIRE_DRAG_DEPTH_GROUP + 50;
+const SOLITAIRE_DOUBLE_CLICK_MS = 300;
+const SOLITAIRE_CLICK_MOVE_TOLERANCE_PX = 14;
+const SOLITAIRE_DRAG_START_THRESHOLD_PX = 8;
+const SOLITAIRE_CARD_HALF_HEIGHT = 160;
+const SOLITAIRE_MIN_DYNAMIC_OVERLAP = 16;
 
 const rankDelay = 0.02;
 const suitDelay = rankDelay * RANK_COUNT * 0.2;
@@ -121,8 +126,6 @@ export class Cards {
   private moveResolver?: (move: SolitairePickMove) => void;
   private solitaireListenerIds: number[] = [];
   private solitaireCanvasListenerId: number | undefined;
-  private lastClickTime = 0;
-  private lastClickedKey: string | null = null;
 
   private solitaireDrag?: {
     cards: Card[];
@@ -138,6 +141,20 @@ export class Cards {
   private solitaireSnapInProgress = false;
   private solitaireStockVisualCount = 0;
   private solitairePreAnimatedMove?: SolitairePickMove;
+  private solitaireLastClick?: {
+    mapKey: string;
+    timeMs: number;
+    canvasX: number;
+    canvasY: number;
+  };
+  private solitairePendingPress?: {
+    mapKey: string;
+    cards: Card[];
+    from: string;
+    count: number;
+    pressCanvasX: number;
+    pressCanvasY: number;
+  };
 
   private timeline = new anim.Timeline();
   private cardsInput = new CardsInput();
@@ -1407,6 +1424,7 @@ export class Cards {
     this.solitaireCardMap.clear();
     this.resetCards();
     let cardSlot = 0;
+    const overlap = this.computeSolitaireOverlaps(roundState);
 
     for (let col = 0; col < 7; col++) {
       const faceDownCount = roundState.faceDownCounts[col];
@@ -1416,7 +1434,7 @@ export class Cards {
         const card = this.cards[cardSlot];
         card.cardIndex = CARD_BACK;
         card.parent = this.getCardNode(CardName.SolTableau, col);
-        card.node.position = [0, j * SOLITAIRE_CARD_OVERLAP_FACEDOWN];
+        card.node.position = [0, j * overlap.faceDown];
         card.visible = true;
         card.depthGroup = GameLayer.Cards + cardSlot;
         cardSlot++;
@@ -1429,8 +1447,7 @@ export class Cards {
         card.parent = this.getCardNode(CardName.SolTableau, col);
         card.node.position = [
           0,
-          faceDownCount * SOLITAIRE_CARD_OVERLAP_FACEDOWN +
-            j * SOLITAIRE_CARD_OVERLAP_FACEUP,
+          faceDownCount * overlap.faceDown + j * overlap.faceUp,
         ];
         card.visible = true;
         card.depthGroup = GameLayer.Cards + cardSlot;
@@ -1518,6 +1535,8 @@ export class Cards {
 
   public cancelPendingSolitaireMove(): void {
     this.cancelSolitaireDragImmediate();
+    this.solitairePendingPress = undefined;
+    this.solitaireLastClick = undefined;
     this.moveResolver = undefined;
     this.disableSolitaireInput();
     this.solitairePreAnimatedMove = undefined;
@@ -1559,21 +1578,7 @@ export class Cards {
           ) {
             return;
           }
-          const now = Date.now();
-
-          if (
-            !this.solitaireDrag &&
-            this.lastClickedKey === mapKey &&
-            now - this.lastClickTime < 1000
-          ) {
-            this.onSolitaireDoubleClick(mapKey);
-            this.lastClickTime = 0;
-            this.lastClickedKey = null;
-            return;
-          }
           this.onSolitaireDragPress(mapKey, e);
-          this.lastClickTime = now;
-          this.lastClickedKey = mapKey;
         },
         'pointer',
       );
@@ -1606,64 +1611,185 @@ export class Cards {
   }
 
   private onSolitaireDragPress(mapKey: string, e: input.InputEvent): void {
-    const rs = this.solitaireRoundState;
-    if (!rs || !this.moveResolver) {
+    if (
+      !this.moveResolver ||
+      this.solitaireSnapInProgress ||
+      this.solitaireDrag
+    ) {
       return;
     }
+    if (this.solitairePendingPress) {
+      return;
+    }
+    const roundState = this.solitaireRoundState;
+    if (!roundState) return;
+    const match = /^STACK_(\d+)_(\d+)$/.exec(mapKey);
 
-    if (mapKey === 'WASTE_PILE') {
+    let cards: Card[] = [];
+    let from = '';
+    let count = 0;
+    if (match) {
+      const col = parseInt(match[1], 10);
+      const j = parseInt(match[2], 10);
+
+      from = `STACK_${col}`;
+      const faceUp = roundState.openCards[col - 1];
+      if (!faceUp || j < 0 || j >= faceUp.length) return;
+      for (let k = j; k < faceUp.length; k++) {
+        const c = this.solitaireCardMap.get(`${from}_${k}`);
+        if (c) cards.push(c);
+      }
+      count = cards.length;
+    } else if (mapKey === 'WASTE_PILE') {
       const wasteCard = this.solitaireCardMap.get('WASTE_PILE');
-      if (!wasteCard) {
-        return;
-      }
-      const wastePicks = this.currentPicks.filter(
-        (p) => p.from === 'WASTE_PILE',
-      );
-      const count = wastePicks.length > 0 ? wastePicks[0].count : 1;
-      this.beginSolitaireDrag(
-        [wasteCard],
-        'WASTE_PILE',
-        count,
-        e.canvasX,
-        e.canvasY,
-      );
-      return;
+      if (!wasteCard) return;
+
+      cards = [wasteCard];
+      from = 'WASTE_PILE';
+      const pick = this.currentPicks.find((p) => p.from === 'WASTE_PILE');
+      count = pick ? pick.count : 1;
     }
 
-    const stackMatch = /^STACK_(\d+)_(\d+)$/.exec(mapKey);
-    if (!stackMatch) {
-      return;
-    }
-    const col = parseInt(stackMatch[1], 10);
-    const j = parseInt(stackMatch[2], 10);
-    const from = `STACK_${col}`;
-    const faceUp = rs.openCards[col - 1];
-    if (!faceUp || j < 0 || j >= faceUp.length) {
-      return;
-    }
-    const count = faceUp.length - j;
-    const dragCards: Card[] = [];
-    for (let k = j; k < faceUp.length; k++) {
-      const c = this.solitaireCardMap.get(`${from}_${k}`);
-      if (c) {
-        dragCards.push(c);
-      }
-    }
-    if (dragCards.length === 0 || dragCards.length !== count) {
-      return;
-    }
-    this.beginSolitaireDrag(dragCards, from, count, e.canvasX, e.canvasY);
-  }
-  private onSolitaireDoubleClick(mapKey: string): void {
-    const resolve = this.moveResolver;
-    if (!resolve) return;
-    const move = this.currentPicks.find(
-      (p) => p.from === this.getFromKey(mapKey) && p.to === 'FOUNDATION',
+    if (cards.length === 0) return;
+    this.solitairePendingPress = {
+      mapKey,
+      cards,
+      from,
+      count,
+      pressCanvasX: e.canvasX,
+      pressCanvasY: e.canvasY,
+    };
+
+    this.removeSolitaireCanvasDragListener();
+
+    this.solitaireCanvasListenerId = CORE.input.listenCanvas(
+      (ev: input.InputEvent) => {
+        if (
+          !this.solitairePendingPress ||
+          this.solitaireSnapInProgress ||
+          this.solitaireDrag
+        ) {
+          return;
+        }
+        if (ev.type === input.EventType.POINTER_MOVE) {
+          const dx = ev.canvasX - this.solitairePendingPress.pressCanvasX;
+          const dy = ev.canvasY - this.solitairePendingPress.pressCanvasY;
+
+          const distance = Math.hypot(dx, dy);
+
+          if (distance < SOLITAIRE_DRAG_START_THRESHOLD_PX) {
+            return;
+          }
+          const pending = this.solitairePendingPress;
+          this.solitairePendingPress = undefined;
+
+          this.beginSolitaireDrag(
+            pending.cards,
+            pending.from,
+            pending.count,
+            pending.pressCanvasX,
+            pending.pressCanvasY,
+          );
+
+          this.applySolitaireDragAtCanvas(ev.canvasX, ev.canvasY);
+        } else if (ev.type === input.EventType.RELEASE) {
+          const pending = this.solitairePendingPress;
+          this.solitairePendingPress = undefined;
+
+          this.removeSolitaireCanvasDragListener();
+
+          if (!pending) return;
+          this.onSolitaireCardRelease(
+            pending.mapKey,
+            ev.canvasX,
+            ev.canvasY,
+            pending.count,
+          );
+        }
+      },
     );
-    if (!move) return;
+  }
+
+  private onSolitaireCardRelease(
+    mapKey: string,
+    canvasX: number,
+    canvasY: number,
+    count: number,
+  ): void {
+    if (
+      !this.moveResolver ||
+      this.solitaireDrag ||
+      this.solitaireSnapInProgress
+    ) {
+      return;
+    }
+    const now = Date.now();
+    const last = this.solitaireLastClick;
+    const isDoubleClick =
+      !!last &&
+      last.mapKey === mapKey &&
+      now - last.timeMs <= SOLITAIRE_DOUBLE_CLICK_MS &&
+      Math.hypot(canvasX - last.canvasX, canvasY - last.canvasY) <=
+        SOLITAIRE_CLICK_MOVE_TOLERANCE_PX;
+    if (isDoubleClick && this.tryResolveFoundationAutoMove(mapKey, count)) {
+      this.solitaireLastClick = undefined;
+      return;
+    }
+    this.solitaireLastClick = {mapKey, timeMs: now, canvasX, canvasY};
+  }
+
+  private tryResolveFoundationAutoMove(mapKey: string, count: number): boolean {
+    const resolve = this.moveResolver;
+    if (!resolve) {
+      return false;
+    }
+    const from = this.getFromKey(mapKey);
+    const move = this.currentPicks.find(
+      (p) =>
+        p.from === from && p.to.startsWith('FOUNDATION') && p.count === count,
+    );
+    if (!move) {
+      return false;
+    }
     this.disableSolitaireInput();
+    this.solitairePendingPress = undefined;
     this.moveResolver = undefined;
-    resolve(move);
+    this.animateSolitaireAutoFoundationMove(move).then(() => {
+      this.solitairePreAnimatedMove = move;
+      resolve(move);
+    });
+    return true;
+  }
+
+  private async animateSolitaireAutoFoundationMove(
+    move: SolitairePickMove,
+  ): Promise<void> {
+    const round = this.solitaireRoundState;
+    if (!round) {
+      return;
+    }
+    const movingCards = this.getCardsForMove(move);
+    if (movingCards.length === 0) {
+      return;
+    }
+    const destination = this.getMoveTargetWorldPosition(
+      move,
+      round,
+      movingCards.length,
+    );
+    const overlap = this.computeSolitaireOverlaps(round);
+    const promises: Promise<void>[] = [];
+    for (let i = 0; i < movingCards.length; i++) {
+      promises.push(
+        this.animateCardWorldMove(
+          movingCards[i],
+          destination[0],
+          destination[1] + i * overlap.faceUp,
+          SOLITAIRE_DROP_SECONDS,
+        ),
+      );
+    }
+    await Promise.all(promises);
   }
 
   private getFromKey(mapKey: string): string {
@@ -1894,6 +2020,7 @@ export class Cards {
 
   private disableSolitaireInput(): void {
     this.removeSolitaireCanvasDragListener();
+    this.solitairePendingPress = undefined;
     for (const id of this.solitaireListenerIds) {
       CORE.input.removeListener(id);
     }
@@ -1915,13 +2042,14 @@ export class Cards {
         nextRound,
         movingCards.length,
       );
+      const overlap = this.computeSolitaireOverlaps(nextRound);
       const promises: Promise<void>[] = [];
       for (let i = 0; i < movingCards.length; i++) {
         promises.push(
           this.animateCardWorldMove(
             movingCards[i],
             destination[0],
-            destination[1] + i * SOLITAIRE_CARD_OVERLAP_FACEUP,
+            destination[1] + i * overlap.faceUp,
             SOLITAIRE_AUTOPLAY_STEP_SECONDS,
           ),
         );
@@ -2008,6 +2136,7 @@ export class Cards {
     nextRound: RoundState,
     movingCount: number,
   ): [number, number] {
+    const overlap = this.computeSolitaireOverlaps(nextRound);
     if (move.to === 'WASTE_PILE') {
       return [
         this.getCardNode(CardName.SolWaste).worldPosition[0],
@@ -2029,8 +2158,8 @@ export class Cards {
       const targetIndex = Math.max(0, faceUp - movingCount);
       const y =
         this.getCardNode(CardName.SolTableau, col).worldPosition[1] +
-        faceDown * SOLITAIRE_CARD_OVERLAP_FACEDOWN +
-        targetIndex * SOLITAIRE_CARD_OVERLAP_FACEUP;
+        faceDown * overlap.faceDown +
+        targetIndex * overlap.faceUp;
       return [this.getCardNode(CardName.SolTableau, col).worldPosition[0], y];
     }
     const waste = this.getCardNode(CardName.SolWaste).worldPosition;
@@ -2089,12 +2218,13 @@ export class Cards {
       drag.cards.length,
     );
     const promises: Promise<void>[] = [];
+    const overlap = this.computeSolitaireOverlaps(this.solitaireRoundState);
     for (let i = 0; i < drag.cards.length; i++) {
       promises.push(
         this.animateCardWorldMove(
           drag.cards[i],
           to[0],
-          to[1] + i * SOLITAIRE_CARD_OVERLAP_FACEUP,
+          to[1] + i * overlap.faceUp,
           SOLITAIRE_DROP_SECONDS,
         ),
       );
@@ -2151,5 +2281,44 @@ export class Cards {
       0,
       SOLITAIRE_STOCK_FLIP_SECONDS,
     );
+  }
+
+  private computeSolitaireOverlaps(roundState: RoundState): {
+    faceDown: number;
+    faceUp: number;
+  } {
+    console.log('coumpute solitaore ');
+    const root = getNode(this.root, 'solitaire_root');
+    const tableau = this.getCardNode(CardName.SolTableau, 0);
+    const rootBottomY = root.size[1] * (1 - root.pivot[1]);
+    const availableSpan = Math.max(
+      1,
+      rootBottomY - tableau.position[1] - SOLITAIRE_CARD_HALF_HEIGHT,
+    );
+    let overlapScale = 1;
+    for (let col = 0; col < 7; col++) {
+      const faceDown = roundState.faceDownCounts[col] ?? 0;
+      const faceUp = roundState.openCards[col]?.length ?? 0;
+      const faceDownSteps = faceUp > 0 ? faceDown : Math.max(0, faceDown - 1);
+      const faceUpSteps = Math.max(0, faceUp - 1);
+      const baseSpan =
+        faceDownSteps * SOLITAIRE_CARD_OVERLAP_FACEDOWN +
+        faceUpSteps * SOLITAIRE_CARD_OVERLAP_FACEUP;
+      if (baseSpan <= 0) {
+        continue;
+      }
+      overlapScale = Math.min(overlapScale, availableSpan / baseSpan);
+    }
+    overlapScale = Math.min(1, overlapScale);
+    return {
+      faceDown: Math.max(
+        SOLITAIRE_MIN_DYNAMIC_OVERLAP,
+        SOLITAIRE_CARD_OVERLAP_FACEDOWN * overlapScale,
+      ),
+      faceUp: Math.max(
+        SOLITAIRE_MIN_DYNAMIC_OVERLAP,
+        SOLITAIRE_CARD_OVERLAP_FACEUP * overlapScale,
+      ),
+    };
   }
 }
