@@ -166,7 +166,6 @@ const NON_BUNDLE_FILES: NonBundleFiles = [
   ['slot-ui/intro/intro_freespin_image.png', ap.always],
   ['slot-ui/intro/intro_hero_image_veikkaus.png', ap.always],
   ['slot-ui/intro/intro_hero_image_international.png', ap.always],
-  ['slot-ui/intro/intro_hero_image_nl.png', ap.always],
 ];
 
 // Image compression settings for different formats; all images assigned a given
