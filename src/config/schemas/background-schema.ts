@@ -4,7 +4,7 @@ import {schema} from '@apila/game-libraries';
 import {byAspectRatio} from '@apila/game-libraries/dist/node-schema';
 
 import {GameLayer} from './common-schema';
-// import {LOCALIZER} from '../../framework';
+import {LOCALIZER} from '../../framework';
 
 export const BACKGROUND: schema.NodeSchema = {
   type: gfx.DrawableType.Empty,
@@ -225,7 +225,7 @@ export const BACKGROUND: schema.NodeSchema = {
         {
           type: gfx.DrawableType.Spine,
           name: 'logo',
-          skeleton: 'logo',
+          skeleton: LOCALIZER.get('_logo'),
           depthGroup: GameLayer.Logo,
           pivot: [0.5, 0.5],
           visible: true,

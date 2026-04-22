@@ -1,0 +1,2253 @@
+{
+    "skeleton": {
+        "hash": "rzIL8TFM17s",
+        "spine": "4.2.20",
+        "x": -328.12,
+        "y": -128.84,
+        "width": 594,
+        "height": 351
+    },
+    "bones": [
+        {
+            "name": "root"
+        },
+        {
+            "name": "scale_logo",
+            "parent": "root",
+            "scaleX": 0.5,
+            "scaleY": 0.5
+        },
+        {
+            "name": "movement_logo",
+            "parent": "scale_logo"
+        },
+        {
+            "name": "logo",
+            "parent": "movement_logo",
+            "x": -4,
+            "y": 57.5
+        },
+        {
+            "name": "solitraire_logo_base",
+            "parent": "logo",
+            "x": 4,
+            "y": -150.5
+        },
+        {
+            "name": "dragon_logo_base",
+            "parent": "logo",
+            "x": 4,
+            "y": -9
+        },
+        {
+            "name": "desk_basegame_mockup",
+            "parent": "scale_logo",
+            "x": 32.05,
+            "y": -860.79
+        },
+        {
+            "name": "logo_fx",
+            "parent": "logo"
+        },
+        {
+            "name": "glow_group",
+            "parent": "logo_fx"
+        },
+        {
+            "name": "glow",
+            "parent": "glow_group",
+            "x": 4,
+            "y": -314.91
+        },
+        {
+            "name": "glow2",
+            "parent": "glow_group",
+            "x": 4,
+            "y": -314.91
+        },
+        {
+            "name": "glow3",
+            "parent": "glow_group",
+            "x": 4,
+            "y": -314.91
+        },
+        {
+            "name": "glow4",
+            "parent": "glow_group",
+            "x": 4,
+            "y": -314.91
+        },
+        {
+            "name": "particle_grp2",
+            "parent": "logo_fx",
+            "x": 4,
+            "y": -229.3
+        },
+        {
+            "name": "particle",
+            "parent": "particle_grp2",
+            "y": 145.49
+        },
+        {
+            "name": "particle2",
+            "parent": "particle_grp2",
+            "y": 145.49
+        },
+        {
+            "name": "particle_grp3",
+            "parent": "logo_fx",
+            "rotation": 180,
+            "x": 4,
+            "y": -57.5,
+            "scaleX": 0.5,
+            "scaleY": 0.5
+        },
+        {
+            "name": "particle3",
+            "parent": "particle_grp3",
+            "y": 145.49
+        },
+        {
+            "name": "particle4",
+            "parent": "particle_grp3",
+            "y": 145.49
+        },
+        {
+            "name": "particle_grp4",
+            "parent": "logo_fx",
+            "rotation": 50,
+            "x": -166.46,
+            "y": -57.5,
+            "scaleX": 0.8,
+            "scaleY": 0.8
+        },
+        {
+            "name": "particle5",
+            "parent": "particle_grp4",
+            "y": 145.49
+        },
+        {
+            "name": "particle6",
+            "parent": "particle_grp4",
+            "y": 145.49
+        },
+        {
+            "name": "particle_grp5",
+            "parent": "logo_fx",
+            "rotation": -32.4,
+            "x": 253.01,
+            "y": -57.5
+        },
+        {
+            "name": "particle7",
+            "parent": "particle_grp5",
+            "y": 145.49
+        },
+        {
+            "name": "particle8",
+            "parent": "particle_grp5",
+            "y": 145.49
+        },
+        {
+            "name": "particle_grp6",
+            "parent": "logo_fx",
+            "rotation": 4.8,
+            "x": -140.48,
+            "y": -57.5
+        },
+        {
+            "name": "particle9",
+            "parent": "particle_grp6",
+            "x": 6.8,
+            "y": 48.54
+        },
+        {
+            "name": "particle10",
+            "parent": "particle_grp6",
+            "x": 6.8,
+            "y": 48.54
+        },
+        {
+            "name": "particle11",
+            "parent": "logo_fx",
+            "x": 303.11,
+            "y": -170.62
+        },
+        {
+            "name": "particle12",
+            "parent": "logo_fx",
+            "x": -240.71,
+            "y": -105.52
+        },
+        {
+            "name": "logo_smoke_group",
+            "parent": "logo_fx"
+        },
+        {
+            "name": "logo_smoke",
+            "parent": "logo_smoke_group",
+            "x": -18.1,
+            "y": -220.09
+        },
+        {
+            "name": "logo_smoke2",
+            "parent": "logo_smoke_group",
+            "x": -18.1,
+            "y": -220.09
+        },
+        {
+            "name": "logo_smoke_group2",
+            "parent": "logo_fx"
+        },
+        {
+            "name": "logo_smoke3",
+            "parent": "logo_smoke_group2",
+            "x": -18.1,
+            "y": -220.09
+        },
+        {
+            "name": "logo_smoke4",
+            "parent": "logo_smoke_group2",
+            "x": -18.1,
+            "y": -220.09
+        },
+        {
+            "name": "logo_smoke_group3",
+            "parent": "logo_fx"
+        },
+        {
+            "name": "logo_smoke5",
+            "parent": "logo_smoke_group3",
+            "x": -18.1,
+            "y": -220.09
+        },
+        {
+            "name": "logo_smoke6",
+            "parent": "logo_smoke_group3",
+            "x": -18.1,
+            "y": -220.09
+        },
+        {
+            "name": "twinkle",
+            "parent": "dragon_logo_base",
+            "x": 333.76,
+            "y": 66.62,
+            "scaleX": 0.5,
+            "scaleY": 0.5
+        },
+        {
+            "name": "twinkle2",
+            "parent": "dragon_logo_base",
+            "x": -244.92,
+            "y": 64.59,
+            "scaleX": 0.5,
+            "scaleY": 0.5
+        },
+        {
+            "name": "new",
+            "parent": "scale_logo"
+        },
+        {
+            "name": "TM",
+            "parent": "dragon_logo_base",
+            "x": 478.36,
+            "y": 99.15
+        }
+    ],
+    "slots": [
+        {
+            "name": "desk_basegame_mockup",
+            "bone": "desk_basegame_mockup"
+        },
+        {
+            "name": "logo_smoke",
+            "bone": "logo_smoke",
+            "blend": "additive"
+        },
+        {
+            "name": "logo_smoke3",
+            "bone": "logo_smoke3",
+            "blend": "additive"
+        },
+        {
+            "name": "logo_smoke5",
+            "bone": "logo_smoke5",
+            "blend": "additive"
+        },
+        {
+            "name": "logo_smoke2",
+            "bone": "logo_smoke2",
+            "blend": "additive"
+        },
+        {
+            "name": "logo_smoke4",
+            "bone": "logo_smoke4",
+            "blend": "additive"
+        },
+        {
+            "name": "logo_smoke6",
+            "bone": "logo_smoke6",
+            "blend": "additive"
+        },
+        {
+            "name": "glow",
+            "bone": "glow",
+            "attachment": "glow_2"
+        },
+        {
+            "name": "glow4",
+            "bone": "glow4"
+        },
+        {
+            "name": "glow2",
+            "bone": "glow2"
+        },
+        {
+            "name": "glow3",
+            "bone": "glow3"
+        },
+        {
+            "name": "particle",
+            "bone": "particle",
+            "attachment": "particle",
+            "blend": "additive"
+        },
+        {
+            "name": "particle7",
+            "bone": "particle7",
+            "attachment": "particle",
+            "blend": "additive"
+        },
+        {
+            "name": "particle5",
+            "bone": "particle5",
+            "attachment": "particle",
+            "blend": "additive"
+        },
+        {
+            "name": "particle3",
+            "bone": "particle3",
+            "attachment": "particle",
+            "blend": "additive"
+        },
+        {
+            "name": "particle2",
+            "bone": "particle2",
+            "attachment": "particle",
+            "blend": "additive"
+        },
+        {
+            "name": "particle8",
+            "bone": "particle8",
+            "attachment": "particle",
+            "blend": "additive"
+        },
+        {
+            "name": "particle6",
+            "bone": "particle6",
+            "attachment": "particle",
+            "blend": "additive"
+        },
+        {
+            "name": "particle4",
+            "bone": "particle4",
+            "attachment": "particle",
+            "blend": "additive"
+        },
+        {
+            "name": "particle9",
+            "bone": "particle9",
+            "attachment": "particle",
+            "blend": "additive"
+        },
+        {
+            "name": "particle10",
+            "bone": "particle10",
+            "attachment": "particle",
+            "blend": "additive"
+        },
+        {
+            "name": "Layer 2",
+            "bone": "scale_logo"
+        },
+        {
+            "name": "ref",
+            "bone": "scale_logo"
+        },
+        {
+            "name": "TM",
+            "bone": "TM"
+        },
+        {
+            "name": "lp_lohikarme_base",
+            "bone": "dragon_logo_base",
+            "attachment": "logo_finnish/lp_lohikarme_base"
+        },
+        {
+            "name": "lp_lohikarme_shadow",
+            "bone": "dragon_logo_base",
+            "attachment": "logo_finnish/lp_lohikarme_shadow"
+        },
+        {
+            "name": "lp_lohikarme_front",
+            "bone": "dragon_logo_base",
+            "attachment": "logo_finnish/lp_lohikarme_front"
+        },
+        {
+            "name": "lp_lohikarme_front2",
+            "bone": "dragon_logo_base",
+            "color": "ffffff00",
+            "attachment": "logo_finnish/lp_lohikarme_front",
+            "blend": "additive"
+        },
+        {
+            "name": "lp_pasianssi_base",
+            "bone": "solitraire_logo_base",
+            "attachment": "logo_finnish/lp_pasianssi_base"
+        },
+        {
+            "name": "lp_pasianssi_shadow",
+            "bone": "solitraire_logo_base",
+            "attachment": "logo_finnish/lp_pasianssi_shadow"
+        },
+        {
+            "name": "lp_pasianssi_front",
+            "bone": "solitraire_logo_base",
+            "attachment": "logo_finnish/lp_pasianssi_front"
+        },
+        {
+            "name": "lp_pasianssi_front2",
+            "bone": "solitraire_logo_base",
+            "color": "ffffff00",
+            "attachment": "logo_finnish/lp_pasianssi_front",
+            "blend": "additive"
+        },
+        {
+            "name": "lp_r",
+            "bone": "TM",
+            "attachment": "logo_finnish/lp_r"
+        },
+        {
+            "name": "particle11",
+            "bone": "particle11",
+            "attachment": "particle",
+            "blend": "additive"
+        },
+        {
+            "name": "particle12",
+            "bone": "particle12",
+            "attachment": "particle",
+            "blend": "additive"
+        },
+        {
+            "name": "twinkle",
+            "bone": "twinkle"
+        },
+        {
+            "name": "twinkle2",
+            "bone": "twinkle2"
+        }
+    ],
+    "skins": [
+        {
+            "name": "default",
+            "attachments": {
+                "glow": {
+                    "glow_2": {
+                        "x": -62.24,
+                        "y": 350.73,
+                        "scaleX": 2,
+                        "scaleY": 2,
+                        "width": 594,
+                        "height": 351
+                    }
+                },
+                "glow2": {
+                    "glow_2": {
+                        "x": -62.24,
+                        "y": 350.73,
+                        "scaleX": 2,
+                        "scaleY": 2,
+                        "width": 594,
+                        "height": 351
+                    }
+                },
+                "glow3": {
+                    "glow_2": {
+                        "x": -62.24,
+                        "y": 350.73,
+                        "scaleX": 2,
+                        "scaleY": 2,
+                        "width": 594,
+                        "height": 351
+                    }
+                },
+                "glow4": {
+                    "glow_2": {
+                        "x": -62.24,
+                        "y": 350.73,
+                        "scaleX": 2,
+                        "scaleY": 2,
+                        "width": 594,
+                        "height": 351
+                    }
+                },
+                "logo_smoke": {
+                    "logo_smoke_2": {
+                        "x": 1.32,
+                        "y": 314.69,
+                        "scaleX": 2,
+                        "scaleY": 2,
+                        "width": 453,
+                        "height": 380
+                    }
+                },
+                "logo_smoke2": {
+                    "logo_smoke_2": {
+                        "x": 1.32,
+                        "y": 314.69,
+                        "scaleX": 2,
+                        "scaleY": 2,
+                        "width": 453,
+                        "height": 380
+                    }
+                },
+                "logo_smoke3": {
+                    "logo_smoke_2": {
+                        "x": 1.32,
+                        "y": 314.69,
+                        "scaleX": 2,
+                        "scaleY": 2,
+                        "width": 453,
+                        "height": 380
+                    }
+                },
+                "logo_smoke4": {
+                    "logo_smoke_2": {
+                        "x": 1.32,
+                        "y": 314.69,
+                        "scaleX": 2,
+                        "scaleY": 2,
+                        "width": 453,
+                        "height": 380
+                    }
+                },
+                "logo_smoke5": {
+                    "logo_smoke_2": {
+                        "x": 1.32,
+                        "y": 314.69,
+                        "scaleX": 2,
+                        "scaleY": 2,
+                        "width": 453,
+                        "height": 380
+                    }
+                },
+                "logo_smoke6": {
+                    "logo_smoke_2": {
+                        "x": 1.32,
+                        "y": 314.69,
+                        "scaleX": 2,
+                        "scaleY": 2,
+                        "width": 453,
+                        "height": 380
+                    }
+                },
+                "lp_lohikarme_base": {
+                    "logo_finnish/lp_lohikarme_base": {
+                        "x": -13.5,
+                        "y": 42.5,
+                        "width": 969,
+                        "height": 188
+                    }
+                },
+                "lp_lohikarme_front": {
+                    "logo_finnish/lp_lohikarme_front": {
+                        "x": -13.5,
+                        "y": 45,
+                        "width": 943,
+                        "height": 157
+                    }
+                },
+                "lp_lohikarme_front2": {
+                    "logo_finnish/lp_lohikarme_front": {
+                        "x": -13.5,
+                        "y": 45,
+                        "width": 943,
+                        "height": 157
+                    }
+                },
+                "lp_lohikarme_shadow": {
+                    "logo_finnish/lp_lohikarme_shadow": {
+                        "x": -13.5,
+                        "y": 38.5,
+                        "width": 957,
+                        "height": 170
+                    }
+                },
+                "lp_pasianssi_base": {
+                    "logo_finnish/lp_pasianssi_base": {
+                        "x": -14.5,
+                        "y": 33.5,
+                        "width": 867,
+                        "height": 257
+                    }
+                },
+                "lp_pasianssi_front": {
+                    "logo_finnish/lp_pasianssi_front": {
+                        "x": -14,
+                        "y": 40.5,
+                        "width": 726,
+                        "height": 141
+                    }
+                },
+                "lp_pasianssi_front2": {
+                    "logo_finnish/lp_pasianssi_front": {
+                        "x": -14,
+                        "y": 40.5,
+                        "width": 726,
+                        "height": 141
+                    }
+                },
+                "lp_pasianssi_shadow": {
+                    "logo_finnish/lp_pasianssi_shadow": {
+                        "x": -14.5,
+                        "y": 39,
+                        "width": 733,
+                        "height": 150
+                    }
+                },
+                "lp_r": {
+                    "logo_finnish/lp_r": {
+                        "x": 1.14,
+                        "y": -3.15,
+                        "width": 39,
+                        "height": 39
+                    }
+                },
+                "particle": {
+                    "particle": {
+                        "width": 18,
+                        "height": 17
+                    }
+                },
+                "particle2": {
+                    "particle": {
+                        "width": 18,
+                        "height": 17
+                    }
+                },
+                "particle3": {
+                    "particle": {
+                        "width": 18,
+                        "height": 17
+                    }
+                },
+                "particle4": {
+                    "particle": {
+                        "width": 18,
+                        "height": 17
+                    }
+                },
+                "particle5": {
+                    "particle": {
+                        "width": 18,
+                        "height": 17
+                    }
+                },
+                "particle6": {
+                    "particle": {
+                        "width": 18,
+                        "height": 17
+                    }
+                },
+                "particle7": {
+                    "particle": {
+                        "width": 18,
+                        "height": 17
+                    }
+                },
+                "particle8": {
+                    "particle": {
+                        "width": 18,
+                        "height": 17
+                    }
+                },
+                "particle9": {
+                    "particle": {
+                        "width": 18,
+                        "height": 17
+                    }
+                },
+                "particle10": {
+                    "particle": {
+                        "width": 18,
+                        "height": 17
+                    }
+                },
+                "particle11": {
+                    "particle": {
+                        "width": 18,
+                        "height": 17
+                    }
+                },
+                "particle12": {
+                    "particle": {
+                        "width": 18,
+                        "height": 17
+                    }
+                },
+                "twinkle": {
+                    "twinkle": {
+                        "scaleX": 2,
+                        "scaleY": 2,
+                        "width": 73,
+                        "height": 71
+                    }
+                },
+                "twinkle2": {
+                    "twinkle": {
+                        "scaleX": 2,
+                        "scaleY": 2,
+                        "width": 73,
+                        "height": 71
+                    }
+                }
+            }
+        }
+    ],
+    "animations": {
+        "idle": {
+            "slots": {
+                "glow": {
+                    "rgba": [
+                        {
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 2,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 3,
+                            "color": "ffffff00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 1
+                        },
+                        {
+                            "time": 2,
+                            "name": "glow_2"
+                        },
+                        {
+                            "time": 3
+                        }
+                    ]
+                },
+                "glow2": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 2,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 3,
+                            "color": "ffffffff"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "name": "glow_2"
+                        },
+                        {
+                            "time": 1
+                        },
+                        {
+                            "time": 2,
+                            "name": "glow_2"
+                        },
+                        {
+                            "time": 3
+                        }
+                    ]
+                },
+                "glow3": {
+                    "rgba": [
+                        {
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 2,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 3,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 4,
+                            "color": "ffffffff"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 1,
+                            "name": "glow_2"
+                        },
+                        {
+                            "time": 2
+                        },
+                        {
+                            "time": 3,
+                            "name": "glow_2"
+                        }
+                    ]
+                },
+                "glow4": {
+                    "rgba": [
+                        {
+                            "time": 1,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 2,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 3,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 4,
+                            "color": "ffffff00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 1,
+                            "name": "glow_2"
+                        },
+                        {
+                            "time": 2
+                        },
+                        {
+                            "time": 3,
+                            "name": "glow_2"
+                        }
+                    ]
+                },
+                "logo_smoke": {
+                    "rgba": [
+                        {
+                            "time": 0.3667,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 1.3333,
+                            "color": "ffffff00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "name": "logo_smoke_2"
+                        },
+                        {
+                            "time": 1.3333
+                        }
+                    ]
+                },
+                "logo_smoke2": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.9333,
+                            "color": "ffffffff"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "name": "logo_smoke_2"
+                        },
+                        {
+                            "time": 1.3333
+                        }
+                    ]
+                },
+                "logo_smoke3": {
+                    "rgba": [
+                        {
+                            "time": 1.7,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 2.6667,
+                            "color": "ffffff00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 1.3333,
+                            "name": "logo_smoke_2"
+                        },
+                        {
+                            "time": 2.6667
+                        }
+                    ]
+                },
+                "logo_smoke4": {
+                    "rgba": [
+                        {
+                            "time": 1.3333,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 2.2667,
+                            "color": "ffffffff"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 1.3333,
+                            "name": "logo_smoke_2"
+                        },
+                        {
+                            "time": 2.6667
+                        }
+                    ]
+                },
+                "logo_smoke5": {
+                    "rgba": [
+                        {
+                            "time": 3.0333,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 4,
+                            "color": "ffffff00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 2.6667,
+                            "name": "logo_smoke_2"
+                        },
+                        {
+                            "time": 4
+                        }
+                    ]
+                },
+                "logo_smoke6": {
+                    "rgba": [
+                        {
+                            "time": 2.6667,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 3.6,
+                            "color": "ffffffff"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 2.6667,
+                            "name": "logo_smoke_2"
+                        },
+                        {
+                            "time": 4
+                        }
+                    ]
+                },
+                "lp_lohikarme_front2": {
+                    "rgba": [
+                        {
+                            "time": 1.4667,
+                            "color": "ffffff00",
+                            "curve": [
+                                1.752,
+                                1,
+                                2.051,
+                                1,
+                                1.752,
+                                1,
+                                2.051,
+                                1,
+                                1.752,
+                                1,
+                                2.051,
+                                1,
+                                1.752,
+                                0,
+                                2.051,
+                                0.46
+                            ]
+                        },
+                        {
+                            "time": 2.3333,
+                            "color": "ffffff76",
+                            "curve": [
+                                3.136,
+                                1,
+                                2.856,
+                                1,
+                                3.136,
+                                1,
+                                2.856,
+                                1,
+                                3.136,
+                                1,
+                                2.856,
+                                1,
+                                3.136,
+                                0.46,
+                                2.856,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 3.5667,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "lp_pasianssi_front2": {
+                    "rgba": [
+                        {
+                            "time": 1.2,
+                            "color": "ffffff00",
+                            "curve": [
+                                1.519,
+                                1,
+                                1.867,
+                                1,
+                                1.519,
+                                1,
+                                1.867,
+                                1,
+                                1.519,
+                                1,
+                                1.867,
+                                1,
+                                1.519,
+                                0,
+                                1.867,
+                                0.54
+                            ]
+                        },
+                        {
+                            "time": 2.2,
+                            "color": "ffffff8b",
+                            "curve": [
+                                2.51,
+                                1,
+                                2.806,
+                                1,
+                                2.51,
+                                1,
+                                2.806,
+                                1,
+                                2.51,
+                                1,
+                                2.806,
+                                1,
+                                2.51,
+                                0.54,
+                                2.806,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 3.0667,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "particle": {
+                    "rgba": [
+                        {
+                            "time": 3.3333,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 4,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "particle2": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 2.8333,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 3.2333,
+                            "color": "ffffffff"
+                        }
+                    ]
+                },
+                "particle3": {
+                    "rgba": [
+                        {
+                            "time": 3.3333,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 4,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "particle4": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 2.8333,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 3.2333,
+                            "color": "ffffffff"
+                        }
+                    ]
+                },
+                "particle5": {
+                    "rgba": [
+                        {
+                            "time": 3.3333,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 4,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "particle6": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 2.8333,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 3.2333,
+                            "color": "ffffffff"
+                        }
+                    ]
+                },
+                "particle7": {
+                    "rgba": [
+                        {
+                            "time": 3.3333,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 4,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "particle8": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 2.8333,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 3.2333,
+                            "color": "ffffffff"
+                        }
+                    ]
+                },
+                "particle9": {
+                    "rgba": [
+                        {
+                            "time": 2.9333,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 4,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "particle10": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.8,
+                            "color": "ffffffff"
+                        }
+                    ]
+                },
+                "particle11": {
+                    "rgba": [
+                        {
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 0.3333,
+                            "color": "ffffffff",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 0.7,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 1.3,
+                            "color": "ffffff00"
+                        }
+                    ]
+                },
+                "particle12": {
+                    "rgba": [
+                        {
+                            "time": 0.5,
+                            "color": "ffffffff"
+                        },
+                        {
+                            "time": 1,
+                            "color": "ffffff00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 2.6667,
+                            "color": "ffffff00"
+                        },
+                        {
+                            "time": 3.2333,
+                            "color": "ffffffff"
+                        }
+                    ]
+                },
+                "twinkle": {
+                    "attachment": [
+                        {
+                            "time": 2.1667,
+                            "name": "twinkle"
+                        }
+                    ]
+                },
+                "twinkle2": {
+                    "attachment": [
+                        {
+                            "time": 1.2,
+                            "name": "twinkle"
+                        }
+                    ]
+                }
+            },
+            "bones": {
+                "solitraire_logo_base": {
+                    "scale": [
+                        {
+                            "curve": [
+                                0.278,
+                                1,
+                                0.556,
+                                0.964,
+                                0.278,
+                                1,
+                                0.556,
+                                0.964
+                            ]
+                        },
+                        {
+                            "time": 0.8333,
+                            "x": 0.964,
+                            "y": 0.964,
+                            "curve": [
+                                1.222,
+                                0.964,
+                                1.611,
+                                1,
+                                1.222,
+                                0.964,
+                                1.611,
+                                1
+                            ]
+                        },
+                        {
+                            "time": 2,
+                            "curve": [
+                                2.278,
+                                1,
+                                2.556,
+                                0.964,
+                                2.278,
+                                1,
+                                2.556,
+                                0.964
+                            ]
+                        },
+                        {
+                            "time": 2.8333,
+                            "x": 0.964,
+                            "y": 0.964,
+                            "curve": [
+                                3.222,
+                                0.964,
+                                3.611,
+                                1,
+                                3.222,
+                                0.964,
+                                3.611,
+                                1
+                            ]
+                        },
+                        {
+                            "time": 4
+                        }
+                    ]
+                },
+                "dragon_logo_base": {
+                    "scale": [
+                        {
+                            "curve": [
+                                0.4,
+                                1.016,
+                                0.778,
+                                0.964,
+                                0.4,
+                                1.016,
+                                0.778,
+                                0.964
+                            ]
+                        },
+                        {
+                            "time": 1.1667,
+                            "x": 0.964,
+                            "y": 0.964,
+                            "curve": [
+                                1.444,
+                                0.964,
+                                1.722,
+                                0.989,
+                                1.444,
+                                0.964,
+                                1.722,
+                                0.989
+                            ]
+                        },
+                        {
+                            "time": 2,
+                            "curve": [
+                                2.4,
+                                1.016,
+                                2.778,
+                                0.964,
+                                2.4,
+                                1.016,
+                                2.778,
+                                0.964
+                            ]
+                        },
+                        {
+                            "time": 3.1667,
+                            "x": 0.964,
+                            "y": 0.964,
+                            "curve": [
+                                3.444,
+                                0.964,
+                                3.751,
+                                0.99,
+                                3.444,
+                                0.964,
+                                3.751,
+                                0.99
+                            ]
+                        },
+                        {
+                            "time": 4
+                        }
+                    ]
+                },
+                "glow": {
+                    "scale": [
+                        {},
+                        {
+                            "time": 1,
+                            "y": 1.1
+                        },
+                        {
+                            "time": 2
+                        },
+                        {
+                            "time": 3,
+                            "y": 1.1
+                        }
+                    ]
+                },
+                "glow2": {
+                    "scale": [
+                        {
+                            "y": 0.9
+                        },
+                        {
+                            "time": 1
+                        },
+                        {
+                            "time": 2,
+                            "y": 0.9
+                        },
+                        {
+                            "time": 3
+                        }
+                    ]
+                },
+                "glow3": {
+                    "scale": [
+                        {},
+                        {
+                            "time": 1,
+                            "y": 0.9
+                        },
+                        {
+                            "time": 2
+                        },
+                        {
+                            "time": 3,
+                            "y": 0.9
+                        },
+                        {
+                            "time": 4
+                        }
+                    ]
+                },
+                "glow4": {
+                    "scale": [
+                        {
+                            "time": 3
+                        },
+                        {
+                            "time": 4,
+                            "y": 1.1
+                        }
+                    ]
+                },
+                "particle": {
+                    "translate": [
+                        {},
+                        {
+                            "time": 4,
+                            "y": 236.05
+                        }
+                    ]
+                },
+                "particle2": {
+                    "translate": [
+                        {
+                            "time": 2.8333,
+                            "y": -98.89
+                        },
+                        {
+                            "time": 4
+                        }
+                    ]
+                },
+                "particle_grp2": {
+                    "translate": [
+                        {
+                            "curve": [
+                                0.1,
+                                -8.05,
+                                0.333,
+                                -24.39,
+                                0.167,
+                                0,
+                                0.333,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 0.5,
+                            "x": -24.39,
+                            "curve": [
+                                0.833,
+                                -24.39,
+                                1.167,
+                                24.39,
+                                0.833,
+                                0,
+                                1.167,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 1.5,
+                            "x": 24.39,
+                            "curve": [
+                                1.833,
+                                24.39,
+                                2.167,
+                                -24.39,
+                                1.833,
+                                0,
+                                2.167,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 2.5,
+                            "x": -24.39,
+                            "curve": [
+                                2.833,
+                                -24.39,
+                                3.167,
+                                24.39,
+                                2.833,
+                                0,
+                                3.167,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 3.5,
+                            "x": 24.39,
+                            "curve": [
+                                3.667,
+                                24.39,
+                                3.9,
+                                8.05,
+                                3.667,
+                                0,
+                                3.833,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 4
+                        }
+                    ]
+                },
+                "particle3": {
+                    "translate": [
+                        {},
+                        {
+                            "time": 4,
+                            "y": 236.05
+                        }
+                    ]
+                },
+                "particle4": {
+                    "translate": [
+                        {
+                            "time": 2.8333,
+                            "y": -98.89
+                        },
+                        {
+                            "time": 4
+                        }
+                    ]
+                },
+                "particle_grp3": {
+                    "translate": [
+                        {
+                            "x": 20.56,
+                            "curve": [
+                                0.056,
+                                23.27,
+                                0.111,
+                                24.39,
+                                0.056,
+                                0,
+                                0.111,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 0.1667,
+                            "x": 24.39,
+                            "curve": [
+                                0.333,
+                                24.39,
+                                0.567,
+                                8.05,
+                                0.333,
+                                0,
+                                0.5,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 0.6667,
+                            "curve": [
+                                0.767,
+                                -8.05,
+                                1,
+                                -24.39,
+                                0.833,
+                                0,
+                                1,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 1.1667,
+                            "x": -24.39,
+                            "curve": [
+                                1.5,
+                                -24.39,
+                                1.833,
+                                24.39,
+                                1.5,
+                                0,
+                                1.833,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 2.1667,
+                            "x": 24.39,
+                            "curve": [
+                                2.5,
+                                24.39,
+                                2.833,
+                                -24.39,
+                                2.5,
+                                0,
+                                2.833,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 3.1667,
+                            "x": -24.39,
+                            "curve": [
+                                3.444,
+                                -24.39,
+                                3.722,
+                                7,
+                                3.444,
+                                0,
+                                3.722,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 4,
+                            "x": 20.56
+                        }
+                    ]
+                },
+                "particle5": {
+                    "translate": [
+                        {},
+                        {
+                            "time": 4,
+                            "y": 236.05
+                        }
+                    ]
+                },
+                "particle6": {
+                    "translate": [
+                        {
+                            "time": 2.8333,
+                            "y": -98.89
+                        },
+                        {
+                            "time": 4
+                        }
+                    ]
+                },
+                "particle_grp4": {
+                    "translate": [
+                        {
+                            "x": -2.41,
+                            "curve": [
+                                0.178,
+                                6.27,
+                                0.356,
+                                24.39,
+                                0.178,
+                                0,
+                                0.356,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 0.5333,
+                            "x": 24.39,
+                            "curve": [
+                                0.867,
+                                24.39,
+                                1.2,
+                                -24.39,
+                                0.867,
+                                0,
+                                1.2,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 1.5333,
+                            "x": -24.39,
+                            "curve": [
+                                1.867,
+                                -24.39,
+                                2.2,
+                                24.39,
+                                1.867,
+                                0,
+                                2.2,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 2.5333,
+                            "x": 24.39,
+                            "curve": [
+                                2.7,
+                                24.39,
+                                2.933,
+                                8.05,
+                                2.7,
+                                0,
+                                2.867,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 3.0333,
+                            "curve": [
+                                3.133,
+                                -8.05,
+                                3.367,
+                                -24.39,
+                                3.2,
+                                0,
+                                3.367,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 3.5333,
+                            "x": -24.39,
+                            "curve": [
+                                3.689,
+                                -24.39,
+                                3.844,
+                                -10,
+                                3.689,
+                                0,
+                                3.844,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 4,
+                            "x": -2.41
+                        }
+                    ]
+                },
+                "particle7": {
+                    "translate": [
+                        {},
+                        {
+                            "time": 4,
+                            "y": 236.05
+                        }
+                    ]
+                },
+                "particle8": {
+                    "translate": [
+                        {
+                            "time": 2.8333,
+                            "y": -98.89
+                        },
+                        {
+                            "time": 4
+                        }
+                    ]
+                },
+                "particle_grp5": {
+                    "translate": [
+                        {
+                            "x": -11.64,
+                            "curve": [
+                                0.222,
+                                -0.8,
+                                0.444,
+                                24.39,
+                                0.222,
+                                0,
+                                0.444,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 0.6667,
+                            "x": 24.39,
+                            "curve": [
+                                1,
+                                24.39,
+                                1.333,
+                                -24.39,
+                                1,
+                                0,
+                                1.333,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 1.6667,
+                            "x": -24.39,
+                            "curve": [
+                                2,
+                                -24.39,
+                                2.333,
+                                24.39,
+                                2,
+                                0,
+                                2.333,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 2.6667,
+                            "x": 24.39,
+                            "curve": [
+                                2.833,
+                                24.39,
+                                3.067,
+                                8.05,
+                                2.833,
+                                0,
+                                3,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 3.1667,
+                            "curve": [
+                                3.267,
+                                -8.05,
+                                3.5,
+                                -24.39,
+                                3.333,
+                                0,
+                                3.5,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 3.6667,
+                            "x": -24.39,
+                            "curve": [
+                                3.778,
+                                -24.39,
+                                3.889,
+                                -17.06,
+                                3.778,
+                                0,
+                                3.889,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 4,
+                            "x": -11.64
+                        }
+                    ]
+                },
+                "particle9": {
+                    "translate": [
+                        {},
+                        {
+                            "time": 4,
+                            "x": 12.96,
+                            "y": 154.31
+                        }
+                    ]
+                },
+                "particle10": {
+                    "translate": [
+                        {
+                            "x": -9.31,
+                            "y": -110.81
+                        },
+                        {
+                            "time": 4
+                        }
+                    ]
+                },
+                "particle_grp6": {
+                    "translate": [
+                        {
+                            "curve": [
+                                0.311,
+                                0,
+                                0.622,
+                                -46.12,
+                                0.311,
+                                0,
+                                0.622,
+                                -3.87
+                            ]
+                        },
+                        {
+                            "time": 0.9333,
+                            "x": -46.12,
+                            "y": -3.87,
+                            "curve": [
+                                1.289,
+                                -46.12,
+                                1.644,
+                                0,
+                                1.289,
+                                -3.87,
+                                1.644,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 2,
+                            "curve": [
+                                2.333,
+                                0,
+                                2.667,
+                                -46.12,
+                                2.333,
+                                0,
+                                2.667,
+                                -3.87
+                            ]
+                        },
+                        {
+                            "time": 3,
+                            "x": -46.12,
+                            "y": -3.87,
+                            "curve": [
+                                3.333,
+                                -46.12,
+                                3.667,
+                                -15.37,
+                                3.333,
+                                -3.87,
+                                3.667,
+                                -1.29
+                            ]
+                        },
+                        {
+                            "time": 4
+                        }
+                    ]
+                },
+                "particle11": {
+                    "translatex": [
+                        {
+                            "curve": [
+                                0.313,
+                                0,
+                                1.757,
+                                -607.01
+                            ]
+                        },
+                        {
+                            "time": 2.1667,
+                            "value": -607.01
+                        }
+                    ],
+                    "translatey": [
+                        {
+                            "curve": [
+                                0.335,
+                                0,
+                                0.671,
+                                -99.85
+                            ]
+                        },
+                        {
+                            "time": 1,
+                            "value": -20.39,
+                            "curve": [
+                                1.392,
+                                71.36,
+                                1.78,
+                                348.51
+                            ]
+                        },
+                        {
+                            "time": 2.1667,
+                            "value": 348.51
+                        }
+                    ]
+                },
+                "particle12": {
+                    "translatex": [
+                        {
+                            "value": 272.57,
+                            "curve": [
+                                0.336,
+                                366.5,
+                                0.668,
+                                449.99
+                            ]
+                        },
+                        {
+                            "time": 1,
+                            "value": 449.99,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.0333,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 2.6667,
+                            "curve": [
+                                3.113,
+                                0,
+                                3.559,
+                                146.34
+                            ]
+                        },
+                        {
+                            "time": 4,
+                            "value": 272.57
+                        }
+                    ],
+                    "translatey": [
+                        {
+                            "value": 21.77,
+                            "curve": [
+                                0.338,
+                                83.69,
+                                0.669,
+                                202.98
+                            ]
+                        },
+                        {
+                            "time": 1,
+                            "value": 202.98,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.0333,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 2.6667,
+                            "curve": [
+                                3.069,
+                                0,
+                                3.47,
+                                -51.92
+                            ]
+                        },
+                        {
+                            "time": 3.8667,
+                            "value": 0.46,
+                            "curve": [
+                                3.912,
+                                6.34,
+                                3.958,
+                                13.32
+                            ]
+                        },
+                        {
+                            "time": 4,
+                            "value": 21.77
+                        }
+                    ]
+                },
+                "logo_smoke": {
+                    "scale": [
+                        {},
+                        {
+                            "time": 1.3333,
+                            "x": 1.35,
+                            "y": 1.35
+                        }
+                    ]
+                },
+                "logo_smoke2": {
+                    "scale": [
+                        {
+                            "x": 0.65,
+                            "y": 0.65
+                        },
+                        {
+                            "time": 1.3333
+                        }
+                    ]
+                },
+                "logo_smoke3": {
+                    "scale": [
+                        {
+                            "time": 1.3333
+                        },
+                        {
+                            "time": 2.6667,
+                            "x": 1.35,
+                            "y": 1.35
+                        }
+                    ]
+                },
+                "logo_smoke4": {
+                    "scale": [
+                        {
+                            "time": 1.3333,
+                            "x": 0.65,
+                            "y": 0.65
+                        },
+                        {
+                            "time": 2.6667
+                        }
+                    ]
+                },
+                "logo_smoke5": {
+                    "scale": [
+                        {
+                            "time": 2.6667
+                        },
+                        {
+                            "time": 4,
+                            "x": 1.35,
+                            "y": 1.35
+                        }
+                    ]
+                },
+                "logo_smoke6": {
+                    "scale": [
+                        {
+                            "time": 2.6667,
+                            "x": 0.65,
+                            "y": 0.65
+                        },
+                        {
+                            "time": 4
+                        }
+                    ]
+                },
+                "twinkle": {
+                    "rotate": [
+                        {
+                            "time": 2.1667
+                        },
+                        {
+                            "time": 2.6,
+                            "value": -25.75
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 2.1667,
+                            "x": 0,
+                            "y": 0,
+                            "curve": [
+                                2.366,
+                                -0.091,
+                                2.322,
+                                1,
+                                2.366,
+                                -0.091,
+                                2.322,
+                                1
+                            ]
+                        },
+                        {
+                            "time": 2.4,
+                            "curve": [
+                                2.467,
+                                1,
+                                2.451,
+                                0,
+                                2.467,
+                                1,
+                                2.451,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 2.6,
+                            "x": 0,
+                            "y": 0
+                        }
+                    ]
+                },
+                "twinkle2": {
+                    "rotate": [
+                        {
+                            "time": 1.2
+                        },
+                        {
+                            "time": 1.8,
+                            "value": -25.75
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 1.2,
+                            "x": 0,
+                            "y": 0,
+                            "curve": [
+                                1.484,
+                                -0.131,
+                                1.422,
+                                1,
+                                1.484,
+                                -0.131,
+                                1.422,
+                                1
+                            ]
+                        },
+                        {
+                            "time": 1.5333,
+                            "curve": [
+                                1.622,
+                                1,
+                                1.601,
+                                0,
+                                1.622,
+                                1,
+                                1.601,
+                                0
+                            ]
+                        },
+                        {
+                            "time": 1.8,
+                            "x": 0,
+                            "y": 0
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
