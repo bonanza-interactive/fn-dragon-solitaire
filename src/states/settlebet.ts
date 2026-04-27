@@ -18,8 +18,6 @@ export class SettleBet extends State {
     await BackendUtil.complete();
     CLIENT_STATE.roundInProgress = false;
 
-    console.log('Settle bet');
-
     CLIENT_STATE.winsum = 0;
 
     GAME.baseGameFrameText.hide();

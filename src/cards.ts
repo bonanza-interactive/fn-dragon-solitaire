@@ -2288,7 +2288,6 @@ export class Cards {
     faceDown: number;
     faceUp: number;
   } {
-    console.log('coumpute solitaore ');
     const root = getNode(this.root, 'solitaire_root');
     const tableau = this.getCardNode(CardName.SolTableau, 0);
     const rootBottomY = root.size[1] * (1 - root.pivot[1]);

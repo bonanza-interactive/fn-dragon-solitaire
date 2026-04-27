@@ -24,8 +24,6 @@ export class ReadyRecovery extends State<StateMachineRoundData> {
     GAME.nodeStorage.baseGame.nodes.root.visible = true;
     CLIENT_STATE.roundInProgress = true;
 
-    console.log('Recovery state: ' + CLIENT_STATE.recoveryState?.toString());
-
     if (data.roundState) {
       if (
         CLIENT_STATE.recoveryState === undefined ||
